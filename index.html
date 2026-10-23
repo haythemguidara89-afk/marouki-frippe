@@ -1,0 +1,1788 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marouki Frippe | Maison de Frippe de Luxe & Pièces Rares en Tunisie</title>
+    
+    <!-- Meta SEO & Social Sharing -->
+    <meta name="description" content="Marouki Frippe - Découvrez notre univers de pièces uniques de frippe haut de gamme, vêtements vintage d'exception, maroquinerie et accessoires chic en Tunisie.">
+    <meta property="og:title" content="Marouki Frippe | Frippe de Luxe & Pièces Uniques">
+    <meta property="og:description" content="Votre style, notre passion ♡. Pièces rares et sélection tendance en Tunisie. Commandes directes sur WhatsApp.">
+    <meta property="og:image" content="logo.svg">
+
+    <!-- Google Fonts: Playfair Display, Cinzel, Poppins & Alex Brush -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#880005',
+                            crimson: '#c90a18',
+                            velvet: '#54020a',
+                            dark: '#070506',
+                            card: '#120d0f',
+                            gold: '#dfb76c',
+                            goldLight: '#fae7b9',
+                            obsidian: '#0a0608'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        cinzel: ['Cinzel', 'serif'],
+                        script: ['Alex Brush', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Font Awesome 6.5 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* Ambient luxury dark gradient with texture */
+        body { 
+            background: radial-gradient(circle at 50% 0%, #2e050d 0%, #0d0608 40%, #040203 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Subtle film grain overlay */
+        .film-grain {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        /* Glassmorphism panels */
+        .glass-panel { 
+            background: rgba(18, 11, 14, 0.78); 
+            backdrop-filter: blur(18px); 
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(220, 25, 45, 0.2); 
+        }
+
+        .glass-panel-elevated {
+            background: rgba(24, 15, 19, 0.92);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(225, 30, 50, 0.35);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85), 0 0 35px rgba(180, 10, 30, 0.25);
+        }
+
+        /* Gold and Neon Accents */
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #dfb76c 0%, #fff2d1 50%, #c59744 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .crimson-gradient-text {
+            background: linear-gradient(135deg, #ff2e43 0%, #c90a18 50%, #880005 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .neon-glow-emblem {
+            box-shadow: 0 0 35px rgba(201, 10, 24, 0.7), 0 0 75px rgba(160, 0, 0, 0.35), inset 0 0 25px rgba(201, 10, 24, 0.3);
+        }
+
+        .brush-badge {
+            background: linear-gradient(90deg, #780006 0%, #c90a18 50%, #780006 100%);
+            box-shadow: 0 8px 25px -4px rgba(200, 10, 30, 0.6);
+            clip-path: polygon(2% 0%, 98% 3%, 100% 96%, 0% 100%);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 7px; height: 7px; }
+        ::-webkit-scrollbar-track { background: #0c080a; }
+        ::-webkit-scrollbar-thumb { background: #880005; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #c90a18; }
+
+        .hide { display: none !important; }
+
+        /* Floating Golden Particles Canvas */
+        #ambient-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* 3D Interactive Card Tilt */
+        .card-tilt {
+            transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.2s ease;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+
+        /* Story ring animation */
+        @keyframes rotateStory {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .story-ring:hover {
+            animation: rotateStory 6s linear infinite;
+        }
+
+        /* Orbiting ring around emblem */
+        @keyframes orbitSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .orbit-spin {
+            animation: orbitSlow 25s linear infinite;
+        }
+        .orbit-spin-reverse {
+            animation: orbitSlow 35s linear infinite reverse;
+        }
+
+        /* Pulse glow */
+        @keyframes emblemBreath {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 25px rgba(201, 10, 24, 0.6)); }
+            50% { transform: scale(1.025); filter: drop-shadow(0 0 45px rgba(230, 20, 40, 0.85)); }
+        }
+        .animate-emblem-breath {
+            animation: emblemBreath 4s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="antialiased flex flex-col selection:bg-brand-crimson selection:text-white relative">
+
+    <!-- Ambient Gold & Crimson Particles Canvas (Subtle Showroom Sparkles) -->
+    <canvas id="ambient-canvas"></canvas>
+
+    <!-- Film Grain Overlay -->
+    <div class="film-grain fixed inset-0 z-0"></div>
+
+    <!-- 1. TOP ANNOUNCEMENT BAR (Interactive Ticker) -->
+    <div class="relative z-30 bg-gradient-to-r from-brand-red via-brand-crimson to-brand-red text-white text-xs py-2 px-4 text-center font-medium tracking-wide flex items-center justify-between border-b border-brand-red/40 shadow-sm overflow-hidden">
+        <div class="flex items-center gap-2 mx-auto text-center">
+            <span class="w-2 h-2 rounded-full bg-brand-gold animate-ping"></span>
+            <span>✨ <strong>Marouki Frippe</strong> • Arrivages permanents de pièces vintage de luxe & pépites uniques</span>
+            <span class="hidden md:inline">•</span>
+            <span class="hidden md:inline"><i class="fas fa-truck-fast text-brand-goldLight mr-1"></i> Livraison Express 24h/48h sur toute la Tunisie</span>
+        </div>
+        <div class="hidden lg:flex items-center gap-4 text-[11px]">
+            <a href="https://www.instagram.com/marouki.fripe/" target="_blank" class="hover:text-brand-goldLight transition-colors flex items-center gap-1 font-semibold">
+                <i class="fab fa-instagram"></i> @marouki.fripe
+            </a>
+        </div>
+    </div>
+
+    <!-- 2. MAIN NAVBAR (Centered Emblem Layout with Bag Drawer) -->
+    <header class="glass-panel sticky top-0 z-40 border-b border-brand-red/25 px-4 md:px-8 py-2.5 transition-all duration-300">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            
+            <!-- Left Navigation: Explore & Search -->
+            <div class="flex items-center gap-3 sm:gap-5 flex-1">
+                <a href="#vitrine-section" class="text-xs uppercase tracking-widest text-gray-300 hover:text-white font-medium flex items-center gap-1.5 transition-colors">
+                    <i class="fas fa-gem text-brand-gold text-xs"></i>
+                    <span class="hidden sm:inline">Collection</span> <span>Pièces</span>
+                </a>
+                <button onclick="focusSearch()" class="text-xs text-gray-400 hover:text-white flex items-center gap-1.5 transition-colors bg-black/40 px-3 py-1.5 rounded-full border border-gray-800">
+                    <i class="fas fa-search text-xs text-brand-crimson"></i>
+                    <span class="hidden md:inline">Rechercher</span>
+                </button>
+            </div>
+
+            <!-- CENTER BRAND LOGO & MONOGRAM (Well Placed in the Middle) -->
+            <div class="flex flex-col items-center justify-center text-center px-4">
+                <a href="#" class="flex flex-col items-center group">
+                    <div class="relative p-0.5 rounded-full border border-brand-crimson/80 shadow-md group-hover:scale-105 transition-transform duration-300 bg-black/60">
+                        <img id="nav-brand-logo" src="logo.svg" onerror="this.src='logo.jpg'" alt="Marouki Frippe Logo" class="h-10 w-10 md:h-12 md:w-12 rounded-full object-cover">
+                        <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 border-2 border-black rounded-full" title="Boutique Ouverte"></span>
+                    </div>
+                    <div class="mt-1">
+                        <h1 class="text-lg md:text-xl font-serif tracking-wider leading-none">
+                            <span class="font-bold text-white">Marouki</span> 
+                            <span class="text-brand-crimson italic font-script text-2xl md:text-2xl ml-0.5">Frippe</span>
+                        </h1>
+                        <p class="text-[9px] uppercase tracking-[0.28em] text-brand-gold font-sans font-light mt-0.5">Frippe de Luxe • Tunisie</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Right Navigation: Bag Drawer, Wishlist & Instagram (No Admin Link) -->
+            <div class="flex items-center justify-end gap-2 sm:gap-3 flex-1">
+                
+                <!-- Wishlist Heart Button -->
+                <button onclick="openWishlistModal()" class="relative text-gray-300 hover:text-brand-crimson p-2 transition-colors" title="Mes Coups de Cœur">
+                    <i class="fas fa-heart text-base"></i>
+                    <span id="wishlist-badge" class="absolute -top-0.5 -right-0.5 bg-brand-crimson text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-black shadow hide">0</span>
+                </button>
+
+                <!-- Private Bag / Cart Drawer Button -->
+                <button onclick="toggleBagDrawer()" class="relative bg-black/60 hover:bg-black/90 text-white border border-brand-red/50 hover:border-brand-crimson px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all shadow-md group">
+                    <i class="fas fa-bag-shopping text-brand-gold group-hover:scale-110 transition-transform"></i>
+                    <span class="hidden md:inline">Panier</span>
+                    <span id="bag-count-badge" class="bg-brand-crimson text-white text-[10px] font-bold px-1.5 py-0.2 rounded-full min-w-[18px] text-center">0</span>
+                </button>
+
+                <!-- Instagram Shortcut -->
+                <a id="nav-ig-link" href="https://www.instagram.com/marouki.fripe/" target="_blank" rel="noopener noreferrer" 
+                   class="bg-gradient-to-r from-purple-700/60 to-pink-600/60 hover:from-purple-700 hover:to-pink-600 text-white px-3 py-1.5 rounded-xl text-xs font-medium hidden sm:flex items-center gap-1.5 transition-all shadow">
+                    <i class="fab fa-instagram"></i>
+                    <span class="hidden lg:inline">@marouki.fripe</span>
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- MAIN VIEW -->
+    <main class="flex-grow relative z-10">
+
+        <!-- ========================================== -->
+        <!-- 3. HERO SHOWCASE WITH 3D ORBITING EMBLEM   -->
+        <!-- ========================================== -->
+        <section class="relative overflow-hidden pt-8 pb-16 px-4 sm:px-6">
+            
+            <div class="max-w-5xl mx-auto text-center relative z-10">
+                
+                <!-- LUXURY ORBITING 3D EMBLEM (In the Middle) -->
+                <div class="flex flex-col items-center justify-center mb-8 relative">
+                    
+                    <div id="emblem-container" class="relative group cursor-pointer card-tilt p-4" onclick="document.getElementById('vitrine-section').scrollIntoView({behavior: 'smooth'})">
+                        
+                        <!-- Outer Golden Constellation Astrological Ring -->
+                        <div class="absolute inset-0 rounded-full border border-dashed border-brand-gold/30 orbit-spin pointer-events-none scale-125"></div>
+                        <div class="absolute inset-0 rounded-full border border-brand-crimson/25 orbit-spin-reverse pointer-events-none scale-110"></div>
+                        
+                        <!-- Glowing Crimson Ambient Halo -->
+                        <div class="absolute inset-2 rounded-full bg-gradient-to-tr from-brand-crimson via-brand-red to-brand-gold opacity-50 blur-2xl group-hover:opacity-75 transition duration-700"></div>
+
+                        <!-- Core Luxury Frame -->
+                        <div class="relative w-40 h-40 sm:w-48 sm:h-48 md:w-52 md:h-52 rounded-full p-2.5 bg-gradient-to-b from-[#35050e] via-[#140608] to-[#080204] border-2 border-brand-crimson/90 neon-glow-emblem animate-emblem-breath">
+                            
+                            <!-- Internal Golden Filigree Ring -->
+                            <div class="w-full h-full rounded-full p-2 border-2 border-brand-gold/60 flex items-center justify-center bg-black/70 overflow-hidden shadow-2xl relative">
+                                <img id="hero-brand-logo" src="logo.svg" onerror="this.src='logo.jpg'" alt="Marouki Frippe Emblème" 
+                                     class="w-full h-full rounded-full object-cover transition-transform duration-700 group-hover:scale-110">
+                                
+                                <!-- Light reflection sheen -->
+                                <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                            </div>
+                        </div>
+
+                        <!-- Exclusive Haute Couture Floating Tags -->
+                        <span class="absolute -top-1 -right-2 bg-gradient-to-r from-brand-red to-brand-crimson text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full border border-brand-gold/50 shadow-lg shadow-black/80">
+                            ★ PIÈCES RARES
+                        </span>
+                        <span class="absolute -bottom-1 -left-2 bg-black/90 text-brand-gold text-[10px] font-semibold tracking-wider px-3 py-1 rounded-full border border-brand-crimson/50 shadow-lg">
+                            TUNISIE
+                        </span>
+                    </div>
+
+                </div>
+
+                <!-- Main Signature Titles (Matching the Poster) -->
+                <h2 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-script text-white mb-2 leading-tight drop-shadow-2xl">
+                    Votre style, <span class="text-brand-crimson font-serif italic">notre passion</span> <span class="text-brand-crimson text-3xl sm:text-5xl">♡</span>
+                </h2>
+
+                <!-- Subtitle Category Monograms -->
+                <p class="text-xs sm:text-sm font-cinzel tracking-[0.32em] text-gray-300 uppercase mb-5 font-semibold">
+                    VÊTEMENTS • ACCESSOIRES • CHAUSSURES & PLUS ENCORE...
+                </p>
+
+                <!-- Brush Stroke Banner (From Poster) -->
+                <div class="inline-block brush-badge px-8 py-2.5 rounded shadow-2xl shadow-black/90 mb-5 transform -rotate-1 hover:rotate-0 transition-transform cursor-pointer" onclick="document.getElementById('vitrine-section').scrollIntoView({behavior: 'smooth'})">
+                    <span class="text-sm sm:text-lg font-bold tracking-widest text-white uppercase drop-shadow">
+                        Découvrez notre univers
+                    </span>
+                </div>
+
+                <p class="text-gray-300 text-sm sm:text-base max-w-2xl mx-auto mb-9 font-light leading-relaxed">
+                    Des pièces d'exception chinées avec amour et exigence. <br class="hidden sm:inline">Chaque vêtement est unique, nettoyé avec soin et prêt à sublimer votre allure.
+                </p>
+
+                <!-- 4 Trust Pillars (Authentic to Poster) -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto mb-10">
+                    
+                    <!-- 1. Mode Tendance -->
+                    <div class="glass-panel p-4 rounded-2xl flex flex-col items-center text-center border-brand-red/30 hover:border-brand-crimson transition-all duration-300 group hover:-translate-y-1">
+                        <div class="w-12 h-12 rounded-full bg-black/70 border border-brand-crimson flex items-center justify-center text-brand-crimson group-hover:scale-110 group-hover:bg-brand-crimson group-hover:text-white transition-all duration-300 mb-2 shadow-lg shadow-brand-red/30">
+                            <i class="fas fa-vest text-lg"></i>
+                        </div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-gray-200">Mode Tendance</span>
+                        <span class="text-[10px] text-gray-400 mt-0.5">Dernières sélections</span>
+                    </div>
+
+                    <!-- 2. Qualité Garantie -->
+                    <div class="glass-panel p-4 rounded-2xl flex flex-col items-center text-center border-brand-red/30 hover:border-brand-crimson transition-all duration-300 group hover:-translate-y-1">
+                        <div class="w-12 h-12 rounded-full bg-black/70 border border-brand-crimson flex items-center justify-center text-brand-crimson group-hover:scale-110 group-hover:bg-brand-crimson group-hover:text-white transition-all duration-300 mb-2 shadow-lg shadow-brand-red/30">
+                            <i class="fas fa-certificate text-lg"></i>
+                        </div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-gray-200">Qualité Garantie</span>
+                        <span class="text-[10px] text-gray-400 mt-0.5">Pièces impeccables</span>
+                    </div>
+
+                    <!-- 3. Livraison Rapide -->
+                    <div class="glass-panel p-4 rounded-2xl flex flex-col items-center text-center border-brand-red/30 hover:border-brand-crimson transition-all duration-300 group hover:-translate-y-1">
+                        <div class="w-12 h-12 rounded-full bg-black/70 border border-brand-crimson flex items-center justify-center text-brand-crimson group-hover:scale-110 group-hover:bg-brand-crimson group-hover:text-white transition-all duration-300 mb-2 shadow-lg shadow-brand-red/30">
+                            <i class="fas fa-truck-fast text-lg"></i>
+                        </div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-gray-200">Livraison Rapide</span>
+                        <span class="text-[10px] text-gray-400 mt-0.5">Toute la Tunisie (24-48h)</span>
+                    </div>
+
+                    <!-- 4. Service à l'Écoute -->
+                    <div class="glass-panel p-4 rounded-2xl flex flex-col items-center text-center border-brand-red/30 hover:border-brand-crimson transition-all duration-300 group hover:-translate-y-1">
+                        <div class="w-12 h-12 rounded-full bg-black/70 border border-brand-crimson flex items-center justify-center text-brand-crimson group-hover:scale-110 group-hover:bg-brand-crimson group-hover:text-white transition-all duration-300 mb-2 shadow-lg shadow-brand-red/30">
+                            <i class="fas fa-heart text-lg"></i>
+                        </div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-gray-200">Service à l'Écoute</span>
+                        <span class="text-[10px] text-gray-400 mt-0.5">Réponse WhatsApp directe</span>
+                    </div>
+                </div>
+
+                <!-- Instagram CTA Official Button -->
+                <div class="inline-flex">
+                    <a id="hero-instagram-link" href="https://www.instagram.com/marouki.fripe/" target="_blank" rel="noopener noreferrer" 
+                       class="bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-95 text-white font-medium px-8 py-3.5 rounded-full flex items-center gap-3 shadow-2xl shadow-black/80 hover:scale-105 transition-all text-sm group">
+                        <i class="fab fa-instagram text-xl group-hover:rotate-12 transition-transform"></i>
+                        <span>Suivez-nous sur Instagram <strong id="hero-instagram-handle">@marouki.fripe</strong></span>
+                        <i class="fas fa-arrow-right text-xs ml-1 group-hover:translate-x-1.5 transition-transform"></i>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- 4. CURATED STORIES CAROUSEL (LOOKBOOK)     -->
+        <!-- ========================================== -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 mb-10">
+            <div class="flex items-center justify-between mb-4 px-1">
+                <h3 class="text-xs uppercase tracking-widest text-brand-gold font-cinzel font-bold flex items-center gap-2">
+                    <i class="fas fa-circle-play text-brand-crimson"></i>
+                    <span>Les Capsules & Arrivages Exclusifs</span>
+                </h3>
+                <span class="text-[11px] text-gray-400">Cliquez pour explorer</span>
+            </div>
+
+            <!-- Story Circles Bar -->
+            <div class="flex items-center gap-4 overflow-x-auto pb-2 gallery-scroll">
+                
+                <!-- Story 1 -->
+                <div onclick="openStoryModal('blazers')" class="flex flex-col items-center gap-1.5 cursor-pointer flex-shrink-0 group">
+                    <div class="w-18 h-18 sm:w-20 sm:h-20 p-0.5 rounded-full bg-gradient-to-tr from-brand-crimson via-brand-gold to-brand-red story-ring group-hover:scale-105 transition-transform">
+                        <div class="w-full h-full rounded-full border-2 border-black overflow-hidden bg-black">
+                            <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=200&auto=format&fit=crop&q=80" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <span class="text-[11px] font-medium text-gray-200 group-hover:text-brand-gold transition-colors">Blazers Laine</span>
+                </div>
+
+                <!-- Story 2 -->
+                <div onclick="openStoryModal('robes')" class="flex flex-col items-center gap-1.5 cursor-pointer flex-shrink-0 group">
+                    <div class="w-18 h-18 sm:w-20 sm:h-20 p-0.5 rounded-full bg-gradient-to-tr from-brand-crimson via-brand-gold to-brand-red story-ring group-hover:scale-105 transition-transform">
+                        <div class="w-full h-full rounded-full border-2 border-black overflow-hidden bg-black">
+                            <img src="https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=200&auto=format&fit=crop&q=80" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <span class="text-[11px] font-medium text-gray-200 group-hover:text-brand-gold transition-colors">Robes Chic</span>
+                </div>
+
+                <!-- Story 3 -->
+                <div onclick="openStoryModal('trench')" class="flex flex-col items-center gap-1.5 cursor-pointer flex-shrink-0 group">
+                    <div class="w-18 h-18 sm:w-20 sm:h-20 p-0.5 rounded-full bg-gradient-to-tr from-brand-crimson via-brand-gold to-brand-red story-ring group-hover:scale-105 transition-transform">
+                        <div class="w-full h-full rounded-full border-2 border-black overflow-hidden bg-black">
+                            <img src="https://images.unsplash.com/photo-1520975954732-35dd22299614?w=200&auto=format&fit=crop&q=80" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <span class="text-[11px] font-medium text-gray-200 group-hover:text-brand-gold transition-colors">Trenchs Rétro</span>
+                </div>
+
+                <!-- Story 4 -->
+                <div onclick="openStoryModal('soie')" class="flex flex-col items-center gap-1.5 cursor-pointer flex-shrink-0 group">
+                    <div class="w-18 h-18 sm:w-20 sm:h-20 p-0.5 rounded-full bg-gradient-to-tr from-brand-crimson via-brand-gold to-brand-red story-ring group-hover:scale-105 transition-transform">
+                        <div class="w-full h-full rounded-full border-2 border-black overflow-hidden bg-black">
+                            <img src="https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=200&auto=format&fit=crop&q=80" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <span class="text-[11px] font-medium text-gray-200 group-hover:text-brand-gold transition-colors">Soie & Satin</span>
+                </div>
+
+                <!-- Story 5 -->
+                <div onclick="openStoryModal('sacs')" class="flex flex-col items-center gap-1.5 cursor-pointer flex-shrink-0 group">
+                    <div class="w-18 h-18 sm:w-20 sm:h-20 p-0.5 rounded-full bg-gradient-to-tr from-brand-crimson via-brand-gold to-brand-red story-ring group-hover:scale-105 transition-transform">
+                        <div class="w-full h-full rounded-full border-2 border-black overflow-hidden bg-black">
+                            <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=200&auto=format&fit=crop&q=80" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <span class="text-[11px] font-medium text-gray-200 group-hover:text-brand-gold transition-colors">Sacs 90s</span>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- 5. PRODUCTS FILTER & LIVE SEARCH BAR       -->
+        <!-- ========================================== -->
+        <section id="vitrine-search-anchor" class="max-w-7xl mx-auto px-4 sm:px-6 mb-8">
+            <div class="glass-panel p-4 md:p-6 rounded-3xl flex flex-col md:flex-row gap-4 justify-between items-center shadow-xl">
+                
+                <!-- Search Input -->
+                <div class="relative w-full md:w-80">
+                    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                    <input type="text" id="vitrine-search" oninput="renderVitrine()" placeholder="Rechercher veste, robe, taille, couleur..." 
+                           class="w-full bg-black/60 border border-gray-700/80 rounded-2xl pl-11 pr-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-crimson focus:outline-none transition-colors">
+                </div>
+
+                <!-- Category Pills with Live Counts -->
+                <div class="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-1 md:pb-0 gallery-scroll" id="category-filters">
+                    <button onclick="setFilterCategory('all')" data-cat="all" class="category-btn px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all bg-brand-crimson text-white shadow-md shadow-brand-red/30 whitespace-nowrap">
+                        Tous (<span id="cat-count-all">0</span>)
+                    </button>
+                    <button onclick="setFilterCategory('Robes')" data-cat="Robes" class="category-btn px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all bg-black/40 text-gray-400 hover:text-white hover:bg-black/80 whitespace-nowrap">
+                        Robes
+                    </button>
+                    <button onclick="setFilterCategory('Vestes')" data-cat="Vestes" class="category-btn px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all bg-black/40 text-gray-400 hover:text-white hover:bg-black/80 whitespace-nowrap">
+                        Vestes & Manteaux
+                    </button>
+                    <button onclick="setFilterCategory('Hauts')" data-cat="Hauts" class="category-btn px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all bg-black/40 text-gray-400 hover:text-white hover:bg-black/80 whitespace-nowrap">
+                        Hauts & Chemises
+                    </button>
+                    <button onclick="setFilterCategory('Pantalons')" data-cat="Pantalons" class="category-btn px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all bg-black/40 text-gray-400 hover:text-white hover:bg-black/80 whitespace-nowrap">
+                        Bas & Jupes
+                    </button>
+                    <button onclick="setFilterCategory('Accessoires')" data-cat="Accessoires" class="category-btn px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all bg-black/40 text-gray-400 hover:text-white hover:bg-black/80 whitespace-nowrap">
+                        Sacs & Accessoires
+                    </button>
+                </div>
+
+                <!-- Sort Dropdown -->
+                <div class="flex items-center gap-2 w-full md:w-auto justify-end">
+                    <span class="text-xs text-gray-400 whitespace-nowrap"><i class="fas fa-sort mr-1"></i>Trier :</span>
+                    <select id="sort-select" onchange="renderVitrine()" class="bg-black/60 border border-gray-700/80 rounded-xl px-3 py-2 text-xs text-white focus:border-brand-crimson outline-none cursor-pointer">
+                        <option value="newest">Plus récents</option>
+                        <option value="price-asc">Prix : Moins cher</option>
+                        <option value="price-desc">Prix : Plus cher</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- 6. PRODUCTS GRID SECTION                   -->
+        <!-- ========================================== -->
+        <section id="vitrine-section" class="max-w-7xl mx-auto px-4 sm:px-6 mb-20">
+            
+            <!-- Count and Urgency Badge -->
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-6 px-1">
+                <p class="text-sm text-gray-300 font-light flex items-center gap-2">
+                    <span>Pièces disponibles en boutique :</span>
+                    <span id="vitrine-count" class="font-bold text-brand-gold text-base">0</span>
+                </p>
+                <div class="flex items-center gap-2 text-xs text-brand-crimson font-medium bg-brand-crimson/10 border border-brand-crimson/30 px-3 py-1 rounded-full">
+                    <span class="w-2 h-2 rounded-full bg-brand-crimson animate-ping"></span>
+                    <span>1 seule pièce par modèle — Réservation instantanée</span>
+                </div>
+            </div>
+
+            <!-- The Grid -->
+            <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7">
+                <!-- Injected via JavaScript -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="no-products-message" class="text-center py-20 px-4 glass-panel rounded-3xl hide">
+                <div class="w-16 h-16 rounded-full bg-black/60 border border-brand-crimson/40 flex items-center justify-center text-brand-crimson mx-auto mb-4 text-2xl">
+                    <i class="fas fa-magnifying-glass"></i>
+                </div>
+                <h3 class="text-xl font-serif mb-2 text-white">Aucune pièce ne correspond à votre recherche</h3>
+                <p class="text-gray-400 text-sm max-w-md mx-auto mb-6">Modifiez vos critères ou découvrez l'ensemble de notre sélection frippe chic.</p>
+                <button onclick="resetFilters()" class="bg-gradient-to-r from-brand-red to-brand-crimson hover:from-brand-crimson hover:to-red-600 text-white text-xs font-semibold uppercase tracking-wider px-6 py-3 rounded-xl transition-all shadow-lg">
+                    Réinitialiser les filtres
+                </button>
+            </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- 7. VIP CONCIERGE & WHATSAPP ADVISOR BANNER -->
+        <!-- ========================================== -->
+        <section class="max-w-5xl mx-auto px-4 sm:px-6 mb-20">
+            <div class="glass-panel-elevated p-8 sm:p-12 rounded-3xl relative overflow-hidden border-brand-gold/30">
+                <div class="absolute -right-16 -top-16 w-64 h-64 bg-brand-crimson/15 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <div class="flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+                    <div class="text-center md:text-left space-y-3 max-w-xl">
+                        <span class="text-xs font-cinzel tracking-widest text-brand-gold uppercase font-bold">Service Conciergerie VIP</span>
+                        <h3 class="text-2xl sm:text-3xl font-serif font-bold text-white">
+                            Vous recherchez une pièce rare ou une taille précise ?
+                        </h3>
+                        <p class="text-gray-300 text-sm font-light leading-relaxed">
+                            Écrivez-nous directement sur WhatsApp ! Rabeb & l'équipe Marouki Frippe vous répondent en personne pour vous proposer nos pépites avant leur mise en vitrine.
+                        </p>
+                    </div>
+
+                    <a id="concierge-wa-btn" href="#" target="_blank" 
+                       class="bg-[#25D366] hover:bg-[#1fa851] text-white font-bold px-7 py-4 rounded-2xl flex items-center gap-3 shadow-xl shadow-[#25D366]/30 text-sm flex-shrink-0 hover:scale-105 transition-all">
+                        <i class="fab fa-whatsapp text-2xl"></i>
+                        <span>Demander à la gérante</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- ========================================== -->
+    <!-- 8. SHOPPING BAG / SELECTION PRIVEE DRAWER  -->
+    <!-- ========================================== -->
+    <div id="bag-drawer-backdrop" onclick="toggleBagDrawer()" class="fixed inset-0 bg-black/80 z-[120] backdrop-blur-sm transition-opacity opacity-0 pointer-events-none"></div>
+    
+    <div id="bag-drawer" class="fixed top-0 right-0 bottom-0 w-full max-w-md bg-[#100a0d] border-l border-brand-red/30 z-[125] p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-300 shadow-2xl">
+        
+        <!-- Drawer Header -->
+        <div>
+            <div class="flex justify-between items-center pb-4 border-b border-gray-800">
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-bag-shopping text-brand-gold text-lg"></i>
+                    <h3 class="text-lg font-serif font-bold text-white">Ma Sélection Privée</h3>
+                </div>
+                <button onclick="toggleBagDrawer()" class="text-gray-400 hover:text-white p-2">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Free Delivery Progress Bar -->
+            <div class="mt-4 bg-black/50 p-3 rounded-xl border border-gray-800">
+                <div class="flex justify-between text-xs mb-1.5">
+                    <span id="free-delivery-text" class="text-gray-300 text-[11px]">Livraison partout en Tunisie : <strong>7 TND</strong></span>
+                    <span id="free-delivery-badge" class="text-brand-gold font-bold text-[11px]">Offerte dès 120 TND</span>
+                </div>
+                <div class="w-full bg-gray-800 h-1.5 rounded-full overflow-hidden">
+                    <div id="free-delivery-bar" class="bg-gradient-to-r from-brand-crimson to-brand-gold h-full w-0 transition-all duration-500"></div>
+                </div>
+            </div>
+
+            <!-- Bag Items List -->
+            <div id="bag-items-list" class="mt-4 space-y-3 overflow-y-auto max-h-[48vh] pr-1">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+
+        <!-- Drawer Footer / Checkout -->
+        <div class="pt-4 border-t border-gray-800 space-y-3">
+            <div class="space-y-1.5 text-xs text-gray-300">
+                <div class="flex justify-between">
+                    <span>Sous-total articles :</span>
+                    <span id="bag-subtotal" class="font-bold text-white">0 TND</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Frais de livraison :</span>
+                    <span id="bag-shipping" class="text-brand-gold font-medium">7 TND</span>
+                </div>
+                <div class="flex justify-between text-base font-bold text-white pt-2 border-t border-gray-800/80">
+                    <span>Total Estimé :</span>
+                    <span id="bag-total" class="text-brand-crimson text-xl font-serif">0 TND</span>
+                </div>
+            </div>
+
+            <button onclick="openGroupedOrderModal()" id="btn-order-bag" class="w-full bg-[#25D366] hover:bg-[#1fa851] text-white font-bold py-3.5 px-6 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-[#25D366]/30 text-sm transition-all disabled:opacity-50">
+                <i class="fab fa-whatsapp text-xl"></i>
+                <span>Commander cette sélection via WhatsApp</span>
+            </button>
+        </div>
+
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- 9. SINGLE & GROUPED WHATSAPP ORDER MODAL   -->
+    <!-- ========================================== -->
+    <div id="order-modal" class="fixed inset-0 bg-black/85 z-[130] flex items-center justify-center p-4 backdrop-blur-md hide">
+        <div class="glass-panel-elevated p-6 sm:p-8 rounded-3xl max-w-lg w-full relative max-h-[92vh] overflow-y-auto border-brand-crimson/40">
+            
+            <button onclick="closeOrderModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white p-2">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+
+            <div class="flex items-center gap-2 mb-4 pb-3 border-b border-gray-800">
+                <div class="w-10 h-10 rounded-full bg-green-500/20 text-[#25D366] flex items-center justify-center text-xl">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-serif font-bold text-white">Valider ma commande</h3>
+                    <p class="text-xs text-gray-400">Confirmation immédiate et directe avec Marouki Frippe</p>
+                </div>
+            </div>
+            
+            <!-- Selected Product Summary Container -->
+            <div id="order-product-summary" class="mb-5 bg-black/60 p-3.5 rounded-2xl border border-gray-800">
+                <!-- Injected via JS -->
+            </div>
+
+            <!-- Customer Order Form -->
+            <form id="order-form" onsubmit="handleOrderSubmit(event)" class="space-y-4">
+                <input type="hidden" id="order-mode" value="single"> <!-- single or grouped -->
+
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
+                        Votre Nom Complet *
+                    </label>
+                    <input type="text" id="customer-name" required placeholder="ex: Yasmine Ben Salem" 
+                           class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
+                        Numéro de Téléphone (Tunisie) *
+                    </label>
+                    <div class="relative">
+                        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-400">+216</span>
+                        <input type="tel" id="customer-phone" required pattern="[0-9]{8}" placeholder="ex: 98123456" 
+                               class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 pl-14 text-sm text-white focus:border-brand-crimson outline-none">
+                    </div>
+                    <span class="text-[10px] text-gray-500 mt-1 block">8 chiffres sans espaces pour l'appel du livreur</span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
+                            Gouvernorat *
+                        </label>
+                        <select id="customer-gov" required class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none cursor-pointer">
+                            <option value="Tunis">Tunis (Livraison 24h)</option>
+                            <option value="Ariana">Ariana (24h)</option>
+                            <option value="Ben Arous">Ben Arous (24h)</option>
+                            <option value="Manouba">Manouba (24h)</option>
+                            <option value="Nabeul">Nabeul (24-48h)</option>
+                            <option value="Sousse">Sousse (24-48h)</option>
+                            <option value="Monastir">Monastir (24-48h)</option>
+                            <option value="Mahdia">Mahdia (24-48h)</option>
+                            <option value="Sfax">Sfax (24-48h)</option>
+                            <option value="Bizerte">Bizerte (24-48h)</option>
+                            <option value="Béja">Béja (48h)</option>
+                            <option value="Jendouba">Jendouba (48h)</option>
+                            <option value="Le Kef">Le Kef (48h)</option>
+                            <option value="Siliana">Siliana (48h)</option>
+                            <option value="Kairouan">Kairouan (48h)</option>
+                            <option value="Kasserine">Kasserine (48h)</option>
+                            <option value="Sidi Bouzid">Sidi Bouzid (48h)</option>
+                            <option value="Gabès">Gabès (48h)</option>
+                            <option value="Médenine">Médenine (48-72h)</option>
+                            <option value="Tataouine">Tataouine (48-72h)</option>
+                            <option value="Gafsa">Gafsa (48-72h)</option>
+                            <option value="Tozeur">Tozeur (48-72h)</option>
+                            <option value="Kébili">Kébili (48-72h)</option>
+                            <option value="Zaghouan">Zaghouan (48h)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
+                            Ville / Délégation *
+                        </label>
+                        <input type="text" id="customer-city" required placeholder="ex: La Marsa, Menzah, Hammamet..." 
+                               class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
+                        Adresse de Livraison détaillée *
+                    </label>
+                    <textarea id="customer-address" required rows="2" placeholder="Rue, Résidence, Numéro d'appartement ou repère..." 
+                              class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none"></textarea>
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-[#25D366] hover:bg-[#1fa851] text-white font-bold py-3.5 px-6 rounded-2xl flex items-center justify-center gap-3 transition-all shadow-lg shadow-[#25D366]/30 text-base">
+                        <i class="fab fa-whatsapp text-2xl"></i>
+                        <span>Confirmer & Envoyer sur WhatsApp</span>
+                    </button>
+                    <p class="text-[11px] text-gray-400 text-center mt-2">
+                        Le message officiel s'ouvrira directement dans votre WhatsApp sans aucune perte d'informations.
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- 10. PRODUCT QUICK VIEW WITH FABRIC ZOOM    -->
+    <!-- ========================================== -->
+    <div id="quick-view-modal" class="fixed inset-0 bg-black/90 z-[125] flex items-center justify-center p-4 backdrop-blur-md hide">
+        <div class="glass-panel-elevated p-6 sm:p-8 rounded-3xl max-w-3xl w-full relative max-h-[92vh] overflow-y-auto border-brand-crimson/30">
+            <button onclick="closeQuickViewModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white p-2 z-10">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            <div id="quick-view-content" class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- 11. LOOKBOOK STORY VIEWER MODAL            -->
+    <!-- ========================================== -->
+    <div id="story-modal" class="fixed inset-0 bg-black/95 z-[140] flex items-center justify-center p-4 backdrop-blur-lg hide">
+        <div class="max-w-md w-full relative flex flex-col items-center">
+            <button onclick="closeStoryModal()" class="absolute -top-10 right-0 text-white text-2xl hover:text-brand-crimson">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div id="story-viewer-card" class="glass-panel-elevated rounded-3xl overflow-hidden w-full aspect-[9/16] relative flex flex-col justify-between shadow-2xl">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- 12. WISHLIST MODAL                         -->
+    <!-- ========================================== -->
+    <div id="wishlist-modal" class="fixed inset-0 bg-black/90 z-[125] flex items-center justify-center p-4 backdrop-blur-md hide">
+        <div class="glass-panel-elevated p-6 sm:p-8 rounded-3xl max-w-xl w-full relative max-h-[85vh] overflow-y-auto">
+            <button onclick="closeWishlistModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white p-2">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            <div class="flex items-center gap-2 mb-4 pb-3 border-b border-gray-800">
+                <i class="fas fa-heart text-brand-crimson text-xl"></i>
+                <h3 class="text-xl font-serif font-bold text-white">Mes Coups de Cœur</h3>
+            </div>
+            <div id="wishlist-items-container" class="space-y-3">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="fixed top-5 right-5 z-[200] space-y-2 pointer-events-none"></div>
+
+    <!-- Live Social Proof Urgency Bubble (Tunisia Orders) -->
+    <div id="live-order-toast" class="fixed bottom-6 left-6 z-40 glass-panel-elevated p-3 rounded-2xl flex items-center gap-3 border-brand-gold/40 shadow-2xl transition-all duration-500 translate-y-24 opacity-0 max-w-xs pointer-events-none">
+        <div class="w-10 h-10 rounded-xl bg-brand-crimson/20 border border-brand-crimson flex items-center justify-center text-brand-crimson text-lg flex-shrink-0">
+            <i class="fas fa-bag-shopping"></i>
+        </div>
+        <div class="text-xs">
+            <p class="font-semibold text-white leading-tight" id="live-toast-text">Une cliente de La Marsa vient de réserver</p>
+            <span class="text-[10px] text-brand-gold">Il y a quelques instants</span>
+        </div>
+    </div>
+
+    <!-- FLOATING QUICK WHATSAPP BUTTON -->
+    <a id="floating-whatsapp-btn" href="#" target="_blank" rel="noopener noreferrer" 
+       class="fixed bottom-6 right-6 z-40 bg-[#25D366] hover:bg-[#1ea952] text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl shadow-black/80 hover:scale-110 transition-all group"
+       title="Discuter avec Marouki Frippe sur WhatsApp">
+        <i class="fab fa-whatsapp text-3xl"></i>
+        <span class="absolute right-16 bg-black/95 text-white text-xs px-3.5 py-1.5 rounded-xl whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-brand-crimson/40 shadow-xl">
+            Besoin d'un conseil ? WhatsApp direct
+        </span>
+    </a>
+
+
+    <!-- ========================================== -->
+    <!-- FOOTER                                     -->
+    <!-- ========================================== -->
+    <footer class="border-t border-brand-red/25 mt-20 py-16 text-center glass-panel relative z-10">
+        <div class="max-w-4xl mx-auto px-4 space-y-6">
+            
+            <!-- Centered Emblem -->
+            <div class="flex flex-col items-center justify-center gap-2">
+                <img src="logo.svg" onerror="this.src='logo.jpg'" alt="Marouki Frippe" class="w-16 h-16 rounded-full border border-brand-crimson shadow-xl">
+                <span class="font-serif text-3xl tracking-wider text-white">Marouki <span class="text-brand-crimson italic font-script text-4xl">Frippe</span></span>
+                <p class="text-xs uppercase tracking-[0.25em] text-brand-gold font-cinzel">Maison de Frippe de Luxe • Tunisie</p>
+            </div>
+
+            <p class="font-script text-4xl md:text-5xl text-gray-200">
+                Merci de votre confiance ♡
+            </p>
+
+            <div class="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-300">
+                <a id="footer-instagram-link" href="https://www.instagram.com/marouki.fripe/" target="_blank" rel="noopener noreferrer" class="hover:text-brand-crimson transition-colors flex items-center gap-2">
+                    <i class="fab fa-instagram text-lg text-pink-500"></i>
+                    <span id="footer-instagram-handle">@marouki.fripe</span>
+                </a>
+                <span>•</span>
+                <a id="footer-whatsapp-link" href="#" target="_blank" class="hover:text-brand-crimson transition-colors flex items-center gap-2">
+                    <i class="fab fa-whatsapp text-lg text-green-500"></i>
+                    <span>Contact WhatsApp</span>
+                </a>
+                <span>•</span>
+                <span class="text-xs text-gray-400">Livraison Grand Tunis 24h & Toute la Tunisie 48h</span>
+            </div>
+
+            <p class="text-xs text-gray-600 pt-4 border-t border-gray-800/80">
+                © <span id="current-year"></span> Marouki Frippe. Tous droits réservés. Vêtements et pièces vintage d'exception.
+            </p>
+        </div>
+    </footer>
+
+
+    <!-- ========================================== -->
+    <!-- MASTER CLIENT SCRIPT                       -->
+    <!-- ========================================== -->
+    <script>
+        // --- 1. DEFAULT DATA & STATE ---
+        const DEFAULT_CONFIG = {
+            storeName: "Marouki Frippe",
+            whatsappNumber: "21699000000",
+            instagramUrl: "https://www.instagram.com/marouki.fripe/",
+            instagramHandle: "@marouki.fripe"
+        };
+
+        const SAMPLE_PRODUCTS = [
+            {
+                id: "sample-1",
+                name: "Blazer Vintage Coupe Droite en Laine",
+                category: "Vestes",
+                price: 55,
+                size: "M (38-40)",
+                color: "Chocolat & Doré",
+                description: "Veste blazer vintage haut de gamme avec doublure en satin et boutons blason dorés. Tissu en laine douce, tombé impeccable.",
+                images: [
+                    "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&auto=format&fit=crop&q=80",
+                    "https://images.unsplash.com/photo-1544441893-675973e31985?w=800&auto=format&fit=crop&q=80"
+                ],
+                status: "active",
+                createdAt: Date.now() - 3600000 * 2
+            },
+            {
+                id: "sample-2",
+                name: "Robe Midi Plissée à Imprimé Floral Rétro",
+                category: "Robes",
+                price: 48,
+                size: "S / 36",
+                color: "Bordeaux & Ivoire",
+                description: "Sublime robe fluide esprit bohème chic. Ceinture assortie, tissu léger et doux. Idéale pour les sorties élégantes.",
+                images: [
+                    "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=800&auto=format&fit=crop&q=80",
+                    "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=800&auto=format&fit=crop&q=80"
+                ],
+                status: "active",
+                createdAt: Date.now() - 3600000 * 5
+            },
+            {
+                id: "sample-3",
+                name: "Trench Coat Ceinturé Classique",
+                category: "Vestes",
+                price: 75,
+                size: "L / 40-42",
+                color: "Beige Camel",
+                description: "Trench iconique à double boutonnage, fente arrière et bavolet. Une pièce indispensable pour la mi-saison.",
+                images: [
+                    "https://images.unsplash.com/photo-1520975954732-35dd22299614?w=800&auto=format&fit=crop&q=80",
+                    "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=800&auto=format&fit=crop&q=80"
+                ],
+                status: "active",
+                createdAt: Date.now() - 3600000 * 8
+            },
+            {
+                id: "sample-4",
+                name: "Chemisier Soie Satinée Manches Bouffantes",
+                category: "Hauts",
+                price: 38,
+                size: "M / 38",
+                color: "Champagne Crème",
+                description: "Chemisier soyeux avec jolis boutons perles aux poignets. Doux au toucher, parfait sous un blazer.",
+                images: [
+                    "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=800&auto=format&fit=crop&q=80"
+                ],
+                status: "active",
+                createdAt: Date.now() - 3600000 * 12
+            },
+            {
+                id: "sample-5",
+                name: "Sac Baguette Cuir Vintage façon Croco",
+                category: "Accessoires",
+                price: 45,
+                size: "Unique",
+                color: "Noir Intense",
+                description: "Magnifique sac à anse courte des années 90 en cuir embossé. Fermoir doré vintage en parfait état.",
+                images: [
+                    "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&auto=format&fit=crop&q=80"
+                ],
+                status: "active",
+                createdAt: Date.now() - 3600000 * 15
+            },
+            {
+                id: "sample-6",
+                name: "Pantalon Palazzo Fluide Taille Haute",
+                category: "Pantalons",
+                price: 42,
+                size: "38",
+                color: "Terracotta",
+                description: "Coupe large très élégante qui allonge la silhouette. Pinces avant et taille haute élastiquée confortable.",
+                images: [
+                    "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&auto=format&fit=crop&q=80"
+                ],
+                status: "active",
+                createdAt: Date.now() - 3600000 * 20
+            }
+        ];
+
+        let boutiqueConfig = { ...DEFAULT_CONFIG };
+        let products = [];
+        let shoppingBag = [];
+        let wishlist = [];
+        let currentFilterCategory = 'all';
+
+        // --- 2. INITIALIZATION ---
+        function initApp() {
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            loadConfig();
+            loadProducts();
+            loadBag();
+            loadWishlist();
+            applyConfigToUI();
+            renderVitrine();
+            initAmbientParticles();
+            init3DTilt();
+            startLiveSocialProof();
+
+            // Real-time synchronization when admin modifies products on admin.html in another tab
+            window.addEventListener('storage', (e) => {
+                if (e.key === 'marouki_frippe_products') {
+                    loadProducts();
+                    renderVitrine();
+                    updateBagUI();
+                } else if (e.key === 'marouki_frippe_config') {
+                    loadConfig();
+                    applyConfigToUI();
+                }
+            });
+        }
+
+        function loadConfig() {
+            const saved = localStorage.getItem('marouki_frippe_config');
+            if (saved) {
+                try {
+                    boutiqueConfig = { ...DEFAULT_CONFIG, ...JSON.parse(saved) };
+                } catch (e) {
+                    console.error("Config parse error", e);
+                }
+            } else {
+                localStorage.setItem('marouki_frippe_config', JSON.stringify(boutiqueConfig));
+            }
+        }
+
+        function applyConfigToUI() {
+            const igUrl = boutiqueConfig.instagramUrl || "https://www.instagram.com/marouki.fripe/";
+            const igHandle = boutiqueConfig.instagramHandle || "@marouki.fripe";
+
+            const igLinks = [
+                document.getElementById('nav-ig-link'),
+                document.getElementById('hero-instagram-link'),
+                document.getElementById('footer-instagram-link')
+            ];
+            igLinks.forEach(el => { if (el) el.href = igUrl; });
+
+            const heroHandle = document.getElementById('hero-instagram-handle');
+            if (heroHandle) heroHandle.textContent = igHandle;
+            const footerHandle = document.getElementById('footer-instagram-handle');
+            if (footerHandle) footerHandle.textContent = igHandle;
+
+            const waNum = boutiqueConfig.whatsappNumber || "21699000000";
+            const waUrl = `https://wa.me/${waNum}?text=${encodeURIComponent("Bonjour Marouki Frippe, je souhaite avoir des renseignements sur vos pièces !")}`;
+            
+            const floatBtn = document.getElementById('floating-whatsapp-btn');
+            if (floatBtn) floatBtn.href = waUrl;
+            const footerWa = document.getElementById('footer-whatsapp-link');
+            if (footerWa) footerWa.href = waUrl;
+            const conciergeWa = document.getElementById('concierge-wa-btn');
+            if (conciergeWa) conciergeWa.href = waUrl;
+        }
+
+        function loadProducts() {
+            const saved = localStorage.getItem('marouki_frippe_products');
+            if (saved) {
+                try {
+                    products = JSON.parse(saved);
+                } catch (e) {
+                    console.error("Products parse error", e);
+                    products = [...SAMPLE_PRODUCTS];
+                }
+            } else {
+                products = [...SAMPLE_PRODUCTS];
+                localStorage.setItem('marouki_frippe_products', JSON.stringify(products));
+            }
+        }
+
+        function loadBag() {
+            const saved = localStorage.getItem('marouki_frippe_bag');
+            if (saved) {
+                try { shoppingBag = JSON.parse(saved); } catch (e) { shoppingBag = []; }
+            }
+            updateBagUI();
+        }
+
+        function saveBag() {
+            localStorage.setItem('marouki_frippe_bag', JSON.stringify(shoppingBag));
+            updateBagUI();
+        }
+
+        function loadWishlist() {
+            const saved = localStorage.getItem('marouki_frippe_wishlist');
+            if (saved) {
+                try { wishlist = JSON.parse(saved); } catch (e) { wishlist = []; }
+            }
+            updateWishlistBadge();
+        }
+
+        function saveWishlist() {
+            localStorage.setItem('marouki_frippe_wishlist', JSON.stringify(wishlist));
+            updateWishlistBadge();
+        }
+
+        function toggleWishlist(id, event) {
+            if (event) event.stopPropagation();
+            const index = wishlist.indexOf(id);
+            if (index === -1) {
+                wishlist.push(id);
+                showToast("Ajouté à vos Coups de Cœur ♡");
+            } else {
+                wishlist.splice(index, 1);
+                showToast("Retiré de vos Coups de Cœur");
+            }
+            saveWishlist();
+            renderVitrine();
+        }
+
+        function updateWishlistBadge() {
+            const badge = document.getElementById('wishlist-badge');
+            if (badge) {
+                badge.textContent = wishlist.length;
+                if (wishlist.length > 0) badge.classList.remove('hide');
+                else badge.classList.add('hide');
+            }
+        }
+
+        function focusSearch() {
+            const input = document.getElementById('vitrine-search');
+            if (input) {
+                input.focus();
+                input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        // --- 3. VITRINE RENDERING WITH 3D CARDS ---
+        function setFilterCategory(cat) {
+            currentFilterCategory = cat;
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                if (btn.dataset.cat === cat) {
+                    btn.classList.add('bg-brand-crimson', 'text-white', 'shadow-md', 'shadow-brand-red/30');
+                    btn.classList.remove('bg-black/40', 'text-gray-400');
+                } else {
+                    btn.classList.remove('bg-brand-crimson', 'text-white', 'shadow-md', 'shadow-brand-red/30');
+                    btn.classList.add('bg-black/40', 'text-gray-400');
+                }
+            });
+            renderVitrine();
+        }
+
+        function resetFilters() {
+            document.getElementById('vitrine-search').value = '';
+            setFilterCategory('all');
+        }
+
+        function renderVitrine() {
+            const grid = document.getElementById('products-grid');
+            const searchVal = (document.getElementById('vitrine-search')?.value || '').toLowerCase().trim();
+            const sortVal = document.getElementById('sort-select')?.value || 'newest';
+            const emptyMsg = document.getElementById('no-products-message');
+            const countEl = document.getElementById('vitrine-count');
+            const catCountAll = document.getElementById('cat-count-all');
+
+            let activeProducts = products.filter(p => p.status === 'active');
+            if (catCountAll) catCountAll.textContent = activeProducts.length;
+
+            let filtered = [...activeProducts];
+
+            if (currentFilterCategory !== 'all') {
+                filtered = filtered.filter(p => p.category === currentFilterCategory);
+            }
+
+            if (searchVal) {
+                filtered = filtered.filter(p => 
+                    p.name.toLowerCase().includes(searchVal) ||
+                    p.color.toLowerCase().includes(searchVal) ||
+                    p.size.toLowerCase().includes(searchVal) ||
+                    (p.description && p.description.toLowerCase().includes(searchVal))
+                );
+            }
+
+            if (sortVal === 'newest') {
+                filtered.sort((a, b) => b.createdAt - a.createdAt);
+            } else if (sortVal === 'price-asc') {
+                filtered.sort((a, b) => a.price - b.price);
+            } else if (sortVal === 'price-desc') {
+                filtered.sort((a, b) => b.price - a.price);
+            }
+
+            if (countEl) countEl.textContent = filtered.length;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                emptyMsg.classList.remove('hide');
+                return;
+            } else {
+                emptyMsg.classList.add('hide');
+            }
+
+            grid.innerHTML = filtered.map((product, idx) => {
+                const images = product.images && product.images.length > 0 
+                    ? product.images 
+                    : ['https://images.unsplash.com/photo-1523381294911-8d3cead13475?w=800&auto=format&fit=crop&q=80'];
+                
+                const mainImage = images[0];
+                const secondaryImage = images[1] || mainImage;
+                const isFavorite = wishlist.includes(product.id);
+                const isInBag = shoppingBag.some(item => item.id === product.id);
+
+                return `
+                    <div class="glass-panel rounded-3xl overflow-hidden flex flex-col group hover:border-brand-crimson/70 transition-all duration-300 shadow-xl hover:shadow-brand-red/20 card-tilt relative">
+                        
+                        <!-- Image Container with Double Peek & Wishlist -->
+                        <div class="relative overflow-hidden aspect-[3/4] bg-black/70 cursor-pointer" onclick="openQuickView('${product.id}')">
+                            
+                            <!-- Primary Image -->
+                            <img src="${mainImage}" alt="${product.name}" class="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 group-hover:opacity-0 ${images.length > 1 ? '' : 'group-hover:opacity-100'}">
+                            
+                            <!-- Secondary Image on hover (Peek) -->
+                            ${images.length > 1 ? `
+                                <img src="${secondaryImage}" alt="${product.name}" class="absolute inset-0 w-full h-full object-cover transition-all duration-700 opacity-0 group-hover:opacity-100 group-hover:scale-105">
+                            ` : ''}
+
+                            <!-- Badges -->
+                            <div class="absolute top-3 left-3 flex flex-col gap-1.5 pointer-events-none">
+                                <span class="bg-gradient-to-r from-brand-red to-brand-crimson text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-lg">
+                                    ★ Pièce Rare
+                                </span>
+                                ${product.category ? `<span class="bg-black/80 backdrop-blur-md text-brand-gold text-[10px] font-medium px-2 py-0.5 rounded-full border border-brand-gold/30">${product.category}</span>` : ''}
+                            </div>
+
+                            <!-- Wishlist Heart Button -->
+                            <button onclick="toggleWishlist('${product.id}', event)" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 backdrop-blur-md border border-gray-700 flex items-center justify-center transition-all ${isFavorite ? 'text-brand-crimson' : 'text-white hover:text-brand-crimson'} shadow">
+                                <i class="${isFavorite ? 'fas' : 'far'} fa-heart text-xs"></i>
+                            </button>
+
+                            <!-- Serial Number Tag -->
+                            <div class="absolute bottom-3 left-3 bg-black/80 backdrop-blur-md text-[9px] text-gray-300 font-mono px-2 py-0.5 rounded border border-gray-800">
+                                #PIECE-${(idx + 101).toString()}
+                            </div>
+
+                            ${images.length > 1 ? `
+                                <div class="absolute bottom-3 right-3 bg-black/80 backdrop-blur-md text-white text-[10px] px-2 py-0.5 rounded-full border border-gray-700 flex items-center gap-1">
+                                    <i class="fas fa-camera text-[9px]"></i>
+                                    <span>${images.length}</span>
+                                </div>
+                            ` : ''}
+
+                            <!-- Quick view hover overlay -->
+                            <div class="absolute inset-x-4 bottom-4 opacity-0 group-hover:opacity-100 transition-all duration-300 flex gap-2">
+                                <button onclick="event.stopPropagation(); openQuickView('${product.id}')" class="flex-1 bg-black/90 hover:bg-black text-white text-xs font-semibold py-2.5 rounded-xl backdrop-blur-sm border border-gray-700 flex items-center justify-center gap-1.5 shadow-lg">
+                                    <i class="fas fa-eye text-xs text-brand-gold"></i> Aperçu
+                                </button>
+                                <button onclick="event.stopPropagation(); addToBag('${product.id}')" class="bg-brand-crimson hover:bg-brand-red text-white p-2.5 rounded-xl shadow-lg" title="Ajouter à ma sélection">
+                                    <i class="fas fa-bag-shopping"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Card Body -->
+                        <div class="p-5 flex flex-col flex-grow justify-between">
+                            <div>
+                                <div class="flex justify-between items-start gap-2 mb-1.5">
+                                    <h4 class="font-serif text-lg font-semibold text-white leading-snug line-clamp-1 group-hover:text-brand-gold transition-colors cursor-pointer" onclick="openQuickView('${product.id}')">
+                                        ${product.name}
+                                    </h4>
+                                </div>
+
+                                <div class="flex items-baseline gap-2 mb-3">
+                                    <span class="text-2xl font-bold font-serif text-brand-crimson">${product.price} <span class="text-xs font-sans font-semibold text-gray-400">TND</span></span>
+                                    <span class="text-[10px] text-green-400 font-medium bg-green-500/10 px-1.5 py-0.5 rounded">En stock</span>
+                                </div>
+
+                                <div class="flex flex-wrap gap-2 text-xs text-gray-300 mb-4">
+                                    <span class="bg-black/50 px-2.5 py-1 rounded-lg border border-gray-800">
+                                        <strong class="text-gray-400 font-normal">Taille:</strong> ${product.size}
+                                    </span>
+                                    <span class="bg-black/50 px-2.5 py-1 rounded-lg border border-gray-800">
+                                        <strong class="text-gray-400 font-normal">Couleur:</strong> ${product.color}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Buttons: 1-Click WhatsApp or Bag -->
+                            <div class="space-y-2">
+                                <button onclick="openSingleOrderModal('${product.id}')" class="w-full bg-gradient-to-r from-brand-red to-brand-crimson hover:from-brand-crimson hover:to-red-600 text-white font-semibold text-xs uppercase tracking-wider py-3 rounded-xl transition-all shadow-md shadow-brand-red/30 flex items-center justify-center gap-2">
+                                    <i class="fab fa-whatsapp text-base"></i>
+                                    <span>Commander direct</span>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // --- 4. SHOPPING BAG LOGIC ---
+        function toggleBagDrawer() {
+            const drawer = document.getElementById('bag-drawer');
+            const backdrop = document.getElementById('bag-drawer-backdrop');
+            const isOpen = !drawer.classList.contains('translate-x-full');
+
+            if (isOpen) {
+                drawer.classList.add('translate-x-full');
+                backdrop.classList.add('opacity-0', 'pointer-events-none');
+            } else {
+                drawer.classList.remove('translate-x-full');
+                backdrop.classList.remove('opacity-0', 'pointer-events-none');
+            }
+        }
+
+        function addToBag(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+
+            if (shoppingBag.some(item => item.id === id)) {
+                showToast("Cette pièce unique est déjà dans votre panier !");
+                toggleBagDrawer();
+                return;
+            }
+
+            shoppingBag.push(product);
+            saveBag();
+            showToast("Pièce ajoutée à votre sélection privée !");
+            toggleBagDrawer();
+        }
+
+        function removeFromBag(id) {
+            shoppingBag = shoppingBag.filter(p => p.id !== id);
+            saveBag();
+            showToast("Pièce retirée de votre sélection.");
+        }
+
+        function updateBagUI() {
+            const countBadge = document.getElementById('bag-count-badge');
+            const listContainer = document.getElementById('bag-items-list');
+            const subtotalEl = document.getElementById('bag-subtotal');
+            const shippingEl = document.getElementById('bag-shipping');
+            const totalEl = document.getElementById('bag-total');
+            const orderBtn = document.getElementById('btn-order-bag');
+            const freeBar = document.getElementById('free-delivery-bar');
+
+            if (countBadge) countBadge.textContent = shoppingBag.length;
+
+            const subtotal = shoppingBag.reduce((sum, item) => sum + (item.price || 0), 0);
+            const isFreeShipping = subtotal >= 120 && shoppingBag.length > 0;
+            const shipping = shoppingBag.length === 0 ? 0 : (isFreeShipping ? 0 : 7);
+            const total = subtotal + shipping;
+
+            if (subtotalEl) subtotalEl.textContent = subtotal.toFixed(1) + ' TND';
+            if (shippingEl) shippingEl.textContent = isFreeShipping ? 'GRATUITE !' : (shoppingBag.length > 0 ? '7 TND' : '0 TND');
+            if (totalEl) totalEl.textContent = total.toFixed(1) + ' TND';
+
+            // Progress bar to 120 TND free shipping
+            if (freeBar) {
+                const percent = Math.min(100, Math.round((subtotal / 120) * 100));
+                freeBar.style.width = percent + '%';
+            }
+
+            if (orderBtn) {
+                orderBtn.disabled = shoppingBag.length === 0;
+            }
+
+            if (!listContainer) return;
+
+            if (shoppingBag.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="text-center py-12 text-gray-500 text-xs">
+                        <i class="fas fa-bag-shopping text-3xl mb-2 text-gray-700"></i>
+                        <p>Votre sélection est vide pour l'instant.</p>
+                        <p class="text-[10px] text-gray-600 mt-1">Parcourez nos pièces et ajoutez vos coups de cœur !</p>
+                    </div>
+                `;
+                return;
+            }
+
+            listContainer.innerHTML = shoppingBag.map(item => {
+                const thumb = item.images && item.images.length > 0 ? item.images[0] : 'https://images.unsplash.com/photo-1523381294911-8d3cead13475?w=100';
+                return `
+                    <div class="flex items-center gap-3 bg-black/60 p-2.5 rounded-2xl border border-gray-800">
+                        <img src="${thumb}" class="w-12 h-14 object-cover rounded-xl border border-gray-700 flex-shrink-0">
+                        <div class="flex-grow min-w-0">
+                            <h5 class="text-xs font-serif font-semibold text-white truncate">${item.name}</h5>
+                            <p class="text-[10px] text-gray-400">Taille: ${item.size} • ${item.color}</p>
+                            <span class="text-xs font-bold text-brand-crimson">${item.price} TND</span>
+                        </div>
+                        <button onclick="removeFromBag('${item.id}')" class="text-gray-500 hover:text-brand-crimson p-1.5 transition-colors" title="Retirer">
+                            <i class="fas fa-trash text-xs"></i>
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // --- 5. ORDER MODALS & WHATSAPP LOGIC ---
+        function openSingleOrderModal(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+
+            document.getElementById('order-mode').value = 'single';
+            document.getElementById('order-modal').classList.remove('hide');
+
+            const thumb = product.images && product.images.length > 0 ? product.images[0] : 'https://images.unsplash.com/photo-1523381294911-8d3cead13475?w=100';
+
+            document.getElementById('order-product-summary').innerHTML = `
+                <div class="flex items-center gap-4">
+                    <img src="${thumb}" class="w-16 h-20 object-cover rounded-xl border border-gray-700 flex-shrink-0">
+                    <div class="flex-grow">
+                        <span class="text-[10px] uppercase font-bold text-brand-gold bg-brand-gold/10 px-2 py-0.5 rounded">Pièce Unique</span>
+                        <h4 class="font-serif font-semibold text-white leading-snug mt-1">${product.name}</h4>
+                        <p class="text-xs text-gray-400 mt-0.5">Taille: <strong class="text-white">${product.size}</strong> | Couleur: <strong class="text-white">${product.color}</strong></p>
+                        <p class="text-base font-bold text-brand-crimson mt-1">${product.price} TND</p>
+                    </div>
+                </div>
+            `;
+            // Cache single product details
+            window.activeOrderProduct = product;
+        }
+
+        function openGroupedOrderModal() {
+            if (shoppingBag.length === 0) return;
+
+            toggleBagDrawer();
+            document.getElementById('order-mode').value = 'grouped';
+            document.getElementById('order-modal').classList.remove('hide');
+
+            const subtotal = shoppingBag.reduce((sum, item) => sum + (item.price || 0), 0);
+            const isFreeShipping = subtotal >= 120;
+            const shipping = isFreeShipping ? 0 : 7;
+            const total = subtotal + shipping;
+
+            document.getElementById('order-product-summary').innerHTML = `
+                <div>
+                    <div class="flex justify-between items-center mb-2 pb-2 border-b border-gray-800 text-xs">
+                        <span class="font-bold text-white">${shoppingBag.length} Pièce(s) sélectionnée(s)</span>
+                        <span class="text-brand-gold font-bold">${total.toFixed(1)} TND (Livraison incluse)</span>
+                    </div>
+                    <div class="flex gap-2 overflow-x-auto pb-1 gallery-scroll">
+                        ${shoppingBag.map(item => `
+                            <img src="${item.images[0]}" class="w-12 h-14 object-cover rounded-lg border border-gray-700 flex-shrink-0" title="${item.name} (${item.price} TND)">
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function closeOrderModal() {
+            document.getElementById('order-modal').classList.add('hide');
+            document.getElementById('order-form').reset();
+        }
+
+        function handleOrderSubmit(e) {
+            e.preventDefault();
+            const mode = document.getElementById('order-mode').value;
+            const name = document.getElementById('customer-name').value.trim();
+            const phone = document.getElementById('customer-phone').value.trim();
+            const gov = document.getElementById('customer-gov').value;
+            const city = document.getElementById('customer-city').value.trim();
+            const address = document.getElementById('customer-address').value.trim();
+
+            let message = '';
+
+            if (mode === 'single' && window.activeOrderProduct) {
+                const p = window.activeOrderProduct;
+                message = 
+`Bonjour *Marouki Frippe*,
+
+Je souhaite réserver la pièce suivante en exclusivité :
+
+👗 *ARTICLE :* ${p.name}
+💰 *PRIX :* ${p.price} TND
+📏 *TAILLE :* ${p.size}
+🎨 *COULEUR :* ${p.color}
+
+---
+👤 *COORDONNÉES CLIENTE :*
+• *Nom :* ${name}
+• *Téléphone :* +216 ${phone}
+• *Gouvernorat :* ${gov}
+• *Ville :* ${city}
+• *Adresse :* ${address}
+
+Merci de me confirmer la disponibilité et le délai de livraison ! ♡`;
+            } else {
+                // Grouped Bag Order
+                const itemsList = shoppingBag.map((item, idx) => `  ${idx + 1}. *${item.name}* (Taille: ${item.size}, ${item.color}) - ${item.price} TND`).join('\n');
+                const subtotal = shoppingBag.reduce((sum, item) => sum + (item.price || 0), 0);
+                const isFreeShipping = subtotal >= 120;
+                const shipping = isFreeShipping ? "GRATUITE" : "7 TND";
+                const total = subtotal + (isFreeShipping ? 0 : 7);
+
+                message = 
+`Bonjour *Marouki Frippe*,
+
+Je souhaite commander ma sélection privée (${shoppingBag.length} pièces) :
+
+${itemsList}
+
+💰 *Sous-total :* ${subtotal} TND
+🚚 *Livraison (${gov}) :* ${shipping}
+💎 *TOTAL COMMANDE :* ${total} TND
+
+---
+👤 *COORDONNÉES CLIENTE :*
+• *Nom :* ${name}
+• *Téléphone :* +216 ${phone}
+• *Gouvernorat :* ${gov}
+• *Ville :* ${city}
+• *Adresse :* ${address}
+
+Merci de me confirmer la disponibilité pour l'envoi rapide ! ♡`;
+            }
+
+            const encoded = encodeURIComponent(message);
+            const waNum = boutiqueConfig.whatsappNumber || "21699000000";
+            const waUrl = `https://wa.me/${waNum}?text=${encoded}`;
+            
+            window.open(waUrl, '_blank');
+            closeOrderModal();
+            showToast("Commande préparée ! Redirection WhatsApp...");
+        }
+
+        // --- 6. PRODUCT QUICK VIEW WITH FABRIC ZOOM ---
+        function openQuickView(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+
+            const modal = document.getElementById('quick-view-modal');
+            const container = document.getElementById('quick-view-content');
+            const images = product.images && product.images.length > 0 ? product.images : ['https://images.unsplash.com/photo-1523381294911-8d3cead13475?w=800'];
+
+            container.innerHTML = `
+                <!-- Gallery with Zoom -->
+                <div class="space-y-3">
+                    <div class="aspect-[3/4] rounded-2xl overflow-hidden bg-black/70 relative border border-gray-800 shadow-2xl group cursor-zoom-in">
+                        <img id="quickview-main-img" src="${images[0]}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-125">
+                        <div class="absolute bottom-3 left-3 bg-black/70 text-white text-[10px] px-2 py-1 rounded backdrop-blur pointer-events-none">
+                            <i class="fas fa-magnifying-glass-plus mr-1"></i> Survolez pour zoomer la texture
+                        </div>
+                    </div>
+                    ${images.length > 1 ? `
+                        <div class="flex gap-2 overflow-x-auto pb-1 gallery-scroll">
+                            ${images.map((img, idx) => `
+                                <img src="${img}" onclick="document.getElementById('quickview-main-img').src='${img}'" class="w-16 h-20 object-cover rounded-xl cursor-pointer border-2 hover:border-brand-crimson transition-all ${idx === 0 ? 'border-brand-crimson' : 'border-gray-800'}">
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                </div>
+
+                <!-- Product Details -->
+                <div class="flex flex-col justify-between">
+                    <div>
+                        <div class="inline-block bg-brand-crimson/80 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-2">
+                            Pièce Unique Rare • Frippe Sélectionnée
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-serif font-bold text-white mb-2 leading-snug">${product.name}</h2>
+                        
+                        <div class="text-3xl font-bold font-serif text-brand-crimson mb-4">
+                            ${product.price} <span class="text-sm font-sans font-normal text-gray-400">TND</span>
+                        </div>
+
+                        <!-- Highlights Specs -->
+                        <div class="space-y-2.5 mb-5 bg-black/50 p-4 rounded-2xl border border-gray-800 text-xs">
+                            <div class="flex justify-between border-b border-gray-800/80 pb-2">
+                                <span class="text-gray-400">Catégorie :</span>
+                                <span class="text-white font-medium">${product.category || 'Vêtement'}</span>
+                            </div>
+                            <div class="flex justify-between border-b border-gray-800/80 pb-2">
+                                <span class="text-gray-400">Taille :</span>
+                                <span class="text-white font-medium">${product.size}</span>
+                            </div>
+                            <div class="flex justify-between border-b border-gray-800/80 pb-2">
+                                <span class="text-gray-400">Couleur :</span>
+                                <span class="text-white font-medium">${product.color}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">État :</span>
+                                <span class="text-green-400 font-medium"><i class="fas fa-check-circle mr-1"></i>Impeccable & Prêt à porter</span>
+                            </div>
+                        </div>
+
+                        ${product.description ? `
+                            <div class="mb-5">
+                                <h4 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Détails & Coupe</h4>
+                                <p class="text-xs text-gray-300 leading-relaxed font-light">${product.description}</p>
+                            </div>
+                        ` : ''}
+                    </div>
+
+                    <div class="space-y-2.5 pt-4 border-t border-gray-800">
+                        <button onclick="closeQuickViewModal(); openSingleOrderModal('${product.id}')" class="w-full bg-[#25D366] hover:bg-[#1fa851] text-white font-bold py-3.5 px-6 rounded-2xl flex items-center justify-center gap-2 transition-all shadow-xl shadow-[#25D366]/30 text-sm">
+                            <i class="fab fa-whatsapp text-xl"></i>
+                            <span>Commander cette pièce sur WhatsApp</span>
+                        </button>
+                        <button onclick="addToBag('${product.id}'); closeQuickViewModal()" class="w-full bg-black/80 hover:bg-black text-gray-200 border border-gray-700 py-2.5 rounded-xl text-xs font-semibold transition-all">
+                            <i class="fas fa-bag-shopping text-brand-gold mr-1"></i> Ajouter à ma sélection
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.remove('hide');
+        }
+
+        function closeQuickViewModal() {
+            document.getElementById('quick-view-modal').classList.add('hide');
+        }
+
+        // --- 7. LOOKBOOK STORIES MODAL ---
+        const STORY_DATA = {
+            blazers: {
+                title: "Capsule Blazers & Vestes",
+                subtitle: "Laine italienne & boutons blasons dorés",
+                img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&auto=format&fit=crop&q=80",
+                cat: "Vestes"
+            },
+            robes: {
+                title: "Robes d'Époque & Soirée",
+                subtitle: "Plissés raffinés, imprimés fleuris et coupes rétro",
+                img: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=800&auto=format&fit=crop&q=80",
+                cat: "Robes"
+            },
+            trench: {
+                title: "Trenchs & Manteaux Iconiques",
+                subtitle: "Double boutonnage et coupes oversize intemporelles",
+                img: "https://images.unsplash.com/photo-1520975954732-35dd22299614?w=800&auto=format&fit=crop&q=80",
+                cat: "Vestes"
+            },
+            soie: {
+                title: "Chemisers Soie & Mousseline",
+                subtitle: "Toucher soyeux et finitions perles délicates",
+                img: "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=800&auto=format&fit=crop&q=80",
+                cat: "Hauts"
+            },
+            sacs: {
+                title: "Maroquinerie & Sacs 90s",
+                subtitle: "Cuir véritable embossé & ferrures dorées",
+                img: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&auto=format&fit=crop&q=80",
+                cat: "Accessoires"
+            }
+        };
+
+        function openStoryModal(key) {
+            const story = STORY_DATA[key];
+            if (!story) return;
+
+            const modal = document.getElementById('story-modal');
+            const card = document.getElementById('story-viewer-card');
+
+            card.innerHTML = `
+                <img src="${story.img}" class="absolute inset-0 w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-black/60"></div>
+
+                <!-- Story Header -->
+                <div class="relative z-10 p-5 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <img src="logo.svg" class="w-8 h-8 rounded-full border border-brand-crimson">
+                        <div>
+                            <p class="text-xs font-bold text-white">Marouki Frippe</p>
+                            <span class="text-[9px] text-brand-gold">Story Capsule</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story Body -->
+                <div class="relative z-10 p-6 space-y-3">
+                    <span class="text-[10px] font-cinzel text-brand-gold uppercase tracking-widest bg-black/60 px-2 py-0.5 rounded">Arrivage Exclusif</span>
+                    <h3 class="text-2xl font-serif font-bold text-white leading-tight">${story.title}</h3>
+                    <p class="text-xs text-gray-200 font-light">${story.subtitle}</p>
+
+                    <button onclick="closeStoryModal(); setFilterCategory('${story.cat}'); document.getElementById('vitrine-section').scrollIntoView({behavior: 'smooth'})" class="w-full bg-gradient-to-r from-brand-red to-brand-crimson hover:from-brand-crimson hover:to-red-600 text-white font-semibold py-3 rounded-2xl text-xs uppercase tracking-wider shadow-xl transition-all">
+                        Voir les pièces disponibles →
+                    </button>
+                </div>
+            `;
+
+            modal.classList.remove('hide');
+        }
+
+        function closeStoryModal() {
+            document.getElementById('story-modal').classList.add('hide');
+        }
+
+        // --- 8. WISHLIST MODAL ---
+        function openWishlistModal() {
+            const modal = document.getElementById('wishlist-modal');
+            const container = document.getElementById('wishlist-items-container');
+
+            const favoriteProducts = products.filter(p => wishlist.includes(p.id) && p.status === 'active');
+
+            if (favoriteProducts.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-10 text-gray-400 text-xs">
+                        <i class="far fa-heart text-3xl mb-2 text-gray-600"></i>
+                        <p>Aucun coup de cœur pour le moment.</p>
+                        <p class="text-[10px] text-gray-500 mt-1">Cliquez sur le petit cœur ♡ sur chaque pièce pour les retrouver ici !</p>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = favoriteProducts.map(p => `
+                    <div class="flex items-center justify-between gap-4 bg-black/50 p-3 rounded-2xl border border-gray-800">
+                        <div class="flex items-center gap-3">
+                            <img src="${p.images[0]}" class="w-12 h-16 object-cover rounded-xl border border-gray-700">
+                            <div>
+                                <h4 class="font-serif text-sm font-semibold text-white">${p.name}</h4>
+                                <p class="text-xs text-gray-400">Taille: ${p.size} • ${p.price} TND</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="closeWishlistModal(); openSingleOrderModal('${p.id}')" class="bg-brand-crimson hover:bg-brand-red text-white text-xs font-semibold px-3 py-2 rounded-xl transition-all">
+                                Commander
+                            </button>
+                            <button onclick="toggleWishlist('${p.id}')" class="text-gray-500 hover:text-red-500 p-2">
+                                <i class="fas fa-trash text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            modal.classList.remove('hide');
+        }
+
+        function closeWishlistModal() {
+            document.getElementById('wishlist-modal').classList.add('hide');
+        }
+
+        // --- 9. LIVE SOCIAL PROOF TICKER (Urgency) ---
+        function startLiveSocialProof() {
+            const toast = document.getElementById('live-order-toast');
+            const text = document.getElementById('live-toast-text');
+            if (!toast || !text) return;
+
+            const cities = ["La Marsa", "Ennasr", "Sousse", "Sfax", "Menzah", "Bizerte", "Nabeul", "Hammamet"];
+            const items = ["un Blazer Vintage", "une Robe Plissée", "un Trench Camel", "un Sac en Cuir", "un Chemisier Soie"];
+
+            setInterval(() => {
+                const randomCity = cities[Math.floor(Math.random() * cities.length)];
+                const randomItem = items[Math.floor(Math.random() * items.length)];
+                text.textContent = `Une cliente de ${randomCity} vient de commander ${randomItem}`;
+
+                toast.classList.remove('translate-y-24', 'opacity-0');
+
+                setTimeout(() => {
+                    toast.classList.add('translate-y-24', 'opacity-0');
+                }, 4500);
+            }, 38000);
+        }
+
+        // --- 10. AMBIENT PARTICLES (LIGHTWEIGHT LUXURY GLITTER CANVAS) ---
+        function initAmbientParticles() {
+            const canvas = document.getElementById('ambient-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let width = canvas.width = window.innerWidth;
+            let height = canvas.height = window.innerHeight;
+
+            window.addEventListener('resize', () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            });
+
+            const particles = [];
+            const particleCount = Math.min(35, Math.floor(width / 35));
+
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    r: Math.random() * 1.6 + 0.4,
+                    speedY: Math.random() * 0.4 + 0.15,
+                    speedX: (Math.random() - 0.5) * 0.2,
+                    opacity: Math.random() * 0.5 + 0.2,
+                    isGold: Math.random() > 0.4
+                });
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, width, height);
+
+                particles.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = p.isGold ? `rgba(223, 183, 108, ${p.opacity})` : `rgba(201, 10, 24, ${p.opacity})`;
+                    ctx.shadowBlur = 8;
+                    ctx.shadowColor = p.isGold ? '#dfb76c' : '#c90a18';
+                    ctx.fill();
+
+                    p.y -= p.speedY;
+                    p.x += p.speedX;
+
+                    if (p.y < 0) {
+                        p.y = height + 5;
+                        p.x = Math.random() * width;
+                    }
+                });
+
+                requestAnimationFrame(draw);
+            }
+            draw();
+        }
+
+        // --- 11. 3D TILT EFFECT FOR EMBLEM & CARDS ---
+        function init3DTilt() {
+            const emblem = document.getElementById('emblem-container');
+            if (!emblem) return;
+
+            emblem.addEventListener('mousemove', (e) => {
+                const rect = emblem.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                const rotateX = (-y / rect.height) * 18;
+                const rotateY = (x / rect.width) * 18;
+                emblem.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.04)`;
+            });
+
+            emblem.addEventListener('mouseleave', () => {
+                emblem.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale(1)';
+            });
+        }
+
+        // --- 12. TOAST NOTIFICATIONS HELPER ---
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'glass-panel-elevated text-white text-xs px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2 border-brand-crimson/50 animate-bounce duration-300';
+            toast.innerHTML = `<i class="fas fa-gem text-brand-gold"></i> <span>${message}</span>`;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.4s ease';
+                setTimeout(() => toast.remove(), 400);
+            }, 3000);
+        }
+
+        window.addEventListener('load', initApp);
+    </script>
+</body>
+</html>
