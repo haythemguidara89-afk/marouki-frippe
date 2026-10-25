@@ -6,10 +6,15 @@
     <title>Administration • Marouki Frippe</title>
     <meta name="robots" content="noindex, nofollow">
 
-    <!-- Google Fonts: Playfair Display, Poppins & Alex Brush -->
+    <!-- Font Preloads for Instant Performance -->
+    <link rel="preload" href="fonts/Garet-Book.woff" as="font" type="font/woff" crossorigin>
+    <link rel="preload" href="fonts/Garet-Heavy.woff" as="font" type="font/woff" crossorigin>
+
+    <!-- Google Fonts & CDN Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -27,9 +32,15 @@
                         }
                     },
                     fontFamily: {
-                        sans: ['Poppins', 'sans-serif'],
+                        sans: ['Garet', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                        garet: ['Garet', 'sans-serif'],
                         serif: ['Playfair Display', 'serif'],
                         script: ['Alex Brush', 'cursive']
+                    },
+                    letterSpacing: {
+                        luxury: '0.24em',
+                        editorial: '0.16em',
+                        snug: '-0.015em'
                     }
                 }
             }
@@ -40,10 +51,81 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
+        /* ===================================================
+           GARET FONT DEFINITIONS (Geometric Clean Sans)
+           =================================================== */
+        @import url('https://fonts.cdnfonts.com/css/garet');
+
+        @font-face {
+            font-family: 'Garet';
+            font-style: normal;
+            font-weight: 300;
+            font-display: swap;
+            src: local('Garet Book'), local('Garet'), url('fonts/Garet-Book.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Book.woff') format('woff');
+        }
+        @font-face {
+            font-family: 'Garet';
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: local('Garet Book'), local('Garet'), url('fonts/Garet-Book.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Book.woff') format('woff');
+        }
+        @font-face {
+            font-family: 'Garet';
+            font-style: normal;
+            font-weight: 500;
+            font-display: swap;
+            src: local('Garet Book'), local('Garet'), url('fonts/Garet-Book.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Book.woff') format('woff');
+        }
+        @font-face {
+            font-family: 'Garet';
+            font-style: normal;
+            font-weight: 600;
+            font-display: swap;
+            src: local('Garet Heavy'), local('Garet-Heavy'), local('Garet'), url('fonts/Garet-Heavy.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Heavy.woff') format('woff');
+        }
+        @font-face {
+            font-family: 'Garet';
+            font-style: normal;
+            font-weight: 700;
+            font-display: swap;
+            src: local('Garet Heavy'), local('Garet-Heavy'), local('Garet'), url('fonts/Garet-Heavy.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Heavy.woff') format('woff');
+        }
+        @font-face {
+            font-family: 'Garet';
+            font-style: normal;
+            font-weight: 800;
+            font-display: swap;
+            src: local('Garet Heavy'), local('Garet-Heavy'), local('Garet'), url('fonts/Garet-Heavy.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Heavy.woff') format('woff');
+        }
+        @font-face {
+            font-family: 'Garet';
+            font-style: normal;
+            font-weight: 850;
+            font-display: swap;
+            src: local('Garet Heavy'), local('Garet-Heavy'), local('Garet'), url('fonts/Garet-Heavy.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Heavy.woff') format('woff');
+        }
+        @font-face {
+            font-family: 'Garet';
+            font-style: normal;
+            font-weight: 900;
+            font-display: swap;
+            src: local('Garet Heavy'), local('Garet-Heavy'), local('Garet'), url('fonts/Garet-Heavy.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Heavy.woff') format('woff');
+        }
+
         body { 
             background: radial-gradient(circle at 50% 0%, #20080c 0%, #080607 55%, #040203 100%);
             color: #ffffff;
+            font-family: 'Garet', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
             min-height: 100vh;
+            letter-spacing: -0.01em;
+        }
+
+        .font-garet {
+            font-family: 'Garet', system-ui, -apple-system, sans-serif !important;
         }
 
         .glass-panel { 
@@ -883,19 +965,19 @@
                 return `
                     <tr class="hover:bg-black/40 transition-colors">
                         <td class="p-3.5 flex items-center gap-3">
-                            <img src="${thumb}" class="w-12 h-14 object-cover rounded-lg border border-gray-700 flex-shrink-0">
+                            <img src="${thumb}" class="w-12 h-14 object-cover rounded-lg border border-gray-700 flex-shrink-0 shadow-md">
                             <div>
-                                <p class="font-medium text-white">${item.name}</p>
-                                <span class="text-[11px] text-gray-500">${new Date(item.createdAt).toLocaleDateString('fr-FR')}</span>
+                                <p class="font-bold text-white tracking-snug text-sm">${item.name}</p>
+                                <span class="text-[11px] text-gray-500 font-light">${new Date(item.createdAt).toLocaleDateString('fr-FR')}</span>
                             </div>
                         </td>
-                        <td class="p-3.5 text-gray-300 text-xs">${item.category || '-'}</td>
-                        <td class="p-3.5 font-bold text-brand-crimson">${item.price} TND</td>
-                        <td class="p-3.5 text-xs text-gray-400">${item.size} / ${item.color}</td>
+                        <td class="p-3.5 text-gray-300 text-xs uppercase tracking-editorial font-medium">${item.category || '-'}</td>
+                        <td class="p-3.5 font-black font-garet text-white text-base tracking-tight">${item.price} <span class="text-[10px] font-bold text-brand-gold uppercase tracking-wider">TND</span></td>
+                        <td class="p-3.5 text-xs text-gray-400 font-medium">${item.size} • ${item.color}</td>
                         <td class="p-3.5">
                             ${isActive ? 
-                                '<span class="bg-green-500/20 text-green-400 text-[10px] font-bold px-2 py-0.5 rounded-full border border-green-500/30">En vitrine</span>' : 
-                                '<span class="bg-red-500/20 text-brand-crimson text-[10px] font-bold px-2 py-0.5 rounded-full border border-red-500/30">Vendu</span>'
+                                '<span class="bg-green-500/20 text-green-400 text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border border-green-500/30">En vitrine</span>' : 
+                                '<span class="bg-red-500/20 text-brand-crimson text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border border-red-500/30">Vendu</span>'
                             }
                         </td>
                         <td class="p-3.5 text-right space-x-1.5 whitespace-nowrap">
