@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
+<html lang="fr" class="scroll-smooth bg-[#040203] text-white">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="theme-color" content="#040203">
+    <meta name="color-scheme" content="dark">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Marouki Frippe | Maison de Frippe de Luxe & Pièces Rares en Tunisie</title>
     
     <!-- Meta SEO & Social Sharing -->
@@ -124,7 +127,12 @@
         }
 
         /* Ambient luxury dark gradient with texture */
+        html {
+            background-color: #040203 !important;
+            color-scheme: dark;
+        }
         body { 
+            background-color: #040203 !important;
             background: radial-gradient(circle at 50% 0%, #2e050d 0%, #0d0608 40%, #040203 100%);
             color: #ffffff;
             font-family: 'Garet', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -143,12 +151,6 @@
         .tracking-luxury { letter-spacing: 0.24em; }
         .tracking-editorial { letter-spacing: 0.16em; }
         .tracking-tight-clean { letter-spacing: -0.025em; }
-
-        /* Subtle film grain overlay */
-        .film-grain {
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
-            pointer-events: none;
-        }
 
         /* Glassmorphism panels */
         .glass-panel { 
@@ -206,13 +208,13 @@
             height: 100%;
             pointer-events: none;
             z-index: 1;
+            background: transparent;
         }
 
         /* 3D Interactive Card Tilt */
         .card-tilt {
             transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.2s ease;
             transform-style: preserve-3d;
-            will-change: transform;
         }
 
         /* Story ring animation */
@@ -246,13 +248,10 @@
         }
     </style>
 </head>
-<body class="antialiased flex flex-col selection:bg-brand-crimson selection:text-white relative">
+<body class="antialiased flex flex-col selection:bg-brand-crimson selection:text-white relative bg-[#040203]">
 
     <!-- Ambient Gold & Crimson Particles Canvas (Subtle Showroom Sparkles) -->
     <canvas id="ambient-canvas"></canvas>
-
-    <!-- Film Grain Overlay -->
-    <div class="film-grain fixed inset-0 z-0"></div>
 
     <!-- 1. TOP ANNOUNCEMENT BAR (Interactive Ticker) -->
     <div class="relative z-30 bg-gradient-to-r from-brand-red via-brand-crimson to-brand-red text-white text-xs py-2 px-4 text-center font-medium tracking-wide flex items-center justify-between border-b border-brand-red/40 shadow-sm overflow-hidden">
@@ -628,18 +627,27 @@
 
                 </div>
 
+                <!-- Mobile Filter Backdrop (Dark luxury glass backdrop for mobile drawer) -->
+                <div id="mobile-filter-backdrop" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[90] transition-opacity duration-300 opacity-0 pointer-events-none lg:hidden"></div>
+
                 <!-- ============================================== -->
-                <!-- RIGHT SIDEBAR: FILTER LIST ON THE RIGHT        -->
+                <!-- RIGHT SIDEBAR: FILTER LIST (Drawer on Mobile, Sticky on Desktop) -->
                 <!-- ============================================== -->
-                <aside id="sidebar-filter-panel" class="w-full lg:w-72 xl:w-76 flex-shrink-0 lg:sticky lg:top-24 order-2 transition-all duration-300 hidden lg:block">
-                    <div class="bg-black/50 backdrop-blur-xl p-5 sm:p-6 rounded-3xl border border-gray-800/80 shadow-2xl space-y-5">
+                <aside id="sidebar-filter-panel" class="fixed inset-y-0 right-0 z-[100] w-full max-w-[320px] sm:max-w-xs bg-[#0b0608] border-l border-brand-red/35 p-5 shadow-2xl transition-transform duration-300 translate-x-full overflow-y-auto lg:translate-x-0 lg:static lg:z-auto lg:w-72 xl:w-76 lg:bg-transparent lg:p-0 lg:border-none lg:shadow-none lg:sticky lg:top-24 order-2">
+                    <div class="bg-black/60 lg:bg-black/50 backdrop-blur-xl p-5 sm:p-6 rounded-3xl border border-gray-800/80 shadow-2xl space-y-5">
                         
                         <!-- Sidebar Header -->
                         <div class="flex items-center justify-between pb-3 border-b border-gray-800/80">
                             <span class="text-xs uppercase tracking-luxury text-gray-300 font-bold font-garet">Filtres</span>
-                            <button onclick="resetFilters()" class="text-[11px] text-gray-400 hover:text-brand-gold transition-colors font-medium" title="Réinitialiser tous les filtres">
-                                Tout effacer
-                            </button>
+                            <div class="flex items-center gap-3">
+                                <button onclick="resetFilters()" class="text-[11px] text-gray-400 hover:text-brand-gold transition-colors font-medium" title="Réinitialiser tous les filtres">
+                                    Tout effacer
+                                </button>
+                                <!-- Close Button on Mobile -->
+                                <button onclick="toggleMobileSidebar()" class="lg:hidden text-gray-400 hover:text-white p-1 text-base transition-colors" title="Fermer les filtres">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
                         </div>
 
                         <!-- 1. DROPDOWN ACCORDION: CATÉGORIES -->
@@ -769,6 +777,13 @@
                             </div>
                         </div>
 
+                        <!-- Mobile Drawer Action Button -->
+                        <div class="pt-2 lg:hidden">
+                            <button onclick="toggleMobileSidebar()" class="w-full bg-gradient-to-r from-brand-red to-brand-crimson hover:brightness-110 text-white font-bold text-xs uppercase tracking-luxury py-3 rounded-xl shadow-lg transition-all font-garet">
+                                Voir les pièces disponibles
+                            </button>
+                        </div>
+
                         <!-- Minimal Subtle Concierge Link -->
                         <div class="pt-3 border-t border-gray-800/60 text-center">
                             <a id="sidebar-wa-btn" href="#" target="_blank" class="text-[11px] text-gray-400 hover:text-brand-gold transition-colors inline-flex items-center gap-1.5 font-garet">
@@ -879,10 +894,10 @@
     <!-- ========================================== -->
     <!-- 9. SINGLE & GROUPED WHATSAPP ORDER MODAL   -->
     <!-- ========================================== -->
-    <div id="order-modal" class="fixed inset-0 bg-black/85 z-[130] flex items-center justify-center p-4 backdrop-blur-md hide font-garet">
+    <div id="order-modal" onclick="if(event.target === this) closeOrderModal()" class="fixed inset-0 bg-black/85 z-[130] flex items-center justify-center p-4 backdrop-blur-md hide font-garet">
         <div class="glass-panel-elevated p-6 sm:p-8 rounded-3xl max-w-lg w-full relative max-h-[92vh] overflow-y-auto border-brand-crimson/40">
             
-            <button onclick="closeOrderModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white p-2">
+            <button onclick="closeOrderModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white p-2" title="Fermer">
                 <i class="fas fa-times text-xl"></i>
             </button>
 
@@ -992,9 +1007,9 @@
     <!-- ========================================== -->
     <!-- 10. PRODUCT QUICK VIEW WITH FABRIC ZOOM    -->
     <!-- ========================================== -->
-    <div id="quick-view-modal" class="fixed inset-0 bg-black/90 z-[125] flex items-center justify-center p-4 backdrop-blur-md hide">
+    <div id="quick-view-modal" onclick="if(event.target === this) closeQuickViewModal()" class="fixed inset-0 bg-black/90 z-[125] flex items-center justify-center p-4 backdrop-blur-md hide">
         <div class="glass-panel-elevated p-6 sm:p-8 rounded-3xl max-w-3xl w-full relative max-h-[92vh] overflow-y-auto border-brand-crimson/30">
-            <button onclick="closeQuickViewModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white p-2 z-10">
+            <button onclick="closeQuickViewModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white p-2 z-10" title="Fermer">
                 <i class="fas fa-times text-xl"></i>
             </button>
             <div id="quick-view-content" class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
@@ -1007,9 +1022,9 @@
     <!-- ========================================== -->
     <!-- 11. LOOKBOOK STORY VIEWER MODAL            -->
     <!-- ========================================== -->
-    <div id="story-modal" class="fixed inset-0 bg-black/95 z-[140] flex items-center justify-center p-4 backdrop-blur-lg hide">
+    <div id="story-modal" onclick="if(event.target === this) closeStoryModal()" class="fixed inset-0 bg-black/95 z-[140] flex items-center justify-center p-4 backdrop-blur-lg hide">
         <div class="max-w-md w-full relative flex flex-col items-center">
-            <button onclick="closeStoryModal()" class="absolute -top-10 right-0 text-white text-2xl hover:text-brand-crimson">
+            <button onclick="closeStoryModal()" class="absolute -top-10 right-0 text-white text-2xl hover:text-brand-crimson" title="Fermer">
                 <i class="fas fa-times"></i>
             </button>
 
@@ -1023,9 +1038,9 @@
     <!-- ========================================== -->
     <!-- 12. WISHLIST MODAL                         -->
     <!-- ========================================== -->
-    <div id="wishlist-modal" class="fixed inset-0 bg-black/90 z-[125] flex items-center justify-center p-4 backdrop-blur-md hide">
+    <div id="wishlist-modal" onclick="if(event.target === this) closeWishlistModal()" class="fixed inset-0 bg-black/90 z-[125] flex items-center justify-center p-4 backdrop-blur-md hide">
         <div class="glass-panel-elevated p-6 sm:p-8 rounded-3xl max-w-xl w-full relative max-h-[85vh] overflow-y-auto">
-            <button onclick="closeWishlistModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white p-2">
+            <button onclick="closeWishlistModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white p-2" title="Fermer">
                 <i class="fas fa-times text-xl"></i>
             </button>
             <div class="flex items-center gap-2 mb-4 pb-3 border-b border-gray-800">
@@ -1043,7 +1058,7 @@
     <div id="toast-container" class="fixed top-5 right-5 z-[200] space-y-2 pointer-events-none"></div>
 
     <!-- Live Social Proof Urgency Bubble (Tunisia Orders) -->
-    <div id="live-order-toast" class="fixed bottom-6 left-6 z-40 glass-panel-elevated p-3 rounded-2xl flex items-center gap-3 border-brand-gold/40 shadow-2xl transition-all duration-500 translate-y-24 opacity-0 max-w-xs pointer-events-none">
+    <div id="live-order-toast" class="fixed bottom-24 sm:bottom-6 left-4 sm:left-6 z-40 glass-panel-elevated p-3 rounded-2xl flex items-center gap-3 border-brand-gold/40 shadow-2xl transition-all duration-500 translate-y-24 opacity-0 max-w-[280px] sm:max-w-xs pointer-events-none">
         <div class="w-10 h-10 rounded-xl bg-brand-crimson/20 border border-brand-crimson flex items-center justify-center text-brand-crimson text-lg flex-shrink-0">
             <i class="fas fa-bag-shopping"></i>
         </div>
@@ -1230,6 +1245,25 @@
             document.addEventListener('click', (e) => {
                 if (!e.target.closest('#sort-dropdown-container')) {
                     closeSortMenu();
+                }
+            });
+
+            // Global Escape key listener to dismiss any active modal or drawer
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeOrderModal();
+                    closeQuickViewModal();
+                    closeStoryModal();
+                    closeWishlistModal();
+                    closeSortMenu();
+                    const bagDrawer = document.getElementById('bag-drawer');
+                    if (bagDrawer && !bagDrawer.classList.contains('translate-x-full')) {
+                        toggleBagDrawer();
+                    }
+                    const filterPanel = document.getElementById('sidebar-filter-panel');
+                    if (filterPanel && !filterPanel.classList.contains('translate-x-full')) {
+                        toggleMobileSidebar();
+                    }
                 }
             });
 
@@ -1421,10 +1455,25 @@
 
         function toggleMobileSidebar() {
             const panel = document.getElementById('sidebar-filter-panel');
+            const backdrop = document.getElementById('mobile-filter-backdrop');
             if (!panel) return;
-            panel.classList.toggle('hidden');
-            if (!panel.classList.contains('hidden')) {
-                panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            const isClosed = panel.classList.contains('translate-x-full');
+            if (isClosed) {
+                panel.classList.remove('translate-x-full');
+                if (backdrop) {
+                    backdrop.classList.remove('opacity-0', 'pointer-events-none');
+                    backdrop.classList.add('opacity-100');
+                }
+                if (window.innerWidth < 1024) {
+                    document.body.style.overflow = 'hidden';
+                }
+            } else {
+                panel.classList.add('translate-x-full');
+                if (backdrop) {
+                    backdrop.classList.add('opacity-0', 'pointer-events-none');
+                    backdrop.classList.remove('opacity-100');
+                }
+                document.body.style.overflow = '';
             }
         }
 
@@ -1795,19 +1844,19 @@
                                 </div>
                             ` : ''}
 
-                            <!-- Quick view hover overlay -->
-                            <div class="absolute inset-x-4 bottom-4 opacity-0 group-hover:opacity-100 transition-all duration-300 flex gap-2">
+                            <!-- Quick view hover overlay (Desktop) -->
+                            <div class="hidden sm:flex absolute inset-x-4 bottom-4 opacity-0 group-hover:opacity-100 transition-all duration-300 gap-2 pointer-events-none group-hover:pointer-events-auto">
                                 <button onclick="event.stopPropagation(); openQuickView('${product.id}')" class="flex-1 bg-black/90 hover:bg-black text-white text-xs font-semibold py-2.5 rounded-xl backdrop-blur-sm border border-gray-700 flex items-center justify-center gap-1.5 shadow-lg tracking-wider uppercase">
                                     <i class="fas fa-eye text-xs text-brand-gold"></i> Aperçu
                                 </button>
-                                <button onclick="event.stopPropagation(); addToBag('${product.id}')" class="bg-brand-crimson hover:bg-brand-red text-white p-2.5 rounded-xl shadow-lg" title="Ajouter à ma sélection">
+                                <button onclick="event.stopPropagation(); addToBag('${product.id}')" class="bg-brand-crimson hover:bg-brand-red text-white p-2.5 rounded-xl shadow-lg" title="Ajouter au Panier">
                                     <i class="fas fa-bag-shopping"></i>
                                 </button>
                             </div>
                         </div>
 
                         <!-- Card Body -->
-                        <div class="p-5 flex flex-col flex-grow justify-between">
+                        <div class="p-4 sm:p-5 flex flex-col flex-grow justify-between">
                             <div>
                                 <div class="mb-2">
                                     <h4 class="font-garet text-base sm:text-lg font-bold text-white tracking-snug leading-snug line-clamp-1 group-hover:text-brand-gold transition-colors cursor-pointer" onclick="openQuickView('${product.id}')">
@@ -1837,11 +1886,14 @@
                                 </div>
                             </div>
 
-                            <!-- Buttons: 1-Click WhatsApp or Bag -->
-                            <div class="space-y-2">
-                                <button onclick="openSingleOrderModal('${product.id}')" class="w-full bg-gradient-to-r from-brand-red via-brand-crimson to-brand-red hover:brightness-110 text-white font-bold text-xs uppercase tracking-luxury py-3.5 rounded-xl transition-all shadow-md shadow-brand-red/30 flex items-center justify-center gap-2 font-garet group/btn">
+                            <!-- Action Buttons: 1-Click WhatsApp + Direct Bag -->
+                            <div class="flex items-center gap-2 pt-1 font-garet">
+                                <button onclick="openSingleOrderModal('${product.id}')" class="flex-1 bg-gradient-to-r from-brand-red via-brand-crimson to-brand-red hover:brightness-110 text-white font-bold text-xs uppercase tracking-luxury py-3.5 rounded-xl transition-all shadow-md shadow-brand-red/30 flex items-center justify-center gap-2 group/btn">
                                     <i class="fab fa-whatsapp text-base group-hover/btn:scale-110 transition-transform"></i>
                                     <span>Commander direct</span>
+                                </button>
+                                <button onclick="event.stopPropagation(); addToBag('${product.id}')" class="w-12 h-[46px] rounded-xl bg-black/60 hover:bg-brand-crimson border border-gray-700/80 hover:border-brand-crimson text-white flex items-center justify-center transition-all shadow-md group/bag shrink-0" title="Ajouter au Panier">
+                                    <i class="fas fa-bag-shopping text-sm text-brand-gold group-hover/bag:text-white transition-colors"></i>
                                 </button>
                             </div>
                         </div>
@@ -1958,6 +2010,7 @@
 
             document.getElementById('order-mode').value = 'single';
             document.getElementById('order-modal').classList.remove('hide');
+            document.body.style.overflow = 'hidden';
 
             const thumb = product.images && product.images.length > 0 ? product.images[0] : 'https://images.unsplash.com/photo-1523381294911-8d3cead13475?w=100';
 
@@ -1986,6 +2039,7 @@
             toggleBagDrawer();
             document.getElementById('order-mode').value = 'grouped';
             document.getElementById('order-modal').classList.remove('hide');
+            document.body.style.overflow = 'hidden';
 
             const subtotal = shoppingBag.reduce((sum, item) => sum + (item.price || 0), 0);
             const isFreeShipping = subtotal >= 120;
@@ -2010,6 +2064,7 @@
         function closeOrderModal() {
             document.getElementById('order-modal').classList.add('hide');
             document.getElementById('order-form').reset();
+            document.body.style.overflow = '';
         }
 
         function handleOrderSubmit(e) {
@@ -2165,10 +2220,12 @@ Merci de me confirmer la disponibilité pour l'envoi rapide ! ♡`;
             `;
 
             modal.classList.remove('hide');
+            document.body.style.overflow = 'hidden';
         }
 
         function closeQuickViewModal() {
             document.getElementById('quick-view-modal').classList.add('hide');
+            document.body.style.overflow = '';
         }
 
         // --- 7. LOOKBOOK STORIES MODAL ---
@@ -2240,10 +2297,12 @@ Merci de me confirmer la disponibilité pour l'envoi rapide ! ♡`;
             `;
 
             modal.classList.remove('hide');
+            document.body.style.overflow = 'hidden';
         }
 
         function closeStoryModal() {
             document.getElementById('story-modal').classList.add('hide');
+            document.body.style.overflow = '';
         }
 
         // --- 8. WISHLIST MODAL ---
@@ -2284,10 +2343,12 @@ Merci de me confirmer la disponibilité pour l'envoi rapide ! ♡`;
             }
 
             modal.classList.remove('hide');
+            document.body.style.overflow = 'hidden';
         }
 
         function closeWishlistModal() {
             document.getElementById('wishlist-modal').classList.add('hide');
+            document.body.style.overflow = '';
         }
 
         // --- 9. LIVE SOCIAL PROOF TICKER (Urgency) ---
@@ -2366,9 +2427,12 @@ Merci de me confirmer la disponibilité pour l'envoi rapide ! ♡`;
         }
 
         // --- 11. 3D TILT EFFECT FOR EMBLEM & CARDS ---
+        let isTiltInitialized = false;
         function init3DTilt() {
+            if (isTiltInitialized) return;
             const emblem = document.getElementById('emblem-container');
             if (!emblem) return;
+            isTiltInitialized = true;
 
             emblem.addEventListener('mousemove', (e) => {
                 const rect = emblem.getBoundingClientRect();
