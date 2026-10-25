@@ -262,7 +262,11 @@
             <span class="hidden md:inline"><i class="fas fa-truck-fast text-brand-goldLight mr-1"></i> Livraison Express 24h/48h sur toute la Tunisie</span>
         </div>
         <div class="hidden lg:flex items-center gap-4 text-[11px]">
-            <a href="https://www.instagram.com/marouki.fripe/" target="_blank" class="hover:text-brand-goldLight transition-colors flex items-center gap-1 font-semibold">
+            <a id="topbar-facebook-link" href="https://www.facebook.com/profile.php?id=100089787764565" target="_blank" rel="noopener noreferrer" class="hover:text-brand-goldLight transition-colors flex items-center gap-1 font-semibold">
+                <i class="fab fa-facebook-f"></i> Facebook
+            </a>
+            <span class="text-white/40">•</span>
+            <a id="topbar-instagram-link" href="https://www.instagram.com/marouki.fripe/" target="_blank" rel="noopener noreferrer" class="hover:text-brand-goldLight transition-colors flex items-center gap-1 font-semibold">
                 <i class="fab fa-instagram"></i> @marouki.fripe
             </a>
         </div>
@@ -317,9 +321,16 @@
                     <span id="bag-count-badge" class="bg-brand-crimson text-white text-[10px] font-bold px-1.5 py-0.2 rounded-full min-w-[18px] text-center">0</span>
                 </button>
 
+                <!-- Facebook Shortcut -->
+                <a id="nav-fb-link" href="https://www.facebook.com/profile.php?id=100089787764565" target="_blank" rel="noopener noreferrer" 
+                   class="bg-[#1877F2]/80 hover:bg-[#1877F2] text-white px-3 py-1.5 rounded-xl text-xs font-medium hidden sm:flex items-center gap-1.5 transition-all shadow" title="Page Facebook Marouki Frippe">
+                    <i class="fab fa-facebook-f text-xs"></i>
+                    <span class="hidden xl:inline">Facebook</span>
+                </a>
+
                 <!-- Instagram Shortcut -->
                 <a id="nav-ig-link" href="https://www.instagram.com/marouki.fripe/" target="_blank" rel="noopener noreferrer" 
-                   class="bg-gradient-to-r from-purple-700/60 to-pink-600/60 hover:from-purple-700 hover:to-pink-600 text-white px-3 py-1.5 rounded-xl text-xs font-medium hidden sm:flex items-center gap-1.5 transition-all shadow">
+                   class="bg-gradient-to-r from-purple-700/60 to-pink-600/60 hover:from-purple-700 hover:to-pink-600 text-white px-3 py-1.5 rounded-xl text-xs font-medium hidden sm:flex items-center gap-1.5 transition-all shadow" title="Compte Instagram Marouki Frippe">
                     <i class="fab fa-instagram"></i>
                     <span class="hidden lg:inline">@marouki.fripe</span>
                 </a>
@@ -435,83 +446,23 @@
                     </div>
                 </div>
 
-                <!-- Instagram CTA Official Button -->
-                <div class="inline-flex font-garet">
-                    <a id="hero-instagram-link" href="https://www.instagram.com/marouki.fripe/" target="_blank" rel="noopener noreferrer" 
-                       class="bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-95 text-white font-semibold px-8 py-3.5 rounded-full flex items-center gap-3 shadow-2xl shadow-black/80 hover:scale-105 transition-all text-xs uppercase tracking-luxury group">
-                        <i class="fab fa-instagram text-xl group-hover:rotate-12 transition-transform"></i>
-                        <span>Suivez-nous sur Instagram <strong id="hero-instagram-handle" class="normal-case tracking-normal ml-0.5">@marouki.fripe</strong></span>
-                        <i class="fas fa-arrow-right text-xs ml-1 group-hover:translate-x-1.5 transition-transform"></i>
+                <!-- Social Channels: Facebook & Instagram Official Buttons -->
+                <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4 font-garet">
+                    <!-- Official Facebook Page Button -->
+                    <a id="hero-facebook-link" href="https://www.facebook.com/profile.php?id=100089787764565" target="_blank" rel="noopener noreferrer" 
+                       class="bg-[#1877F2] hover:bg-[#166fe5] text-white font-bold px-7 py-3.5 rounded-full flex items-center gap-2.5 shadow-2xl shadow-[#1877F2]/30 hover:scale-105 transition-all text-xs uppercase tracking-luxury group">
+                        <i class="fab fa-facebook-f text-lg group-hover:scale-110 transition-transform"></i>
+                        <span>Page Facebook <strong class="normal-case tracking-normal ml-0.5">Marouki Frippe</strong></span>
+                        <i class="fas fa-arrow-right text-xs ml-0.5 group-hover:translate-x-1 transition-transform"></i>
                     </a>
-                </div>
 
-            </div>
-        </section>
-
-
-        <!-- ========================================== -->
-        <!-- 4. CURATED STORIES CAROUSEL (LOOKBOOK)     -->
-        <!-- ========================================== -->
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 mb-10">
-            <div class="flex items-center justify-between mb-4 px-1">
-                <h3 class="text-xs uppercase tracking-widest text-brand-gold font-cinzel font-bold flex items-center gap-2">
-                    <i class="fas fa-circle-play text-brand-crimson"></i>
-                    <span>Les Capsules & Arrivages Exclusifs</span>
-                </h3>
-                <span class="text-[11px] text-gray-400">Cliquez pour explorer</span>
-            </div>
-
-            <!-- Story Circles Bar -->
-            <div class="flex items-center gap-4 overflow-x-auto pb-2 gallery-scroll">
-                
-                <!-- Story 1 -->
-                <div onclick="openStoryModal('blazers')" class="flex flex-col items-center gap-1.5 cursor-pointer flex-shrink-0 group">
-                    <div class="w-18 h-18 sm:w-20 sm:h-20 p-0.5 rounded-full bg-gradient-to-tr from-brand-crimson via-brand-gold to-brand-red story-ring group-hover:scale-105 transition-transform">
-                        <div class="w-full h-full rounded-full border-2 border-black overflow-hidden bg-black">
-                            <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=200&auto=format&fit=crop&q=80" class="w-full h-full object-cover">
-                        </div>
-                    </div>
-                    <span class="text-[11px] font-medium text-gray-200 group-hover:text-brand-gold transition-colors">Blazers Laine</span>
-                </div>
-
-                <!-- Story 2 -->
-                <div onclick="openStoryModal('robes')" class="flex flex-col items-center gap-1.5 cursor-pointer flex-shrink-0 group">
-                    <div class="w-18 h-18 sm:w-20 sm:h-20 p-0.5 rounded-full bg-gradient-to-tr from-brand-crimson via-brand-gold to-brand-red story-ring group-hover:scale-105 transition-transform">
-                        <div class="w-full h-full rounded-full border-2 border-black overflow-hidden bg-black">
-                            <img src="https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=200&auto=format&fit=crop&q=80" class="w-full h-full object-cover">
-                        </div>
-                    </div>
-                    <span class="text-[11px] font-medium text-gray-200 group-hover:text-brand-gold transition-colors">Robes Chic</span>
-                </div>
-
-                <!-- Story 3 -->
-                <div onclick="openStoryModal('trench')" class="flex flex-col items-center gap-1.5 cursor-pointer flex-shrink-0 group">
-                    <div class="w-18 h-18 sm:w-20 sm:h-20 p-0.5 rounded-full bg-gradient-to-tr from-brand-crimson via-brand-gold to-brand-red story-ring group-hover:scale-105 transition-transform">
-                        <div class="w-full h-full rounded-full border-2 border-black overflow-hidden bg-black">
-                            <img src="https://images.unsplash.com/photo-1520975954732-35dd22299614?w=200&auto=format&fit=crop&q=80" class="w-full h-full object-cover">
-                        </div>
-                    </div>
-                    <span class="text-[11px] font-medium text-gray-200 group-hover:text-brand-gold transition-colors">Trenchs Rétro</span>
-                </div>
-
-                <!-- Story 4 -->
-                <div onclick="openStoryModal('soie')" class="flex flex-col items-center gap-1.5 cursor-pointer flex-shrink-0 group">
-                    <div class="w-18 h-18 sm:w-20 sm:h-20 p-0.5 rounded-full bg-gradient-to-tr from-brand-crimson via-brand-gold to-brand-red story-ring group-hover:scale-105 transition-transform">
-                        <div class="w-full h-full rounded-full border-2 border-black overflow-hidden bg-black">
-                            <img src="https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=200&auto=format&fit=crop&q=80" class="w-full h-full object-cover">
-                        </div>
-                    </div>
-                    <span class="text-[11px] font-medium text-gray-200 group-hover:text-brand-gold transition-colors">Soie & Satin</span>
-                </div>
-
-                <!-- Story 5 -->
-                <div onclick="openStoryModal('sacs')" class="flex flex-col items-center gap-1.5 cursor-pointer flex-shrink-0 group">
-                    <div class="w-18 h-18 sm:w-20 sm:h-20 p-0.5 rounded-full bg-gradient-to-tr from-brand-crimson via-brand-gold to-brand-red story-ring group-hover:scale-105 transition-transform">
-                        <div class="w-full h-full rounded-full border-2 border-black overflow-hidden bg-black">
-                            <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=200&auto=format&fit=crop&q=80" class="w-full h-full object-cover">
-                        </div>
-                    </div>
-                    <span class="text-[11px] font-medium text-gray-200 group-hover:text-brand-gold transition-colors">Sacs 90s</span>
+                    <!-- Official Instagram Button -->
+                    <a id="hero-instagram-link" href="https://www.instagram.com/marouki.fripe/" target="_blank" rel="noopener noreferrer" 
+                       class="bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-95 text-white font-bold px-7 py-3.5 rounded-full flex items-center gap-2.5 shadow-2xl shadow-black/80 hover:scale-105 transition-all text-xs uppercase tracking-luxury group">
+                        <i class="fab fa-instagram text-lg group-hover:rotate-12 transition-transform"></i>
+                        <span>Instagram <strong id="hero-instagram-handle" class="normal-case tracking-normal ml-0.5">@marouki.fripe</strong></span>
+                        <i class="fas fa-arrow-right text-xs ml-0.5 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
                 </div>
 
             </div>
@@ -1019,20 +970,7 @@
     </div>
 
 
-    <!-- ========================================== -->
-    <!-- 11. LOOKBOOK STORY VIEWER MODAL            -->
-    <!-- ========================================== -->
-    <div id="story-modal" onclick="if(event.target === this) closeStoryModal()" class="fixed inset-0 bg-black/95 z-[140] flex items-center justify-center p-4 backdrop-blur-lg hide">
-        <div class="max-w-md w-full relative flex flex-col items-center">
-            <button onclick="closeStoryModal()" class="absolute -top-10 right-0 text-white text-2xl hover:text-brand-crimson" title="Fermer">
-                <i class="fas fa-times"></i>
-            </button>
 
-            <div id="story-viewer-card" class="glass-panel-elevated rounded-3xl overflow-hidden w-full aspect-[9/16] relative flex flex-col justify-between shadow-2xl">
-                <!-- Injected via JS -->
-            </div>
-        </div>
-    </div>
 
 
     <!-- ========================================== -->
@@ -1097,6 +1035,11 @@
             </p>
 
             <div class="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-300">
+                <a id="footer-facebook-link" href="https://www.facebook.com/profile.php?id=100089787764565" target="_blank" rel="noopener noreferrer" class="hover:text-[#1877F2] transition-colors flex items-center gap-2">
+                    <i class="fab fa-facebook-f text-base text-blue-500"></i>
+                    <span>Facebook</span>
+                </a>
+                <span>•</span>
                 <a id="footer-instagram-link" href="https://www.instagram.com/marouki.fripe/" target="_blank" rel="noopener noreferrer" class="hover:text-brand-crimson transition-colors flex items-center gap-2">
                     <i class="fab fa-instagram text-lg text-pink-500"></i>
                     <span id="footer-instagram-handle">@marouki.fripe</span>
@@ -1126,7 +1069,8 @@
             storeName: "Marouki Frippe",
             whatsappNumber: "21699000000",
             instagramUrl: "https://www.instagram.com/marouki.fripe/",
-            instagramHandle: "@marouki.fripe"
+            instagramHandle: "@marouki.fripe",
+            facebookUrl: "https://www.facebook.com/profile.php?id=100089787764565"
         };
 
         const SAMPLE_PRODUCTS = [
@@ -1253,7 +1197,6 @@
                 if (e.key === 'Escape') {
                     closeOrderModal();
                     closeQuickViewModal();
-                    closeStoryModal();
                     closeWishlistModal();
                     closeSortMenu();
                     const bagDrawer = document.getElementById('bag-drawer');
@@ -1294,10 +1237,20 @@
         }
 
         function applyConfigToUI() {
+            const fbUrl = boutiqueConfig.facebookUrl || "https://www.facebook.com/profile.php?id=100089787764565";
+            const fbLinks = [
+                document.getElementById('topbar-facebook-link'),
+                document.getElementById('nav-fb-link'),
+                document.getElementById('hero-facebook-link'),
+                document.getElementById('footer-facebook-link')
+            ];
+            fbLinks.forEach(el => { if (el) el.href = fbUrl; });
+
             const igUrl = boutiqueConfig.instagramUrl || "https://www.instagram.com/marouki.fripe/";
             const igHandle = boutiqueConfig.instagramHandle || "@marouki.fripe";
 
             const igLinks = [
+                document.getElementById('topbar-instagram-link'),
                 document.getElementById('nav-ig-link'),
                 document.getElementById('hero-instagram-link'),
                 document.getElementById('footer-instagram-link')
@@ -2228,82 +2181,7 @@ Merci de me confirmer la disponibilité pour l'envoi rapide ! ♡`;
             document.body.style.overflow = '';
         }
 
-        // --- 7. LOOKBOOK STORIES MODAL ---
-        const STORY_DATA = {
-            blazers: {
-                title: "Capsule Blazers & Vestes",
-                subtitle: "Laine italienne & boutons blasons dorés",
-                img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&auto=format&fit=crop&q=80",
-                cat: "Vestes"
-            },
-            robes: {
-                title: "Robes d'Époque & Soirée",
-                subtitle: "Plissés raffinés, imprimés fleuris et coupes rétro",
-                img: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=800&auto=format&fit=crop&q=80",
-                cat: "Robes"
-            },
-            trench: {
-                title: "Trenchs & Manteaux Iconiques",
-                subtitle: "Double boutonnage et coupes oversize intemporelles",
-                img: "https://images.unsplash.com/photo-1520975954732-35dd22299614?w=800&auto=format&fit=crop&q=80",
-                cat: "Vestes"
-            },
-            soie: {
-                title: "Chemisers Soie & Mousseline",
-                subtitle: "Toucher soyeux et finitions perles délicates",
-                img: "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=800&auto=format&fit=crop&q=80",
-                cat: "Hauts"
-            },
-            sacs: {
-                title: "Maroquinerie & Sacs 90s",
-                subtitle: "Cuir véritable embossé & ferrures dorées",
-                img: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&auto=format&fit=crop&q=80",
-                cat: "Accessoires"
-            }
-        };
 
-        function openStoryModal(key) {
-            const story = STORY_DATA[key];
-            if (!story) return;
-
-            const modal = document.getElementById('story-modal');
-            const card = document.getElementById('story-viewer-card');
-
-            card.innerHTML = `
-                <img src="${story.img}" class="absolute inset-0 w-full h-full object-cover">
-                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-black/60"></div>
-
-                <!-- Story Header -->
-                <div class="relative z-10 p-5 flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                        <img src="logo.svg" class="w-8 h-8 rounded-full border border-brand-crimson">
-                        <div>
-                            <p class="text-xs font-bold text-white">Marouki Frippe</p>
-                            <span class="text-[9px] text-brand-gold">Story Capsule</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Story Body -->
-                <div class="relative z-10 p-6 space-y-3">
-                    <span class="text-[10px] font-cinzel text-brand-gold uppercase tracking-widest bg-black/60 px-2 py-0.5 rounded">Arrivage Exclusif</span>
-                    <h3 class="text-2xl font-serif font-bold text-white leading-tight">${story.title}</h3>
-                    <p class="text-xs text-gray-200 font-light">${story.subtitle}</p>
-
-                    <button onclick="closeStoryModal(); setFilterCategory('${story.cat}'); document.getElementById('vitrine-section').scrollIntoView({behavior: 'smooth'})" class="w-full bg-gradient-to-r from-brand-red to-brand-crimson hover:from-brand-crimson hover:to-red-600 text-white font-semibold py-3 rounded-2xl text-xs uppercase tracking-wider shadow-xl transition-all">
-                        Voir les pièces disponibles →
-                    </button>
-                </div>
-            `;
-
-            modal.classList.remove('hide');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeStoryModal() {
-            document.getElementById('story-modal').classList.add('hide');
-            document.body.style.overflow = '';
-        }
 
         // --- 8. WISHLIST MODAL ---
         function openWishlistModal() {

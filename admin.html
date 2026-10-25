@@ -484,6 +484,14 @@
 
                 <div>
                     <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
+                        Lien Page Facebook
+                    </label>
+                    <input type="text" id="setting-facebook" placeholder="https://www.facebook.com/profile.php?id=100089787764565" 
+                           class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
                         Nouveau Code PIN Admin
                     </label>
                     <input type="password" id="setting-pin" required placeholder="ex: 1234" 
@@ -524,6 +532,7 @@
             whatsappNumber: "21699000000",
             instagramUrl: "https://www.instagram.com/marouki.fripe/",
             instagramHandle: "@marouki.fripe",
+            facebookUrl: "https://www.facebook.com/profile.php?id=100089787764565",
             adminPin: "1234"
         };
 
@@ -659,6 +668,8 @@
             if (setWa) setWa.value = boutiqueConfig.whatsappNumber || "21699000000";
             const setIg = document.getElementById('setting-instagram');
             if (setIg) setIg.value = boutiqueConfig.instagramUrl || "https://www.instagram.com/marouki.fripe/";
+            const setFb = document.getElementById('setting-facebook');
+            if (setFb) setFb.value = boutiqueConfig.facebookUrl || "https://www.facebook.com/profile.php?id=100089787764565";
             const setPin = document.getElementById('setting-pin');
             if (setPin) setPin.value = boutiqueConfig.adminPin || "1234";
         }
@@ -1021,12 +1032,14 @@
             const store = document.getElementById('setting-store-name').value.trim();
             const wa = document.getElementById('setting-whatsapp').value.trim();
             const ig = document.getElementById('setting-instagram').value.trim();
+            const fb = document.getElementById('setting-facebook').value.trim();
             const pin = document.getElementById('setting-pin').value.trim();
 
             boutiqueConfig.storeName = store || 'Marouki Frippe';
             boutiqueConfig.whatsappNumber = wa;
             boutiqueConfig.instagramUrl = ig.startsWith('http') ? ig : `https://www.instagram.com/${ig.replace('@', '').replace('/', '')}/`;
             boutiqueConfig.instagramHandle = ig.startsWith('http') ? '@' + ig.replace(/\/$/, '').split('/').pop() : (ig.startsWith('@') ? ig : '@' + ig);
+            boutiqueConfig.facebookUrl = fb || 'https://www.facebook.com/profile.php?id=100089787764565';
             boutiqueConfig.adminPin = pin || '1234';
 
             saveConfig();
