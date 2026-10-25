@@ -1780,10 +1780,15 @@
                                 ${product.category ? `<span class="bg-black/85 backdrop-blur-md text-brand-gold text-[9px] uppercase tracking-editorial font-semibold px-2.5 py-0.5 rounded-full border border-brand-gold/30">${product.category}</span>` : ''}
                             </div>
 
-                            <!-- Wishlist Heart Button -->
-                            <button onclick="toggleWishlist('${product.id}', event)" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 backdrop-blur-md border border-gray-700 flex items-center justify-center transition-all ${isFavorite ? 'text-brand-crimson' : 'text-white hover:text-brand-crimson'} shadow">
-                                <i class="${isFavorite ? 'fas' : 'far'} fa-heart text-xs"></i>
-                            </button>
+                            <!-- Floating Actions: Wishlist Heart & Direct Bag -->
+                            <div class="absolute top-3 right-3 flex flex-col gap-2 z-10" onclick="event.stopPropagation()">
+                                <button onclick="toggleWishlist('${product.id}', event)" class="w-8 h-8 rounded-full bg-black/70 hover:bg-black/90 backdrop-blur-md border border-gray-700/80 hover:border-brand-crimson flex items-center justify-center transition-all ${isFavorite ? 'text-brand-crimson border-brand-crimson/60 shadow-brand-crimson/20' : 'text-white hover:text-brand-crimson'} shadow-md" title="Coup de cœur">
+                                    <i class="${isFavorite ? 'fas' : 'far'} fa-heart text-xs"></i>
+                                </button>
+                                <button onclick="addToBag('${product.id}')" class="w-8 h-8 rounded-full bg-black/70 hover:bg-black/90 backdrop-blur-md border border-gray-700/80 hover:border-brand-gold flex items-center justify-center transition-all ${isInBag ? 'text-brand-gold border-brand-gold/70 shadow-brand-gold/20' : 'text-white hover:text-brand-gold'} shadow-md" title="Ajouter au Panier">
+                                    <i class="fas fa-bag-shopping text-xs"></i>
+                                </button>
+                            </div>
 
                             <!-- Serial Number Tag -->
                             <div class="absolute bottom-3 left-3 bg-black/80 backdrop-blur-md text-[9px] text-gray-300 font-mono tracking-wider px-2 py-0.5 rounded border border-gray-800">
@@ -1839,14 +1844,11 @@
                                 </div>
                             </div>
 
-                            <!-- Action Buttons: 1-Click WhatsApp + Direct Bag -->
-                            <div class="flex items-center gap-2 pt-1 font-garet">
-                                <button onclick="openSingleOrderModal('${product.id}')" class="flex-1 bg-gradient-to-r from-brand-red via-brand-crimson to-brand-red hover:brightness-110 text-white font-bold text-xs uppercase tracking-luxury py-3.5 rounded-xl transition-all shadow-md shadow-brand-red/30 flex items-center justify-center gap-2 group/btn">
-                                    <i class="fab fa-whatsapp text-base group-hover/btn:scale-110 transition-transform"></i>
-                                    <span>Commander direct</span>
-                                </button>
-                                <button onclick="event.stopPropagation(); addToBag('${product.id}')" class="w-12 h-[46px] rounded-xl bg-black/60 hover:bg-brand-crimson border border-gray-700/80 hover:border-brand-crimson text-white flex items-center justify-center transition-all shadow-md group/bag shrink-0" title="Ajouter au Panier">
-                                    <i class="fas fa-bag-shopping text-sm text-brand-gold group-hover/bag:text-white transition-colors"></i>
+                            <!-- Primary Action Button: 1-Click WhatsApp Order -->
+                            <div class="pt-2 font-garet">
+                                <button onclick="openSingleOrderModal('${product.id}')" class="w-full bg-gradient-to-r from-brand-red via-brand-crimson to-brand-red hover:brightness-110 active:scale-[0.98] text-white font-bold text-xs uppercase tracking-wider py-3.5 px-4 rounded-xl transition-all shadow-md shadow-brand-red/30 flex items-center justify-center gap-2.5 group">
+                                    <i class="fab fa-whatsapp text-base group-hover:scale-110 transition-transform shrink-0"></i>
+                                    <span class="whitespace-nowrap">Commander direct</span>
                                 </button>
                             </div>
                         </div>
