@@ -6,10 +6,10 @@
 // Features: Real-time inventory synchronization, cloud orders, passkeys & settings.
 
 const MAROUKI_SUPABASE_CONFIG = {
-    // Shared Supabase Project URL
-    url: "https://pmaslgwawmbpeoahwxfv.supabase.co",
-    // Shared Anon Public Key
-    anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBtYXNsZ3dhd21icGVvYWh3eGZ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEyODY4MTMsImV4cCI6MjEwNjg2MjgxM30.oqWVU5Qp3Th0Velnqhb4YkLF1KtiVyOas2Igk501Vow"
+    // Dedicated Supabase Project URL for Marouki Frippe
+    url: "https://muwhwsgiuklmdysjvkrg.supabase.co",
+    // Dedicated Anon Public Key
+    anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11d2h3c2dpdWtsbWR5c2p2a3JnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMxMTYxMjIsImV4cCI6MjEwODY5MjEyMn0.Cvd5-qFI0EVgd1hQLl2irnHlD9FeA0LHoUByGp0VDwo"
 };
 
 function getActiveSupabaseConfig() {

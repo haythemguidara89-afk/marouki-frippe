@@ -13,8 +13,8 @@ from datetime import datetime, timedelta
 import urllib.request
 import urllib.error
 
-SUPABASE_URL = "https://pmaslgwawmbpeoahwxfv.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBtYXNsZ3dhd21icGVvYWh3eGZ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEyODY4MTMsImV4cCI6MjEwNjg2MjgxM30.oqWVU5Qp3Th0Velnqhb4YkLF1KtiVyOas2Igk501Vow"
+SUPABASE_URL = "https://muwhwsgiuklmdysjvkrg.supabase.co"
+SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11d2h3c2dpdWtsbWR5c2p2a3JnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMxMTYxMjIsImV4cCI6MjEwODY5MjEyMn0.Cvd5-qFI0EVgd1hQLl2irnHlD9FeA0LHoUByGp0VDwo"
 BASE_ADMIN_URL = "https://marouki-frippe-admin.vercel.app"
 
 def request_supabase(endpoint, method="GET", data=None):
