@@ -1,0 +1,8 @@
+{
+  "cleanUrls": true,
+  "routes": [
+    { "src": "^/$", "status": 302, "headers": { "Location": "/admin" } },
+    { "src": "^/admin$", "dest": "/admin.html" },
+    { "handle": "filesystem" }
+  ]
+}

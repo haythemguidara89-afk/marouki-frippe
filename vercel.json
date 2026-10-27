@@ -1,3 +1,11 @@
 {
-  "cleanUrls": true
+  "cleanUrls": true,
+  "routes": [
+    { "src": "^/admin(/.*)?$", "dest": "/404.html", "status": 404 },
+    { "src": "^/admin\\.html$", "dest": "/404.html", "status": 404 },
+    { "src": "^/admin\\.js$", "dest": "/404.html", "status": 404 },
+    { "src": "^/schema\\.sql$", "dest": "/404.html", "status": 404 },
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/404.html", "status": 404 }
+  ]
 }

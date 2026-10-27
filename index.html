@@ -62,6 +62,10 @@
     <!-- Font Awesome 6.5 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+    <!-- Supabase SDK & Configuration -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+
     <style>
         /* ===================================================
            GARET FONT DEFINITIONS (Geometric Haute-Couture Sans)
@@ -1221,9 +1225,37 @@
                     applyConfigToUI();
                 }
             });
+
+            // Cloud Supabase Ready & Realtime listener
+            window.addEventListener('maroukiSupabaseReady', () => {
+                loadConfig();
+                loadProducts();
+                setupStoreRealtime();
+            });
+
+            // Initial Realtime setup
+            setupStoreRealtime();
         }
 
-        function loadConfig() {
+        function setupStoreRealtime() {
+            if (!maroukiSupabase) return;
+            try {
+                maroukiSupabase
+                    .channel('storefront-realtime')
+                    .on('postgres_changes', { event: '*', schema: 'public', table: 'products' }, () => {
+                        console.log("Storefront: Realtime product update received");
+                        loadProducts();
+                    })
+                    .on('postgres_changes', { event: '*', schema: 'public', table: 'boutique_config' }, () => {
+                        loadConfig();
+                    })
+                    .subscribe();
+            } catch (err) {
+                console.warn("Storefront realtime subscription notice:", err);
+            }
+        }
+
+        async function loadConfig() {
             const saved = localStorage.getItem('marouki_frippe_config');
             if (saved) {
                 try {
@@ -1233,6 +1265,31 @@
                 }
             } else {
                 localStorage.setItem('marouki_frippe_config', JSON.stringify(boutiqueConfig));
+            }
+
+            if (maroukiSupabase) {
+                try {
+                    const { data, error } = await maroukiSupabase
+                        .from('boutique_config')
+                        .select('*')
+                        .eq('id', 'main')
+                        .single();
+
+                    if (!error && data) {
+                        boutiqueConfig = {
+                            storeName: data.store_name || DEFAULT_CONFIG.storeName,
+                            whatsappNumber: data.whatsapp_number || DEFAULT_CONFIG.whatsappNumber,
+                            instagramUrl: data.instagram_url || DEFAULT_CONFIG.instagramUrl,
+                            instagramHandle: data.instagram_handle || DEFAULT_CONFIG.instagramHandle,
+                            facebookUrl: data.facebook_url || DEFAULT_CONFIG.facebookUrl,
+                            adminPin: data.admin_pin || DEFAULT_CONFIG.adminPin
+                        };
+                        localStorage.setItem('marouki_frippe_config', JSON.stringify(boutiqueConfig));
+                        applyConfigToUI();
+                    }
+                } catch (err) {
+                    console.warn("Could not load config from Supabase, using cache:", err);
+                }
             }
         }
 
@@ -1275,7 +1332,7 @@
             if (sidebarWa) sidebarWa.href = waUrl;
         }
 
-        function loadProducts() {
+        async function loadProducts() {
             const saved = localStorage.getItem('marouki_frippe_products');
             if (saved) {
                 try {
@@ -1287,6 +1344,23 @@
             } else {
                 products = [...SAMPLE_PRODUCTS];
                 localStorage.setItem('marouki_frippe_products', JSON.stringify(products));
+            }
+
+            if (maroukiSupabase) {
+                try {
+                    const { data, error } = await maroukiSupabase
+                        .from('products')
+                        .select('*')
+                        .order('created_at', { ascending: false });
+
+                    if (!error && data && data.length > 0) {
+                        products = data;
+                        localStorage.setItem('marouki_frippe_products', JSON.stringify(products));
+                        renderVitrine();
+                    }
+                } catch (err) {
+                    console.warn("Could not load products from Supabase, using cache:", err);
+                }
             }
         }
 
@@ -1506,7 +1580,7 @@
         }
 
         function updateCategoryCounts() {
-            const activeProducts = products.filter(p => p.status === 'active');
+            const activeProducts = products.filter(p => p.status === 'active' || p.status === 'available');
             
             const countAll = document.getElementById('cat-count-all');
             if (countAll) countAll.textContent = activeProducts.length;
@@ -1682,7 +1756,7 @@
             updateCategoryCounts();
             renderActiveFilterChips(searchVal);
 
-            let activeProducts = products.filter(p => p.status === 'active');
+            let activeProducts = products.filter(p => p.status === 'active' || p.status === 'available');
             let filtered = [...activeProducts];
 
             // Filter Category
@@ -2031,14 +2105,20 @@
             const city = document.getElementById('customer-city').value.trim();
             const address = document.getElementById('customer-address').value.trim();
 
+            const orderId = 'MF-' + Date.now().toString().slice(-6);
             let message = '';
+            let orderTotal = 0;
+            let orderItems = [];
 
             if (mode === 'single' && window.activeOrderProduct) {
                 const p = window.activeOrderProduct;
+                orderTotal = p.price;
+                orderItems = [p];
                 message = 
 `Bonjour *Marouki Frippe*,
 
 Je souhaite réserver la pièce suivante en exclusivité :
+📋 *RÉFÉRENCE :* #${orderId}
 
 👗 *ARTICLE :* ${p.name}
 💰 *PRIX :* ${p.price} TND
@@ -2061,11 +2141,14 @@ Merci de me confirmer la disponibilité et le délai de livraison ! ♡`;
                 const isFreeShipping = subtotal >= 120;
                 const shipping = isFreeShipping ? "GRATUITE" : "7 TND";
                 const total = subtotal + (isFreeShipping ? 0 : 7);
+                orderTotal = total;
+                orderItems = [...shoppingBag];
 
                 message = 
 `Bonjour *Marouki Frippe*,
 
 Je souhaite commander ma sélection privée (${shoppingBag.length} pièces) :
+📋 *RÉFÉRENCE :* #${orderId}
 
 ${itemsList}
 
@@ -2084,13 +2167,34 @@ ${itemsList}
 Merci de me confirmer la disponibilité pour l'envoi rapide ! ♡`;
             }
 
+            // Save order in Supabase Cloud
+            if (maroukiSupabase) {
+                try {
+                    maroukiSupabase.from('orders').insert({
+                        id: orderId,
+                        customer_name: name,
+                        customer_phone: phone,
+                        customer_city: gov + (city ? ` (${city})` : ''),
+                        customer_address: address,
+                        items: orderItems,
+                        total: orderTotal,
+                        mode: mode,
+                        status: 'pending'
+                    }).then(({ error }) => {
+                        if (error) console.warn("Supabase order insert notice:", error);
+                    });
+                } catch (err) {
+                    console.warn("Order persistence notice:", err);
+                }
+            }
+
             const encoded = encodeURIComponent(message);
             const waNum = boutiqueConfig.whatsappNumber || "21699000000";
             const waUrl = `https://wa.me/${waNum}?text=${encoded}`;
             
             window.open(waUrl, '_blank');
             closeOrderModal();
-            showToast("Commande préparée ! Redirection WhatsApp...");
+            showToast("Commande enregistrée ! Redirection WhatsApp...");
         }
 
         // --- 6. PRODUCT QUICK VIEW WITH FABRIC ZOOM ---
@@ -2190,7 +2294,7 @@ Merci de me confirmer la disponibilité pour l'envoi rapide ! ♡`;
             const modal = document.getElementById('wishlist-modal');
             const container = document.getElementById('wishlist-items-container');
 
-            const favoriteProducts = products.filter(p => wishlist.includes(p.id) && p.status === 'active');
+            const favoriteProducts = products.filter(p => wishlist.includes(p.id) && (p.status === 'active' || p.status === 'available'));
 
             if (favoriteProducts.length === 0) {
                 container.innerHTML = `

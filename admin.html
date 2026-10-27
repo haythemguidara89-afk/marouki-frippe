@@ -9,6 +9,9 @@
     <title>Administration • Marouki Frippe</title>
     <meta name="robots" content="noindex, nofollow">
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+
     <!-- Font Preloads for Instant Performance -->
     <link rel="preload" href="fonts/Garet-Book.woff" as="font" type="font/woff" crossorigin>
     <link rel="preload" href="fonts/Garet-Heavy.woff" as="font" type="font/woff" crossorigin>
@@ -52,6 +55,11 @@
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Supabase SDK & Configuration -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="passkey.js"></script>
 
     <style>
         /* ===================================================
@@ -104,13 +112,6 @@
         @font-face {
             font-family: 'Garet';
             font-style: normal;
-            font-weight: 850;
-            font-display: swap;
-            src: local('Garet Heavy'), local('Garet-Heavy'), local('Garet'), url('fonts/Garet-Heavy.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Heavy.woff') format('woff');
-        }
-        @font-face {
-            font-family: 'Garet';
-            font-style: normal;
             font-weight: 900;
             font-display: swap;
             src: local('Garet Heavy'), local('Garet-Heavy'), local('Garet'), url('fonts/Garet-Heavy.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Heavy.woff') format('woff');
@@ -118,17 +119,9 @@
 
         body { 
             background: radial-gradient(circle at 50% 0%, #20080c 0%, #080607 55%, #040203 100%);
-            color: #ffffff;
-            font-family: 'Garet', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility;
             min-height: 100vh;
-            letter-spacing: -0.01em;
-        }
-
-        .font-garet {
-            font-family: 'Garet', system-ui, -apple-system, sans-serif !important;
+            color: #f3f4f6;
+            font-family: 'Garet', system-ui, sans-serif;
         }
 
         .glass-panel { 
@@ -147,7 +140,6 @@
 
         .hide { display: none !important; }
 
-        /* Custom scrollbar */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: #0c080a; }
         ::-webkit-scrollbar-thumb { background: #850005; border-radius: 4px; }
@@ -158,27 +150,51 @@
 
     <!-- ADMIN HEADER (Only visible when unlocked) -->
     <header id="admin-header" class="glass-panel sticky top-0 z-40 border-b border-brand-red/30 px-4 md:px-8 py-3.5 transition-all duration-300 hide">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-3">
             
             <!-- Brand & Admin Title -->
             <div class="flex items-center gap-3">
                 <img src="logo.svg" onerror="this.src='logo.jpg'" alt="Marouki Frippe" class="h-10 w-10 rounded-full border border-brand-crimson object-cover">
                 <div>
                     <h1 class="text-base sm:text-lg font-serif font-bold text-white flex items-center gap-1.5 leading-tight">
-                        <span>Marouki Frippe</span>
+                        <span id="header-store-name">Marouki Frippe</span>
                         <span class="text-brand-crimson text-xs font-sans font-semibold px-2 py-0.5 rounded bg-brand-crimson/20 border border-brand-crimson/40">Espace Propriétaire</span>
                     </h1>
-                    <p class="text-[10px] text-gray-400">Gestion des articles, stock et commandes WhatsApp</p>
+                    <div class="flex items-center gap-2 mt-0.5">
+                        <div id="db-status-badge" class="flex items-center gap-1 text-[10px] text-emerald-400 font-medium">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <span>Cloud DB Connecté</span>
+                        </div>
+                        <span class="text-gray-600 text-[10px]">•</span>
+                        <p class="text-[10px] text-gray-400 hidden sm:inline">Gestion en direct</p>
+                    </div>
                 </div>
+            </div>
+
+            <!-- Tab Switchers (Inventaire vs Commandes) -->
+            <div class="flex items-center bg-black/60 p-1 rounded-2xl border border-gray-800">
+                <button onclick="switchAdminTab('inventory')" id="tab-btn-inventory" class="px-4 py-1.5 rounded-xl text-xs font-bold transition-all bg-brand-crimson text-white shadow-sm flex items-center gap-1.5">
+                    <i class="fas fa-boxes-stacked text-xs"></i>
+                    <span>Inventaire</span>
+                </button>
+                <button onclick="switchAdminTab('orders')" id="tab-btn-orders" class="px-4 py-1.5 rounded-xl text-xs font-bold transition-all text-gray-400 hover:text-white flex items-center gap-1.5 relative">
+                    <i class="fas fa-receipt text-xs"></i>
+                    <span>Commandes</span>
+                    <span id="badge-pending-orders" class="ml-1 bg-brand-gold text-black text-[10px] font-black px-1.5 py-0.2 rounded-full hide">0</span>
+                </button>
             </div>
 
             <!-- Actions Bar -->
             <div class="flex items-center gap-2 sm:gap-3">
-                <a href="index.html" target="_blank" class="bg-black/50 hover:bg-black/80 text-gray-300 hover:text-white border border-gray-700 px-3 py-1.5 rounded-xl text-xs font-medium flex items-center gap-1.5 transition-all">
+                <a href="https://marouki-frippe.vercel.app/" target="_blank" class="bg-black/50 hover:bg-black/80 text-gray-300 hover:text-white border border-gray-700 px-3 py-1.5 rounded-xl text-xs font-medium flex items-center gap-1.5 transition-all" title="Ouvrir la vitrine cliente">
                     <i class="fas fa-store text-brand-gold"></i>
-                    <span class="hidden sm:inline">Voir la</span> <span>Vitrine</span>
-                    <i class="fas fa-arrow-up-right-from-square text-[10px] ml-0.5"></i>
+                    <span class="hidden md:inline">Vitrine</span>
+                    <i class="fas fa-arrow-up-right-from-square text-[10px]"></i>
                 </a>
+                <button onclick="openInviteModal()" class="glass-panel hover:border-brand-gold/60 text-brand-gold hover:text-white px-3 py-1.5 rounded-xl text-xs font-medium flex items-center gap-1.5 transition-all" title="Générer un lien Passkey d'invitation">
+                    <i class="fas fa-key text-xs"></i>
+                    <span class="hidden sm:inline">Passkeys</span>
+                </button>
                 <button onclick="toggleSettingsModal()" class="glass-panel hover:border-gray-500 text-gray-300 hover:text-white px-3 py-1.5 rounded-xl text-xs font-medium flex items-center gap-1.5 transition-all">
                     <i class="fas fa-sliders text-brand-crimson"></i>
                     <span class="hidden sm:inline">Paramètres</span>
@@ -198,31 +214,65 @@
     <!-- MAIN ADMIN CONTENT -->
     <main class="flex-grow max-w-7xl mx-auto p-4 sm:p-6 w-full">
 
-        <!-- PIN GATE SCREEN (Shown by default) -->
-        <div id="pin-screen" class="min-h-[75vh] flex items-center justify-center p-4">
-            <div class="glass-panel-elevated p-8 sm:p-10 rounded-3xl max-w-sm w-full text-center relative border-brand-crimson/40">
+        <!-- AUTH GATE SCREEN (Passkey Biometric & Code de Secours) -->
+        <div id="auth-screen" class="min-h-[75vh] flex items-center justify-center p-4">
+            <div class="glass-panel-elevated p-8 sm:p-10 rounded-3xl max-w-md w-full text-center relative border-brand-crimson/40 shadow-2xl">
                 
                 <div class="w-16 h-16 rounded-full bg-brand-crimson/20 border border-brand-crimson text-brand-crimson flex items-center justify-center mx-auto mb-5 text-2xl shadow-lg shadow-brand-red/30">
-                    <i class="fas fa-shield-halved"></i>
+                    <i class="fas fa-fingerprint"></i>
                 </div>
                 
                 <h2 class="text-2xl font-serif font-bold text-white mb-1">Espace Propriétaire</h2>
-                <p class="text-xs text-gray-400 mb-6 font-light">Accès sécurisé pour la gestion de Marouki Frippe</p>
+                <p class="text-xs text-gray-400 mb-6 font-light">Connexion sécurisée par Passkey biométrique (Face ID / Touch ID)</p>
 
-                <form onsubmit="handlePinSubmit(event)" class="space-y-4">
-                    <div>
-                        <input type="password" id="admin-pin-input" maxlength="8" autofocus placeholder="Code PIN (défaut: 1234)" 
-                               class="w-full text-center tracking-[0.5em] text-2xl font-bold bg-black/80 border border-gray-700 rounded-2xl p-3.5 text-white focus:border-brand-crimson outline-none transition-colors">
+                <!-- Passkey Invite Enrollment Banner (if ?setup_passkey in URL) -->
+                <div id="invite-enrollment-banner" class="mb-6 p-4 rounded-2xl bg-brand-gold/10 border border-brand-gold/40 text-left hide">
+                    <div class="flex items-start gap-2.5">
+                        <i class="fas fa-wand-magic-sparkles text-brand-gold text-lg mt-0.5"></i>
+                        <div>
+                            <h4 class="text-xs font-bold text-brand-gold uppercase tracking-wider">Lien d'enrôlement détecté</h4>
+                            <p class="text-xs text-gray-300 mt-1">
+                                Vous êtes invité(e) en tant que <strong id="enrollment-admin-name" class="text-white">Propriétaire</strong>.
+                                Cliquez ci-dessous pour enregistrer votre Face ID ou Touch ID en 1 clic.
+                            </p>
+                        </div>
                     </div>
-                    <p id="pin-error-msg" class="text-xs text-brand-crimson font-medium hide">Code PIN incorrect</p>
-
-                    <button type="submit" class="w-full bg-gradient-to-r from-brand-red to-brand-crimson hover:from-brand-crimson hover:to-red-600 text-white font-semibold py-3.5 rounded-2xl transition-all shadow-lg shadow-brand-red/30 text-sm uppercase tracking-wider">
-                        Déverrouiller
+                    <button onclick="handleEnrollPasskey()" id="btn-enroll-passkey" class="mt-3 w-full bg-brand-gold hover:bg-yellow-400 text-black font-bold py-2.5 px-4 rounded-xl text-xs uppercase tracking-wider transition-all shadow-lg flex items-center justify-center gap-2">
+                        <i class="fas fa-fingerprint text-base"></i>
+                        <span>Associer mon Passkey Biométrique</span>
                     </button>
-                </form>
+                </div>
+
+                <!-- Primary 1-Touch Passkey Login Button -->
+                <div class="space-y-4">
+                    <button onclick="handlePasskeyLogin()" id="btn-passkey-login" class="w-full bg-gradient-to-r from-brand-red via-brand-crimson to-brand-red hover:brightness-110 active:scale-[0.98] text-white font-bold py-4 px-6 rounded-2xl transition-all shadow-xl shadow-brand-red/30 flex items-center justify-center gap-3 text-xs uppercase tracking-wider group">
+                        <i class="fas fa-fingerprint text-xl text-brand-gold group-hover:scale-110 transition-transform"></i>
+                        <span>Connexion Face ID / Touch ID</span>
+                    </button>
+
+                    <!-- Divider -->
+                    <div class="flex items-center gap-3 py-1">
+                        <div class="flex-grow border-t border-gray-800"></div>
+                        <span class="text-[11px] text-gray-500 uppercase tracking-widest font-mono">ou code d'accès</span>
+                        <div class="flex-grow border-t border-gray-800"></div>
+                    </div>
+
+                    <!-- Recovery Code / PIN Fallback Form -->
+                    <form onsubmit="handleCodeSubmit(event)" class="space-y-3">
+                        <div>
+                            <input type="password" id="admin-code-input" placeholder="Code de secours ou PIN (défaut: 1234)" 
+                                   class="w-full text-center text-sm font-mono tracking-widest bg-black/80 border border-gray-700 rounded-xl p-3 text-white focus:border-brand-crimson outline-none transition-colors">
+                        </div>
+                        <p id="auth-error-msg" class="text-xs text-brand-crimson font-medium hide"></p>
+
+                        <button type="submit" class="w-full bg-black/60 hover:bg-black/90 text-gray-200 border border-gray-700 py-3 rounded-xl transition-all text-xs font-semibold uppercase tracking-wider">
+                            Valider avec le code
+                        </button>
+                    </form>
+                </div>
 
                 <div class="mt-6 pt-5 border-t border-gray-800 text-xs text-gray-500">
-                    <a href="index.html" class="hover:text-gray-300 transition-colors flex items-center justify-center gap-1.5">
+                    <a href="https://marouki-frippe.vercel.app/" class="hover:text-gray-300 transition-colors flex items-center justify-center gap-1.5">
                         <i class="fas fa-arrow-left text-[10px]"></i>
                         <span>Retourner vers la vitrine publique</span>
                     </a>
@@ -230,28 +280,28 @@
             </div>
         </div>
 
-        <!-- DASHBOARD CONTAINER (Hidden until PIN is entered) -->
+        <!-- DASHBOARD CONTAINER (Hidden until authenticated) -->
         <div id="dashboard-container" class="hide space-y-8">
             
             <!-- Stats Overview Cards -->
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                <!-- Total -->
+                <!-- Total Articles -->
                 <div class="glass-panel p-4 rounded-2xl border-gray-800">
                     <p class="text-xs text-gray-400 uppercase tracking-wider">Total Produits</p>
                     <p id="stat-total" class="text-2xl sm:text-3xl font-bold mt-1 text-white">0</p>
                     <span class="text-[10px] text-gray-500">Inventaire complet</span>
                 </div>
-                <!-- Actifs -->
+                <!-- En Vitrine -->
                 <div class="glass-panel p-4 rounded-2xl border-green-900/40">
                     <p class="text-xs text-green-400 uppercase tracking-wider">En Vitrine (Dispo)</p>
                     <p id="stat-active" class="text-2xl sm:text-3xl font-bold mt-1 text-green-400">0</p>
                     <span class="text-[10px] text-gray-500">Visibles par les clientes</span>
                 </div>
-                <!-- Vendus -->
+                <!-- Commandes Total -->
                 <div class="glass-panel p-4 rounded-2xl border-brand-red/40">
-                    <p class="text-xs text-brand-crimson uppercase tracking-wider">Articles Vendus</p>
-                    <p id="stat-sold" class="text-2xl sm:text-3xl font-bold mt-1 text-brand-crimson">0</p>
-                    <span class="text-[10px] text-gray-500">Marqués comme vendus</span>
+                    <p class="text-xs text-brand-crimson uppercase tracking-wider">Commandes Clients</p>
+                    <p id="stat-orders-count" class="text-2xl sm:text-3xl font-bold mt-1 text-brand-crimson">0</p>
+                    <span class="text-[10px] text-gray-500">Total reçues</span>
                 </div>
                 <!-- Valeur Stock -->
                 <div class="glass-panel p-4 rounded-2xl border-amber-900/40">
@@ -261,188 +311,316 @@
                 </div>
             </div>
 
-            <!-- Add / Edit Product Form Panel -->
-            <div id="add-product-section" class="glass-panel-elevated p-6 rounded-3xl hide">
-                <div class="flex justify-between items-center mb-6 pb-3 border-b border-gray-800">
-                    <h3 id="form-title" class="text-xl font-serif font-semibold text-white flex items-center gap-2">
-                        <i class="fas fa-shirt text-brand-crimson"></i>
-                        <span>Ajouter une nouvelle pièce</span>
-                    </h3>
-                    <button onclick="toggleAddProductForm()" class="text-gray-400 hover:text-white p-1 text-lg">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
+            <!-- VIEW 1: INVENTORY MANAGEMENT SECTION -->
+            <div id="view-inventory" class="space-y-6">
 
-                <form id="product-form" onsubmit="handleProductSubmit(event)" class="space-y-6">
-                    <input type="hidden" id="edit-prod-id" value="">
-
-                    <!-- Image Upload Zone -->
-                    <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-2">
-                            Photos de l'article (Import direct depuis téléphone ou ordinateur)
-                        </label>
-                        
-                        <!-- Drag & Drop / File Input -->
-                        <div id="drop-zone" class="border-2 border-dashed border-brand-red/40 hover:border-brand-crimson rounded-2xl p-6 text-center bg-black/40 cursor-pointer transition-all">
-                            <input type="file" id="prod-file-input" multiple accept="image/*" class="hidden" onchange="handleFileSelect(event)">
-                            <div onclick="document.getElementById('prod-file-input').click()" class="space-y-2">
-                                <div class="w-12 h-12 rounded-full bg-brand-crimson/20 border border-brand-crimson/50 text-brand-crimson flex items-center justify-center mx-auto">
-                                    <i class="fas fa-camera text-xl"></i>
-                                </div>
-                                <p class="text-sm font-medium text-white">Cliquez ou déposez vos photos ici</p>
-                                <p class="text-xs text-gray-400">Importez directement depuis votre galerie (JPG, PNG, WebP) - Max 10 photos</p>
-                            </div>
-                        </div>
-
-                        <!-- Image Preview Thumbnails -->
-                        <div id="preview-thumbnails" class="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 gap-3 mt-4">
-                            <!-- Thumbnails injected via JS -->
-                        </div>
-
-                        <!-- External URLs Alternative Accordion -->
-                        <div class="mt-3">
-                            <button type="button" onclick="document.getElementById('manual-urls-container').classList.toggle('hide')" class="text-xs text-gray-400 hover:text-brand-crimson flex items-center gap-1.5 transition-colors">
-                                <i class="fas fa-link"></i>
-                                <span>Ou ajouter des URLs d'images externes</span>
-                            </button>
-                            <div id="manual-urls-container" class="mt-2 hide">
-                                <textarea id="prod-image-urls" rows="2" placeholder="https://lien1.jpg, https://lien2.jpg" class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-xs text-white focus:border-brand-crimson outline-none"></textarea>
-                                <button type="button" onclick="addUrlsToImages()" class="mt-1 text-xs bg-gray-800 hover:bg-gray-700 text-gray-200 px-3 py-1.5 rounded-lg">
-                                    Ajouter les URLs
-                                </button>
-                            </div>
-                        </div>
+                <!-- Add / Edit Product Form Panel -->
+                <div id="add-product-section" class="glass-panel-elevated p-6 rounded-3xl hide">
+                    <div class="flex justify-between items-center mb-6 pb-3 border-b border-gray-800">
+                        <h3 id="form-title" class="text-xl font-serif font-semibold text-white flex items-center gap-2">
+                            <i class="fas fa-shirt text-brand-crimson"></i>
+                            <span>Ajouter une nouvelle pièce</span>
+                        </h3>
+                        <button onclick="toggleAddProductForm()" class="text-gray-400 hover:text-white p-1 text-lg">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
 
-                    <!-- General Product Info -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        
-                        <!-- Name -->
-                        <div class="md:col-span-2">
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
-                                Nom de la pièce *
+                    <form id="product-form" onsubmit="handleProductSubmit(event)" class="space-y-6">
+                        <input type="hidden" id="edit-prod-id" value="">
+
+                        <!-- Image Upload Zone -->
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-2">
+                                Photos de l'article (Import direct depuis téléphone ou ordinateur)
                             </label>
-                            <input type="text" id="prod-name" required placeholder="ex: Blazer Vintage en Laine Marron" 
-                                   class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none">
+                            
+                            <!-- Drag & Drop / File Input -->
+                            <div id="drop-zone" class="border-2 border-dashed border-brand-red/40 hover:border-brand-crimson rounded-2xl p-6 text-center bg-black/40 cursor-pointer transition-all">
+                                <input type="file" id="prod-file-input" multiple accept="image/*" class="hidden" onchange="handleFileSelect(event)">
+                                <div onclick="document.getElementById('prod-file-input').click()" class="space-y-2">
+                                    <div class="w-12 h-12 rounded-full bg-brand-crimson/20 border border-brand-crimson/50 text-brand-crimson flex items-center justify-center mx-auto">
+                                        <i class="fas fa-camera text-xl"></i>
+                                    </div>
+                                    <p class="text-sm font-medium text-white">Cliquez ou déposez vos photos ici</p>
+                                    <p class="text-xs text-gray-400">Importez directement depuis votre galerie (JPG, PNG, WebP) - Max 10 photos</p>
+                                </div>
+                            </div>
+
+                            <!-- Image Preview Thumbnails -->
+                            <div id="preview-thumbnails" class="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 gap-3 mt-4">
+                                <!-- Thumbnails injected via JS -->
+                            </div>
+
+                            <!-- External URLs Alternative Accordion -->
+                            <div class="mt-3">
+                                <button type="button" onclick="document.getElementById('manual-urls-container').classList.toggle('hide')" class="text-xs text-gray-400 hover:text-brand-crimson flex items-center gap-1.5 transition-colors">
+                                    <i class="fas fa-link"></i>
+                                    <span>Ou ajouter des URLs d'images externes</span>
+                                </button>
+                                <div id="manual-urls-container" class="mt-2 hide">
+                                    <textarea id="prod-image-urls" rows="2" placeholder="https://lien1.jpg, https://lien2.jpg" class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-xs text-white focus:border-brand-crimson outline-none"></textarea>
+                                    <button type="button" onclick="addUrlsToImages()" class="mt-1 text-xs bg-gray-800 hover:bg-gray-700 text-gray-200 px-3 py-1.5 rounded-lg">
+                                        Ajouter les URLs
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
-                        <!-- Category -->
+                        <!-- General Product Info -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            
+                            <!-- Name -->
+                            <div class="md:col-span-2">
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
+                                    Nom de la pièce *
+                                </label>
+                                <input type="text" id="prod-name" required placeholder="ex: Blazer Vintage en Laine Marron" 
+                                       class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none font-garet">
+                            </div>
+
+                            <!-- Category -->
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
+                                    Catégorie *
+                                </label>
+                                <select id="prod-category" required class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none font-garet">
+                                    <option value="Robes">Robes & Combinaisons</option>
+                                    <option value="Vestes">Vestes & Manteaux</option>
+                                    <option value="Hauts">Hauts, Chemises & Pulls</option>
+                                    <option value="Pantalons">Pantalons & Jupes</option>
+                                    <option value="Accessoires">Sacs, Chaussures & Accessoires</option>
+                                    <option value="Autre">Autre pièce tendance</option>
+                                </select>
+                            </div>
+
+                            <!-- Price -->
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
+                                    Prix (en TND) *
+                                </label>
+                                <div class="relative">
+                                    <input type="number" id="prod-price" required min="1" step="0.5" placeholder="ex: 45" 
+                                           class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none pr-14 font-garet">
+                                    <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-brand-crimson">TND</span>
+                                </div>
+                            </div>
+
+                            <!-- Size -->
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
+                                    Taille *
+                                </label>
+                                <input type="text" id="prod-size" required placeholder="ex: S, M, L, 38, Unique" 
+                                       class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none font-garet">
+                            </div>
+
+                            <!-- Color -->
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
+                                    Couleur *
+                                </label>
+                                <input type="text" id="prod-color" required placeholder="ex: Rouge bordeaux, Noir, Beige" 
+                                       class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none font-garet">
+                            </div>
+
+                            <!-- Description -->
+                            <div class="md:col-span-2">
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
+                                    Description & État (optionnel)
+                                </label>
+                                <textarea id="prod-desc" rows="2" placeholder="État impeccable, tissu soyeux, boutons dorés..." 
+                                          class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none font-garet"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="flex justify-end items-center gap-3 pt-3 border-t border-gray-800">
+                            <button type="button" onclick="toggleAddProductForm()" class="px-5 py-2.5 rounded-xl text-xs font-medium text-gray-400 hover:text-white transition-colors">
+                                Annuler
+                            </button>
+                            <button type="submit" id="btn-submit-product" class="bg-brand-crimson hover:bg-brand-red text-white font-semibold text-xs uppercase tracking-wider px-6 py-3 rounded-xl transition-all shadow-lg shadow-brand-red/30">
+                                Enregistrer dans la Base Cloud
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Products List Management -->
+                <div class="glass-panel p-4 sm:p-6 rounded-3xl">
+                    
+                    <!-- Table controls -->
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                         <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
-                                Catégorie *
-                            </label>
-                            <select id="prod-category" required class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none">
-                                <option value="Robes">Robes & Combinaisons</option>
-                                <option value="Vestes">Vestes & Manteaux</option>
-                                <option value="Hauts">Hauts, Chemises & Pulls</option>
-                                <option value="Pantalons">Pantalons & Jupes</option>
-                                <option value="Accessoires">Sacs, Chaussures & Accessoires</option>
-                                <option value="Autre">Autre pièce tendance</option>
+                            <h3 class="text-lg font-serif font-semibold">Inventaire des articles</h3>
+                            <p class="text-xs text-gray-400">Gérez votre stock et marquez les articles vendus en 1 clic</p>
+                        </div>
+
+                        <!-- Admin search & filter -->
+                        <div class="flex items-center gap-2 w-full sm:w-auto">
+                            <input type="text" id="admin-search" oninput="renderAdminTable()" placeholder="Filtrer la liste..." 
+                                   class="bg-black/60 border border-gray-700 rounded-xl px-3 py-1.5 text-xs text-white placeholder-gray-500 focus:border-brand-crimson outline-none w-full sm:w-48 font-garet">
+                            <select id="admin-status-filter" onchange="renderAdminTable()" class="bg-black/60 border border-gray-700 rounded-xl px-2.5 py-1.5 text-xs text-white focus:border-brand-crimson outline-none font-garet">
+                                <option value="all">Tous</option>
+                                <option value="available">En vente (Dispo)</option>
+                                <option value="reserved">Réservés</option>
+                                <option value="sold">Vendus</option>
                             </select>
                         </div>
-
-                        <!-- Price -->
-                        <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
-                                Prix (en TND) *
-                            </label>
-                            <div class="relative">
-                                <input type="number" id="prod-price" required min="1" step="0.5" placeholder="ex: 45" 
-                                       class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none pr-14">
-                                <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-brand-crimson">TND</span>
-                            </div>
-                        </div>
-
-                        <!-- Size -->
-                        <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
-                                Taille *
-                            </label>
-                            <input type="text" id="prod-size" required placeholder="ex: S, M, L, 38, Unique" 
-                                   class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none">
-                        </div>
-
-                        <!-- Color -->
-                        <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
-                                Couleur *
-                            </label>
-                            <input type="text" id="prod-color" required placeholder="ex: Rouge bordeaux, Noir, Beige" 
-                                   class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none">
-                        </div>
-
-                        <!-- Description -->
-                        <div class="md:col-span-2">
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
-                                Description & État (optionnel)
-                            </label>
-                            <textarea id="prod-desc" rows="2" placeholder="État impeccable, tissu soyeux, boutons dorés..." 
-                                      class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none"></textarea>
-                        </div>
                     </div>
 
-                    <!-- Actions -->
-                    <div class="flex justify-end items-center gap-3 pt-3 border-t border-gray-800">
-                        <button type="button" onclick="toggleAddProductForm()" class="px-5 py-2.5 rounded-xl text-xs font-medium text-gray-400 hover:text-white transition-colors">
-                            Annuler
-                        </button>
-                        <button type="submit" id="btn-submit-product" class="bg-brand-crimson hover:bg-brand-red text-white font-semibold text-xs uppercase tracking-wider px-6 py-3 rounded-xl transition-all shadow-lg shadow-brand-red/30">
-                            Enregistrer l'article
-                        </button>
+                    <!-- Table -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-black/70 text-gray-400 text-xs uppercase tracking-wider">
+                                <tr>
+                                    <th class="p-3.5 rounded-tl-xl">Pièce</th>
+                                    <th class="p-3.5">Catégorie</th>
+                                    <th class="p-3.5">Prix</th>
+                                    <th class="p-3.5">Taille / Couleur</th>
+                                    <th class="p-3.5">Statut</th>
+                                    <th class="p-3.5 text-right rounded-tr-xl">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-product-list" class="divide-y divide-gray-800/80">
+                                <!-- Injected via JS -->
+                            </tbody>
+                        </table>
                     </div>
-                </form>
+
+                    <!-- Empty Table Notice -->
+                    <div id="admin-empty-table" class="text-center py-10 text-gray-500 text-sm hide">
+                        Aucun produit trouvé dans cette vue.
+                    </div>
+                </div>
+
             </div>
 
-            <!-- Products List Management -->
-            <div class="glass-panel p-4 sm:p-6 rounded-3xl">
-                
-                <!-- Table controls -->
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-                    <div>
-                        <h3 class="text-lg font-serif font-semibold">Inventaire des articles</h3>
-                        <p class="text-xs text-gray-400">Gérez votre stock et marquez les articles vendus en 1 clic</p>
+            <!-- VIEW 2: ORDERS MANAGEMENT SECTION -->
+            <div id="view-orders" class="space-y-6 hide">
+                <div class="glass-panel p-4 sm:p-6 rounded-3xl">
+                    
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                        <div>
+                            <h3 class="text-lg font-serif font-semibold text-white flex items-center gap-2">
+                                <i class="fas fa-receipt text-brand-gold"></i>
+                                <span>Commandes Clients en Direct</span>
+                            </h3>
+                            <p class="text-xs text-gray-400">Toutes les commandes initiées par WhatsApp et sélections du panier</p>
+                        </div>
+
+                        <!-- Orders filters -->
+                        <div class="flex items-center gap-2">
+                            <select id="orders-status-filter" onchange="renderOrdersTable()" class="bg-black/60 border border-gray-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-brand-crimson outline-none font-garet">
+                                <option value="all">Tous les statuts</option>
+                                <option value="pending">En attente</option>
+                                <option value="confirmed">Confirmée</option>
+                                <option value="delivered">Livrée</option>
+                                <option value="cancelled">Annulée</option>
+                            </select>
+                        </div>
                     </div>
 
-                    <!-- Admin search & filter -->
-                    <div class="flex items-center gap-2 w-full sm:w-auto">
-                        <input type="text" id="admin-search" oninput="renderAdminTable()" placeholder="Filtrer la liste..." 
-                               class="bg-black/60 border border-gray-700 rounded-xl px-3 py-1.5 text-xs text-white placeholder-gray-500 focus:border-brand-crimson outline-none w-full sm:w-48">
-                        <select id="admin-status-filter" onchange="renderAdminTable()" class="bg-black/60 border border-gray-700 rounded-xl px-2.5 py-1.5 text-xs text-white focus:border-brand-crimson outline-none">
-                            <option value="all">Tous</option>
-                            <option value="active">En vente</option>
-                            <option value="sold">Vendus</option>
-                        </select>
+                    <!-- Orders Table -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-black/70 text-gray-400 text-xs uppercase tracking-wider">
+                                <tr>
+                                    <th class="p-3.5 rounded-tl-xl">Réf & Date</th>
+                                    <th class="p-3.5">Cliente</th>
+                                    <th class="p-3.5">Destination</th>
+                                    <th class="p-3.5">Articles Commandés</th>
+                                    <th class="p-3.5">Total</th>
+                                    <th class="p-3.5">Statut</th>
+                                    <th class="p-3.5 text-right rounded-tr-xl">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orders-list-body" class="divide-y divide-gray-800/80">
+                                <!-- Injected via JS -->
+                            </tbody>
+                        </table>
                     </div>
-                </div>
 
-                <!-- Table -->
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-sm">
-                        <thead class="bg-black/70 text-gray-400 text-xs uppercase tracking-wider">
-                            <tr>
-                                <th class="p-3.5 rounded-tl-xl">Pièce</th>
-                                <th class="p-3.5">Catégorie</th>
-                                <th class="p-3.5">Prix</th>
-                                <th class="p-3.5">Taille / Couleur</th>
-                                <th class="p-3.5">Statut</th>
-                                <th class="p-3.5 text-right rounded-tr-xl">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="admin-product-list" class="divide-y divide-gray-800/80">
-                            <!-- Injected via JS -->
-                        </tbody>
-                    </table>
-                </div>
+                    <div id="orders-empty-state" class="text-center py-12 text-gray-500 text-sm hide">
+                        <i class="fas fa-clipboard-list text-3xl mb-2 text-gray-700"></i>
+                        <p>Aucune commande enregistrée pour le moment.</p>
+                        <p class="text-[11px] text-gray-600 mt-1">Dès qu'une cliente commande sur la boutique, elle apparaîtra ici en temps réel.</p>
+                    </div>
 
-                <!-- Empty Table Notice -->
-                <div id="admin-empty-table" class="text-center py-10 text-gray-500 text-sm hide">
-                    Aucun produit trouvé dans cette vue.
                 </div>
             </div>
 
         </div>
 
     </main>
+
+    <!-- ONE-TIME PASSKEY INVITE MODAL -->
+    <div id="invite-modal" class="fixed inset-0 bg-black/90 z-[110] flex items-center justify-center p-4 backdrop-blur-md hide">
+        <div class="glass-panel-elevated p-6 sm:p-8 rounded-3xl max-w-lg w-full relative border-brand-gold/40">
+            <button onclick="closeInviteModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i class="fas fa-times text-lg"></i>
+            </button>
+            
+            <h3 class="text-xl font-serif font-bold mb-2 flex items-center gap-2 text-brand-gold">
+                <i class="fas fa-key"></i>
+                <span>Générer un Lien Passkey</span>
+            </h3>
+            <p class="text-xs text-gray-400 mb-6">
+                Créez un lien d'enrôlement unique pour configurer votre Face ID ou Touch ID sur votre téléphone ou partager l'accès.
+            </p>
+
+            <form onsubmit="handleGenerateInvite(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
+                        Nom de l'Administrateur
+                    </label>
+                    <input type="text" id="invite-admin-name" required value="Propriétaire" placeholder="ex: Propriétaire" 
+                           class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-gold outline-none font-garet">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
+                        Durée de validité
+                    </label>
+                    <select id="invite-duration" class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-gold outline-none font-garet">
+                        <option value="48">48 heures (2 jours)</option>
+                        <option value="168" selected>7 jours</option>
+                        <option value="720">30 jours</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="w-full bg-brand-gold hover:bg-yellow-400 text-black font-bold py-3 rounded-xl text-xs uppercase tracking-wider transition-all shadow-lg flex items-center justify-center gap-2">
+                    <i class="fas fa-link"></i>
+                    <span>Créer le lien unique</span>
+                </button>
+            </form>
+
+            <!-- Generated Result Container -->
+            <div id="invite-result-container" class="mt-6 p-4 rounded-2xl bg-black/80 border border-brand-gold/50 hide space-y-3">
+                <p class="text-xs text-brand-gold font-bold flex items-center gap-1.5">
+                    <i class="fas fa-check-circle"></i> Lien généré et sauvegardé dans Supabase !
+                </p>
+                <div class="relative">
+                    <input type="text" id="generated-invite-url" readonly 
+                           class="w-full bg-black/90 border border-gray-700 rounded-xl p-2.5 pr-20 text-xs text-white font-mono select-all">
+                    <button type="button" onclick="copyInviteUrl()" class="absolute right-1.5 top-1/2 -translate-y-1/2 bg-brand-gold hover:bg-yellow-400 text-black text-[10px] font-bold px-3 py-1.5 rounded-lg transition-all">
+                        Copier
+                    </button>
+                </div>
+                <p class="text-[11px] text-gray-400">
+                    Ouvrez ce lien sur votre iPhone, Android ou Mac pour enregistrer votre Face ID ou Touch ID en 1 touche.
+                </p>
+            </div>
+
+            <!-- List of existing active passkeys -->
+            <div class="mt-6 pt-5 border-t border-gray-800">
+                <h4 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-3">Passkeys & Accès Actifs</h4>
+                <div id="existing-passkeys-list" class="space-y-2 max-h-40 overflow-y-auto">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- BOUTIQUE SETTINGS MODAL -->
     <div id="settings-modal" class="fixed inset-0 bg-black/90 z-[105] flex items-center justify-center p-4 backdrop-blur-md hide">
@@ -462,16 +640,16 @@
                         Nom de la Boutique
                     </label>
                     <input type="text" id="setting-store-name" required placeholder="Marouki Frippe" 
-                           class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none">
+                           class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none font-garet">
                 </div>
 
                 <div>
                     <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
-                        Numéro WhatsApp pour les Commandes (avec indicatif Tunisie 216, sans +)
+                        Numéro WhatsApp pour les Commandes (avec indicatif 216, sans +)
                     </label>
-                    <input type="text" id="setting-whatsapp" required placeholder="ex: 21698123456" 
-                           class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none">
-                    <span class="text-[10px] text-gray-400">Exemple Tunisie : 216XXXXXXXX (ex: 21698123456)</span>
+                    <input type="text" id="setting-whatsapp" required placeholder="ex: 21699000000" 
+                           class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none font-garet">
+                    <span class="text-[10px] text-gray-400">Exemple Tunisie : 216XXXXXXXX</span>
                 </div>
 
                 <div>
@@ -479,7 +657,7 @@
                         Lien ou Compte Instagram
                     </label>
                     <input type="text" id="setting-instagram" required placeholder="https://www.instagram.com/marouki.fripe/" 
-                           class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none">
+                           class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none font-garet">
                 </div>
 
                 <div>
@@ -487,15 +665,15 @@
                         Lien Page Facebook
                     </label>
                     <input type="text" id="setting-facebook" placeholder="https://www.facebook.com/profile.php?id=100089787764565" 
-                           class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none">
+                           class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none font-garet">
                 </div>
 
                 <div>
                     <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
-                        Nouveau Code PIN Admin
+                        Code PIN de Secours Admin
                     </label>
                     <input type="password" id="setting-pin" required placeholder="ex: 1234" 
-                           class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none">
+                           class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none font-garet">
                 </div>
 
                 <div class="pt-4 border-t border-gray-800 flex justify-between items-center">
@@ -503,7 +681,7 @@
                         Recharger démo
                     </button>
                     <div class="flex items-center gap-2">
-                        <button type="button" onclick="exportDataJson()" class="bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs px-3 py-2 rounded-xl transition-all" title="Télécharger une sauvegarde de tous vos articles">
+                        <button type="button" onclick="exportDataJson()" class="bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs px-3 py-2 rounded-xl transition-all" title="Télécharger une sauvegarde">
                             <i class="fas fa-download mr-1"></i> Sauvegarder
                         </button>
                         <button type="submit" class="bg-brand-crimson hover:bg-brand-red text-white text-xs font-bold uppercase tracking-wider px-5 py-2.5 rounded-xl transition-all shadow-md">
@@ -512,20 +690,13 @@
                     </div>
                 </div>
             </form>
-            <div class="mt-4 pt-3 border-t border-gray-800 text-center">
-                <label class="text-[11px] text-gray-400 hover:text-brand-gold cursor-pointer inline-flex items-center gap-1.5">
-                    <i class="fas fa-upload text-xs"></i>
-                    <span>Restaurer un fichier de sauvegarde (JSON)</span>
-                    <input type="file" accept=".json" onchange="importDataJson(event)" class="hidden">
-                </label>
-            </div>
         </div>
     </div>
 
     <!-- Toast Notifications Container -->
     <div id="toast-container" class="fixed top-5 right-5 z-[200] space-y-2 pointer-events-none"></div>
 
-    <!-- SCRIPT -->
+    <!-- MAIN JAVASCRIPT LOGIC -->
     <script>
         const DEFAULT_CONFIG = {
             storeName: "Marouki Frippe",
@@ -549,8 +720,8 @@
                     "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&auto=format&fit=crop&q=80",
                     "https://images.unsplash.com/photo-1544441893-675973e31985?w=800&auto=format&fit=crop&q=80"
                 ],
-                status: "active",
-                createdAt: Date.now() - 3600000 * 2
+                status: "available",
+                created_at: new Date(Date.now() - 3600000 * 2).toISOString()
             },
             {
                 id: "sample-2",
@@ -564,8 +735,8 @@
                     "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=800&auto=format&fit=crop&q=80",
                     "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=800&auto=format&fit=crop&q=80"
                 ],
-                status: "active",
-                createdAt: Date.now() - 3600000 * 5
+                status: "available",
+                created_at: new Date(Date.now() - 3600000 * 5).toISOString()
             },
             {
                 id: "sample-3",
@@ -579,8 +750,8 @@
                     "https://images.unsplash.com/photo-1520975954732-35dd22299614?w=800&auto=format&fit=crop&q=80",
                     "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=800&auto=format&fit=crop&q=80"
                 ],
-                status: "active",
-                createdAt: Date.now() - 3600000 * 8
+                status: "available",
+                created_at: new Date(Date.now() - 3600000 * 8).toISOString()
             },
             {
                 id: "sample-4",
@@ -593,8 +764,8 @@
                 images: [
                     "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=800&auto=format&fit=crop&q=80"
                 ],
-                status: "active",
-                createdAt: Date.now() - 3600000 * 12
+                status: "available",
+                created_at: new Date(Date.now() - 3600000 * 12).toISOString()
             },
             {
                 id: "sample-5",
@@ -607,8 +778,8 @@
                 images: [
                     "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&auto=format&fit=crop&q=80"
                 ],
-                status: "active",
-                createdAt: Date.now() - 3600000 * 15
+                status: "available",
+                created_at: new Date(Date.now() - 3600000 * 15).toISOString()
             },
             {
                 id: "sample-6",
@@ -621,47 +792,228 @@
                 images: [
                     "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&auto=format&fit=crop&q=80"
                 ],
-                status: "active",
-                createdAt: Date.now() - 3600000 * 20
+                status: "available",
+                created_at: new Date(Date.now() - 3600000 * 20).toISOString()
             }
         ];
 
         let boutiqueConfig = { ...DEFAULT_CONFIG };
         let products = [];
+        let orders = [];
         let uploadedImagesBase64 = [];
         let isAuthenticated = false;
+        let activeAdminTab = 'inventory';
+        let pendingInviteToken = null;
 
-        function initAdmin() {
-            loadConfig();
-            loadProducts();
+        // --- 1. INITIALIZATION ---
+        async function initAdmin() {
+            checkInviteFromUrl();
+            await loadConfig();
+            await loadProducts();
+            await loadOrders();
 
-            // Check if already authenticated in this session
+            setupRealtimeSubscriptions();
+
             if (sessionStorage.getItem('marouki_admin_auth') === 'true') {
                 unlockDashboard();
             } else {
-                showPinScreen();
+                showAuthScreen();
             }
         }
 
-        function loadConfig() {
+        function checkInviteFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('setup_passkey');
+            if (token) {
+                pendingInviteToken = token;
+                const banner = document.getElementById('invite-enrollment-banner');
+                if (banner) banner.classList.remove('hide');
+                MaroukiPasskey.validateInviteToken(token).then(res => {
+                    if (res.valid && res.adminName) {
+                        const nameEl = document.getElementById('enrollment-admin-name');
+                        if (nameEl) nameEl.textContent = res.adminName;
+                    }
+                });
+            }
+        }
+
+        // --- 2. AUTHENTICATION & PASSKEYS ---
+        function showAuthScreen() {
+            document.getElementById('auth-screen').classList.remove('hide');
+            document.getElementById('dashboard-container').classList.add('hide');
+            document.getElementById('admin-header').classList.add('hide');
+            const err = document.getElementById('auth-error-msg');
+            if (err) err.classList.add('hide');
+        }
+
+        function unlockDashboard() {
+            isAuthenticated = true;
+            sessionStorage.setItem('marouki_admin_auth', 'true');
+            document.getElementById('auth-screen').classList.add('hide');
+            document.getElementById('dashboard-container').classList.remove('hide');
+            document.getElementById('admin-header').classList.remove('hide');
+            applySettingsToUI();
+            renderAdminTable();
+            renderOrdersTable();
+            updateStats();
+        }
+
+        function lockAdminSession() {
+            sessionStorage.removeItem('marouki_admin_auth');
+            isAuthenticated = false;
+            showAuthScreen();
+            showToast("Session propriétaire verrouillée.");
+        }
+
+        async function handlePasskeyLogin() {
+            const errEl = document.getElementById('auth-error-msg');
+            errEl.classList.add('hide');
+
+            try {
+                const res = await MaroukiPasskey.authenticate();
+                if (res.success) {
+                    unlockDashboard();
+                    showToast(`Bienvenue, ${res.adminName} ! (Passkey validé)`);
+                } else if (res.noPasskeysConfigured) {
+                    errEl.textContent = res.reason;
+                    errEl.classList.remove('hide');
+                }
+            } catch (err) {
+                console.warn("Passkey login warning:", err);
+                errEl.textContent = err.message || "Authentification Passkey annulée ou non reconnue.";
+                errEl.classList.remove('hide');
+            }
+        }
+
+        async function handleCodeSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById('admin-code-input').value.trim();
+            const errEl = document.getElementById('auth-error-msg');
+            errEl.classList.add('hide');
+
+            if (!input) {
+                errEl.textContent = "Veuillez saisir votre code d'accès ou PIN";
+                errEl.classList.remove('hide');
+                return;
+            }
+
+            const res = await MaroukiPasskey.verifyRecoveryCode(input);
+            if (res.success) {
+                unlockDashboard();
+                showToast(`Accès validé (${res.adminName}) !`);
+            } else {
+                errEl.textContent = res.reason || "Code de secours ou PIN incorrect";
+                errEl.classList.remove('hide');
+            }
+        }
+
+        async function handleEnrollPasskey() {
+            if (!pendingInviteToken) return;
+            const btn = document.getElementById('btn-enroll-passkey');
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span>Enregistrement en cours...</span>`;
+
+            try {
+                const res = await MaroukiPasskey.registerPasskeyFromInvite(pendingInviteToken);
+                showToast(`Passkey enregistré avec succès ! Code de secours : ${res.recoveryCode}`);
+                alert(`✨ Félicitations ! Votre Passkey a été configuré avec succès.\n\nGardez précieusement ce code de secours en cas de perte de votre appareil :\n👉 ${res.recoveryCode}`);
+                
+                // Remove parameter from URL without reload
+                const cleanUrl = window.location.origin + window.location.pathname;
+                window.history.replaceState({}, document.title, cleanUrl);
+                document.getElementById('invite-enrollment-banner').classList.add('hide');
+
+                unlockDashboard();
+            } catch (err) {
+                alert("Erreur lors de l'enregistrement du Passkey : " + err.message);
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fas fa-fingerprint text-base"></i> <span>Associer mon Passkey Biométrique</span>`;
+            }
+        }
+
+        // --- 3. TAB NAVIGATION ---
+        function switchAdminTab(tab) {
+            activeAdminTab = tab;
+            const viewInv = document.getElementById('view-inventory');
+            const viewOrd = document.getElementById('view-orders');
+            const btnInv = document.getElementById('tab-btn-inventory');
+            const btnOrd = document.getElementById('tab-btn-orders');
+
+            if (tab === 'inventory') {
+                viewInv.classList.remove('hide');
+                viewOrd.classList.add('hide');
+                btnInv.className = "px-4 py-1.5 rounded-xl text-xs font-bold transition-all bg-brand-crimson text-white shadow-sm flex items-center gap-1.5";
+                btnOrd.className = "px-4 py-1.5 rounded-xl text-xs font-bold transition-all text-gray-400 hover:text-white flex items-center gap-1.5 relative";
+            } else {
+                viewInv.classList.add('hide');
+                viewOrd.classList.remove('hide');
+                btnOrd.className = "px-4 py-1.5 rounded-xl text-xs font-bold transition-all bg-brand-crimson text-white shadow-sm flex items-center gap-1.5 relative";
+                btnInv.className = "px-4 py-1.5 rounded-xl text-xs font-bold transition-all text-gray-400 hover:text-white flex items-center gap-1.5";
+                renderOrdersTable();
+            }
+        }
+
+        // --- 4. CLOUD DATABASE & REALTIME ---
+        async function loadConfig() {
+            // First load local cache
             const saved = localStorage.getItem('marouki_frippe_config');
             if (saved) {
-                try {
-                    boutiqueConfig = { ...DEFAULT_CONFIG, ...JSON.parse(saved) };
-                } catch (e) {
-                    console.error("Config parse error", e);
-                }
-            } else {
-                localStorage.setItem('marouki_frippe_config', JSON.stringify(boutiqueConfig));
+                try { boutiqueConfig = { ...DEFAULT_CONFIG, ...JSON.parse(saved) }; } catch (e) {}
             }
-        }
 
-        function saveConfig() {
-            localStorage.setItem('marouki_frippe_config', JSON.stringify(boutiqueConfig));
+            // Sync from Supabase if connected
+            if (maroukiSupabase) {
+                try {
+                    const { data, error } = await maroukiSupabase
+                        .from('boutique_config')
+                        .select('*')
+                        .eq('id', 'main')
+                        .single();
+
+                    if (!error && data) {
+                        boutiqueConfig = {
+                            storeName: data.store_name || DEFAULT_CONFIG.storeName,
+                            whatsappNumber: data.whatsapp_number || DEFAULT_CONFIG.whatsappNumber,
+                            instagramUrl: data.instagram_url || DEFAULT_CONFIG.instagramUrl,
+                            instagramHandle: data.instagram_handle || DEFAULT_CONFIG.instagramHandle,
+                            facebookUrl: data.facebook_url || DEFAULT_CONFIG.facebookUrl,
+                            adminPin: data.admin_pin || DEFAULT_CONFIG.adminPin
+                        };
+                        localStorage.setItem('marouki_frippe_config', JSON.stringify(boutiqueConfig));
+                    }
+                } catch (e) {
+                    console.warn("Could not load config from Supabase, using cache:", e);
+                }
+            }
             applySettingsToUI();
         }
 
+        async function saveConfig() {
+            localStorage.setItem('marouki_frippe_config', JSON.stringify(boutiqueConfig));
+            applySettingsToUI();
+
+            if (maroukiSupabase) {
+                try {
+                    await maroukiSupabase.from('boutique_config').upsert({
+                        id: 'main',
+                        store_name: boutiqueConfig.storeName,
+                        whatsapp_number: boutiqueConfig.whatsappNumber,
+                        instagram_url: boutiqueConfig.instagramUrl,
+                        instagram_handle: boutiqueConfig.instagramHandle,
+                        facebook_url: boutiqueConfig.facebookUrl,
+                        admin_pin: boutiqueConfig.adminPin,
+                        updated_at: new Date().toISOString()
+                    });
+                } catch (e) {
+                    console.error("Failed to save config to Supabase:", e);
+                }
+            }
+        }
+
         function applySettingsToUI() {
+            const hStore = document.getElementById('header-store-name');
+            if (hStore) hStore.textContent = boutiqueConfig.storeName || "Marouki Frippe";
+
             const setStore = document.getElementById('setting-store-name');
             if (setStore) setStore.value = boutiqueConfig.storeName || "Marouki Frippe";
             const setWa = document.getElementById('setting-whatsapp');
@@ -674,69 +1026,89 @@
             if (setPin) setPin.value = boutiqueConfig.adminPin || "1234";
         }
 
-        function loadProducts() {
+        async function loadProducts() {
+            // Load local cache first
             const saved = localStorage.getItem('marouki_frippe_products');
             if (saved) {
-                try {
-                    products = JSON.parse(saved);
-                } catch (e) {
-                    console.error("Products parse error", e);
-                    products = [...SAMPLE_PRODUCTS];
-                }
+                try { products = JSON.parse(saved); } catch (e) { products = [...SAMPLE_PRODUCTS]; }
             } else {
                 products = [...SAMPLE_PRODUCTS];
-                localStorage.setItem('marouki_frippe_products', JSON.stringify(products));
             }
-        }
 
-        function saveProducts() {
-            localStorage.setItem('marouki_frippe_products', JSON.stringify(products));
+            // Fetch live from Supabase
+            if (maroukiSupabase) {
+                try {
+                    const { data, error } = await maroukiSupabase
+                        .from('products')
+                        .select('*')
+                        .order('created_at', { ascending: false });
+
+                    if (!error && data && data.length > 0) {
+                        products = data;
+                        localStorage.setItem('marouki_frippe_products', JSON.stringify(products));
+                    }
+                } catch (e) {
+                    console.warn("Could not load products from Supabase, using cache:", e);
+                }
+            }
+
             renderAdminTable();
             updateStats();
         }
 
-        function showPinScreen() {
-            document.getElementById('pin-screen').classList.remove('hide');
-            document.getElementById('dashboard-container').classList.add('hide');
-            document.getElementById('admin-header').classList.add('hide');
-            document.getElementById('admin-pin-input').value = '';
-            document.getElementById('pin-error-msg').classList.add('hide');
-            setTimeout(() => document.getElementById('admin-pin-input').focus(), 100);
-        }
+        async function loadOrders() {
+            // Load local cache
+            const saved = localStorage.getItem('marouki_frippe_orders');
+            if (saved) {
+                try { orders = JSON.parse(saved); } catch (e) { orders = []; }
+            }
 
-        function unlockDashboard() {
-            isAuthenticated = true;
-            sessionStorage.setItem('marouki_admin_auth', 'true');
-            document.getElementById('pin-screen').classList.add('hide');
-            document.getElementById('dashboard-container').classList.remove('hide');
-            document.getElementById('admin-header').classList.remove('hide');
-            applySettingsToUI();
-            renderAdminTable();
+            // Sync from Supabase
+            if (maroukiSupabase) {
+                try {
+                    const { data, error } = await maroukiSupabase
+                        .from('orders')
+                        .select('*')
+                        .order('created_at', { ascending: false });
+
+                    if (!error && data) {
+                        orders = data;
+                        localStorage.setItem('marouki_frippe_orders', JSON.stringify(orders));
+                    }
+                } catch (e) {
+                    console.warn("Could not load orders from Supabase:", e);
+                }
+            }
+
+            renderOrdersTable();
             updateStats();
         }
 
-        function handlePinSubmit(e) {
-            e.preventDefault();
-            const pinEntered = document.getElementById('admin-pin-input').value.trim();
-            const correctPin = boutiqueConfig.adminPin || '1234';
+        function setupRealtimeSubscriptions() {
+            if (!maroukiSupabase) return;
 
-            if (pinEntered === correctPin) {
-                unlockDashboard();
-                showToast("Accès administrateur validé !");
-            } else {
-                document.getElementById('pin-error-msg').classList.remove('hide');
-                document.getElementById('admin-pin-input').value = '';
+            try {
+                maroukiSupabase
+                    .channel('admin-realtime')
+                    .on('postgres_changes', { event: '*', schema: 'public', table: 'products' }, payload => {
+                        console.log("Realtime Product change:", payload);
+                        loadProducts();
+                    })
+                    .on('postgres_changes', { event: '*', schema: 'public', table: 'orders' }, payload => {
+                        console.log("Realtime Order change:", payload);
+                        loadOrders();
+                        showToast("Nouvelle commande client reçue en direct !");
+                    })
+                    .on('postgres_changes', { event: '*', schema: 'public', table: 'boutique_config' }, () => {
+                        loadConfig();
+                    })
+                    .subscribe();
+            } catch (err) {
+                console.warn("Realtime channel initialization error:", err);
             }
         }
 
-        function lockAdminSession() {
-            sessionStorage.removeItem('marouki_admin_auth');
-            isAuthenticated = false;
-            showPinScreen();
-            showToast("Session verrouillée.");
-        }
-
-        // --- PRODUCT MANAGEMENT ---
+        // --- 5. PRODUCTS CRUD ---
         function toggleAddProductForm() {
             const formSection = document.getElementById('add-product-section');
             const isHidden = formSection.classList.contains('hide');
@@ -758,97 +1130,52 @@
 
         function handleFileSelect(e) {
             const files = Array.from(e.target.files);
-            processImageFiles(files);
-        }
+            if (files.length === 0) return;
 
-        const dropZone = document.getElementById('drop-zone');
-        ['dragenter', 'dragover'].forEach(eventName => {
-            dropZone.addEventListener(eventName, (e) => {
-                e.preventDefault();
-                dropZone.classList.add('border-brand-crimson', 'bg-brand-crimson/10');
-            }, false);
-        });
-
-        ['dragleave', 'drop'].forEach(eventName => {
-            dropZone.addEventListener(eventName, (e) => {
-                e.preventDefault();
-                dropZone.classList.remove('border-brand-crimson', 'bg-brand-crimson/10');
-            }, false);
-        });
-
-        dropZone.addEventListener('drop', (e) => {
-            const files = Array.from(e.dataTransfer.files);
-            processImageFiles(files);
-        });
-
-        function processImageFiles(files) {
-            const imageFiles = files.filter(f => f.type.startsWith('image/')).slice(0, 10 - uploadedImagesBase64.length);
-            
-            if (imageFiles.length === 0) return;
-
-            imageFiles.forEach(file => {
+            files.forEach(file => {
+                if (!file.type.startsWith('image/')) return;
                 const reader = new FileReader();
                 reader.onload = (event) => {
-                    compressImage(event.target.result, 900, 0.8, (compressed) => {
-                        uploadedImagesBase64.push(compressed);
-                        renderImagePreviews();
-                    });
+                    uploadedImagesBase64.push(event.target.result);
+                    renderImagePreviews();
                 };
                 reader.readAsDataURL(file);
             });
         }
 
-        function compressImage(base64Str, maxWidth, quality, callback) {
-            const img = new Image();
-            img.src = base64Str;
-            img.onload = () => {
-                const canvas = document.createElement('canvas');
-                let width = img.width;
-                let height = img.height;
-
-                if (width > maxWidth) {
-                    height = Math.round((height * maxWidth) / width);
-                    width = maxWidth;
-                }
-
-                canvas.width = width;
-                canvas.height = height;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, width, height);
-                callback(canvas.toDataURL('image/jpeg', quality));
-            };
-        }
-
-        function addUrlsToImages() {
-            const raw = document.getElementById('prod-image-urls').value;
-            const urls = raw.split(',').map(u => u.trim()).filter(u => u.length > 5);
-            if (urls.length > 0) {
-                uploadedImagesBase64.push(...urls);
-                renderImagePreviews();
-                document.getElementById('prod-image-urls').value = '';
-                showToast(`${urls.length} photo(s) ajoutée(s)`);
-            }
-        }
-
-        function removeUploadedImage(index) {
-            uploadedImagesBase64.splice(index, 1);
-            renderImagePreviews();
-        }
-
         function renderImagePreviews() {
             const container = document.getElementById('preview-thumbnails');
+            if (uploadedImagesBase64.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+
             container.innerHTML = uploadedImagesBase64.map((img, idx) => `
-                <div class="relative group aspect-[3/4] rounded-lg overflow-hidden border border-gray-700 bg-black">
+                <div class="relative group rounded-xl overflow-hidden aspect-[3/4] bg-black/60 border border-gray-700">
                     <img src="${img}" class="w-full h-full object-cover">
-                    <button type="button" onclick="removeUploadedImage(${idx})" class="absolute top-1 right-1 bg-red-600/90 hover:bg-red-700 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs shadow transition-all">
+                    <button type="button" onclick="removeImage(${idx})" class="absolute top-1 right-1 bg-black/80 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] hover:bg-brand-crimson transition-colors">
                         <i class="fas fa-times"></i>
                     </button>
-                    ${idx === 0 ? '<span class="absolute bottom-1 left-1 bg-brand-crimson text-white text-[9px] px-1.5 py-0.5 rounded font-bold">Principale</span>' : ''}
+                    ${idx === 0 ? `<span class="absolute bottom-1 left-1 bg-brand-crimson text-white text-[8px] font-bold px-1.5 py-0.5 rounded uppercase">Principale</span>` : ''}
                 </div>
             `).join('');
         }
 
-        function handleProductSubmit(e) {
+        function removeImage(idx) {
+            uploadedImagesBase64.splice(idx, 1);
+            renderImagePreviews();
+        }
+
+        function addUrlsToImages() {
+            const text = document.getElementById('prod-image-urls').value.trim();
+            if (!text) return;
+            const urls = text.split(/[\n,]+/).map(u => u.trim()).filter(u => u.startsWith('http'));
+            uploadedImagesBase64.push(...urls);
+            renderImagePreviews();
+            document.getElementById('prod-image-urls').value = '';
+        }
+
+        async function handleProductSubmit(e) {
             e.preventDefault();
             const editId = document.getElementById('edit-prod-id').value;
             const name = document.getElementById('prod-name').value.trim();
@@ -859,7 +1186,7 @@
             const description = document.getElementById('prod-desc').value.trim();
 
             if (uploadedImagesBase64.length === 0) {
-                if (!confirm("Vous n'avez ajouté aucune photo pour cet article. Enregistrer quand même avec une image par défaut ?")) {
+                if (!confirm("Vous n'avez ajouté aucune photo. Enregistrer quand même avec une image par défaut ?")) {
                     return;
                 }
             }
@@ -868,15 +1195,31 @@
                 ? [...uploadedImagesBase64] 
                 : ['https://images.unsplash.com/photo-1523381294911-8d3cead13475?w=800'];
 
+            const submitBtn = document.getElementById('btn-submit-product');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span>Enregistrement...</span>`;
+
             if (editId) {
-                const index = products.findIndex(p => p.id === editId);
-                if (index !== -1) {
-                    products[index] = {
-                        ...products[index],
-                        name, category, price, size, color, description, images
-                    };
-                    showToast("Article mis à jour avec succès !");
+                const updatedPayload = {
+                    name, category, price, size, color, description, images,
+                    updated_at: new Date().toISOString()
+                };
+
+                // Update local array
+                const idx = products.findIndex(p => p.id === editId);
+                if (idx !== -1) {
+                    products[idx] = { ...products[idx], ...updatedPayload };
                 }
+
+                // Update Supabase
+                if (maroukiSupabase) {
+                    try {
+                        await maroukiSupabase.from('products').update(updatedPayload).eq('id', editId);
+                    } catch (err) {
+                        console.error("Supabase update error:", err);
+                    }
+                }
+                showToast("Article mis à jour avec succès dans le cloud !");
             } else {
                 const newProduct = {
                     id: 'prod_' + Date.now(),
@@ -887,15 +1230,29 @@
                     color,
                     description,
                     images,
-                    status: 'active',
-                    createdAt: Date.now()
+                    status: 'available',
+                    created_at: new Date().toISOString()
                 };
+
                 products.unshift(newProduct);
-                showToast("Nouvel article ajouté et visible sur la vitrine !");
+
+                // Insert into Supabase
+                if (maroukiSupabase) {
+                    try {
+                        await maroukiSupabase.from('products').insert(newProduct);
+                    } catch (err) {
+                        console.error("Supabase insert error:", err);
+                    }
+                }
+                showToast("Nouvel article ajouté et visible en direct sur la vitrine !");
             }
 
-            saveProducts();
+            localStorage.setItem('marouki_frippe_products', JSON.stringify(products));
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Enregistrer dans la Base Cloud";
             toggleAddProductForm();
+            renderAdminTable();
+            updateStats();
         }
 
         function editProduct(id) {
@@ -916,31 +1273,53 @@
             renderImagePreviews();
         }
 
-        function toggleProductStatus(id) {
+        async function toggleProductStatus(id) {
             const product = products.find(p => p.id === id);
             if (!product) return;
 
-            if (product.status === 'active') {
-                if (confirm(`Marquer "${product.name}" comme VENDU ? Il sera immédiatement masqué de la vitrine.`)) {
-                    product.status = 'sold';
-                    saveProducts();
-                    showToast("Article marqué comme Vendu !");
+            const newStatus = (product.status === 'available') ? 'sold' : 'available';
+            const actionLabel = (newStatus === 'sold') ? 'VENDU' : 'DISPONIBLE';
+
+            if (confirm(`Changer le statut de "${product.name}" vers ${actionLabel} ?`)) {
+                product.status = newStatus;
+                localStorage.setItem('marouki_frippe_products', JSON.stringify(products));
+
+                if (maroukiSupabase) {
+                    try {
+                        await maroukiSupabase.from('products').update({
+                            status: newStatus,
+                            updated_at: new Date().toISOString()
+                        }).eq('id', id);
+                    } catch (e) {
+                        console.error("Failed to update status in Supabase:", e);
+                    }
                 }
-            } else {
-                product.status = 'active';
-                saveProducts();
-                showToast("Article remis en vente sur la vitrine !");
+
+                showToast(`Article marqué comme ${actionLabel} !`);
+                renderAdminTable();
+                updateStats();
             }
         }
 
-        function deleteProduct(id) {
+        async function deleteProduct(id) {
             const product = products.find(p => p.id === id);
             if (!product) return;
 
-            if (confirm(`Supprimer définitivement l'article "${product.name}" ?`)) {
+            if (confirm(`Supprimer définitivement l'article "${product.name}" de la base cloud ?`)) {
                 products = products.filter(p => p.id !== id);
-                saveProducts();
-                showToast("Article supprimé de l'inventaire.");
+                localStorage.setItem('marouki_frippe_products', JSON.stringify(products));
+
+                if (maroukiSupabase) {
+                    try {
+                        await maroukiSupabase.from('products').delete().eq('id', id);
+                    } catch (e) {
+                        console.error("Failed to delete from Supabase:", e);
+                    }
+                }
+
+                showToast("Article supprimé de la base de données.");
+                renderAdminTable();
+                updateStats();
             }
         }
 
@@ -960,7 +1339,8 @@
                 list = list.filter(p => 
                     p.name.toLowerCase().includes(searchVal) ||
                     p.color.toLowerCase().includes(searchVal) ||
-                    p.size.toLowerCase().includes(searchVal)
+                    p.size.toLowerCase().includes(searchVal) ||
+                    (p.category && p.category.toLowerCase().includes(searchVal))
                 );
             }
 
@@ -974,34 +1354,38 @@
 
             tbody.innerHTML = list.map(item => {
                 const thumb = item.images && item.images.length > 0 ? item.images[0] : 'https://images.unsplash.com/photo-1523381294911-8d3cead13475?w=100';
-                const isActive = item.status === 'active';
+                const isAvailable = item.status === 'available' || item.status === 'active';
 
                 return `
                     <tr class="hover:bg-black/40 transition-colors">
                         <td class="p-3.5 flex items-center gap-3">
-                            <img src="${thumb}" class="w-12 h-14 object-cover rounded-lg border border-gray-700 flex-shrink-0 shadow-md">
+                            <img src="${thumb}" class="w-10 h-12 rounded-lg object-cover border border-gray-700 shrink-0">
                             <div>
-                                <p class="font-bold text-white tracking-snug text-sm">${item.name}</p>
-                                <span class="text-[11px] text-gray-500 font-light">${new Date(item.createdAt).toLocaleDateString('fr-FR')}</span>
+                                <p class="font-bold text-white leading-tight">${item.name}</p>
+                                <span class="text-[10px] text-gray-500 font-mono">ID: ${item.id}</span>
                             </div>
                         </td>
-                        <td class="p-3.5 text-gray-300 text-xs uppercase tracking-editorial font-medium">${item.category || '-'}</td>
-                        <td class="p-3.5 font-black font-garet text-white text-base tracking-tight">${item.price} <span class="text-[10px] font-bold text-brand-gold uppercase tracking-wider">TND</span></td>
-                        <td class="p-3.5 text-xs text-gray-400 font-medium">${item.size} • ${item.color}</td>
+                        <td class="p-3.5 text-xs text-gray-300 font-medium">${item.category || 'Autres'}</td>
+                        <td class="p-3.5 text-xs font-bold text-brand-gold">${item.price} TND</td>
+                        <td class="p-3.5 text-xs text-gray-300">${item.size} • ${item.color}</td>
                         <td class="p-3.5">
-                            ${isActive ? 
-                                '<span class="bg-green-500/20 text-green-400 text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border border-green-500/30">En vitrine</span>' : 
-                                '<span class="bg-red-500/20 text-brand-crimson text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border border-red-500/30">Vendu</span>'
-                            }
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                                isAvailable 
+                                    ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30' 
+                                    : 'bg-brand-crimson/15 text-brand-crimson border border-brand-crimson/30'
+                            }">
+                                <span class="w-1.5 h-1.5 rounded-full ${isAvailable ? 'bg-emerald-400' : 'bg-brand-crimson'}"></span>
+                                <span>${isAvailable ? 'Disponible' : 'Vendu'}</span>
+                            </span>
                         </td>
                         <td class="p-3.5 text-right space-x-1.5 whitespace-nowrap">
-                            <button onclick="toggleProductStatus('${item.id}')" class="p-2 rounded-lg text-xs transition-colors ${isActive ? 'bg-gray-800 hover:bg-brand-crimson text-white' : 'bg-green-800 hover:bg-green-700 text-white'}" title="${isActive ? 'Marquer vendu' : 'Remettre en vente'}">
-                                <i class="fas ${isActive ? 'fa-check' : 'fa-rotate-left'}"></i>
+                            <button onclick="toggleProductStatus('${item.id}')" class="p-2 rounded-lg bg-black/60 hover:bg-black text-gray-300 hover:text-white border border-gray-700 transition-all text-xs" title="${isAvailable ? 'Marquer vendu' : 'Remettre en vente'}">
+                                <i class="fas ${isAvailable ? 'fa-tag text-emerald-400' : 'fa-rotate-left text-brand-crimson'}"></i>
                             </button>
-                            <button onclick="editProduct('${item.id}')" class="bg-gray-800 hover:bg-gray-700 text-gray-300 p-2 rounded-lg text-xs transition-colors" title="Modifier">
-                                <i class="fas fa-pen"></i>
+                            <button onclick="editProduct('${item.id}')" class="p-2 rounded-lg bg-black/60 hover:bg-black text-gray-300 hover:text-white border border-gray-700 transition-all text-xs" title="Modifier">
+                                <i class="fas fa-pencil text-brand-gold"></i>
                             </button>
-                            <button onclick="deleteProduct('${item.id}')" class="bg-gray-800 hover:bg-red-800 text-gray-400 hover:text-white p-2 rounded-lg text-xs transition-colors" title="Supprimer">
+                            <button onclick="deleteProduct('${item.id}')" class="p-2 rounded-lg bg-black/60 hover:bg-black text-gray-300 hover:text-red-500 border border-gray-700 transition-all text-xs" title="Supprimer">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </td>
@@ -1010,24 +1394,163 @@
             }).join('');
         }
 
-        function updateStats() {
-            const total = products.length;
-            const active = products.filter(p => p.status === 'active').length;
-            const sold = products.filter(p => p.status === 'sold').length;
-            const totalValue = products.filter(p => p.status === 'active').reduce((sum, p) => sum + (p.price || 0), 0);
+        // --- 6. ORDERS MANAGEMENT ---
+        function renderOrdersTable() {
+            const tbody = document.getElementById('orders-list-body');
+            const emptyEl = document.getElementById('orders-empty-state');
+            const filterVal = document.getElementById('orders-status-filter')?.value || 'all';
 
-            document.getElementById('stat-total').textContent = total;
-            document.getElementById('stat-active').textContent = active;
-            document.getElementById('stat-sold').textContent = sold;
-            document.getElementById('stat-value').textContent = totalValue.toFixed(1) + ' TND';
+            let list = [...orders];
+
+            if (filterVal !== 'all') {
+                list = list.filter(o => o.status === filterVal);
+            }
+
+            if (list.length === 0) {
+                tbody.innerHTML = '';
+                emptyEl.classList.remove('hide');
+                return;
+            } else {
+                emptyEl.classList.add('hide');
+            }
+
+            tbody.innerHTML = list.map(o => {
+                const dateStr = o.created_at ? new Date(o.created_at).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' }) : 'Récemment';
+                const itemsCount = Array.isArray(o.items) ? o.items.length : 1;
+                const itemsDetails = Array.isArray(o.items) ? o.items.map(i => `${i.name} (${i.price} TND)`).join(', ') : 'Article commandé';
+
+                let statusBadge = '';
+                if (o.status === 'confirmed') statusBadge = '<span class="bg-blue-500/20 text-blue-400 border border-blue-500/30 px-2 py-0.5 rounded-full text-[10px] font-bold">Confirmée</span>';
+                else if (o.status === 'delivered') statusBadge = '<span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full text-[10px] font-bold">Livrée</span>';
+                else if (o.status === 'cancelled') statusBadge = '<span class="bg-red-500/20 text-red-400 border border-red-500/30 px-2 py-0.5 rounded-full text-[10px] font-bold">Annulée</span>';
+                else statusBadge = '<span class="bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-full text-[10px] font-bold">En attente</span>';
+
+                return `
+                    <tr class="hover:bg-black/40 transition-colors">
+                        <td class="p-3.5">
+                            <span class="font-mono text-xs font-bold text-white block">${o.id}</span>
+                            <span class="text-[10px] text-gray-500">${dateStr}</span>
+                        </td>
+                        <td class="p-3.5">
+                            <p class="font-bold text-white text-xs">${o.customer_name}</p>
+                            <a href="https://wa.me/${(o.customer_phone || '').replace(/[^0-9]/g, '')}" target="_blank" class="text-[11px] text-emerald-400 hover:underline flex items-center gap-1 font-mono mt-0.5">
+                                <i class="fab fa-whatsapp"></i> ${o.customer_phone}
+                            </a>
+                        </td>
+                        <td class="p-3.5 text-xs text-gray-300">
+                            <p class="font-semibold text-white">${o.customer_city}</p>
+                            <span class="text-[10px] text-gray-400 line-clamp-1">${o.customer_address}</span>
+                        </td>
+                        <td class="p-3.5 text-xs text-gray-300 max-w-xs">
+                            <span class="font-medium text-brand-gold">${itemsCount} article(s)</span>
+                            <p class="text-[10px] text-gray-400 line-clamp-1">${itemsDetails}</p>
+                        </td>
+                        <td class="p-3.5 text-xs font-bold text-white">${o.total} TND</td>
+                        <td class="p-3.5">${statusBadge}</td>
+                        <td class="p-3.5 text-right whitespace-nowrap">
+                            <select onchange="updateOrderStatus('${o.id}', this.value)" class="bg-black/60 border border-gray-700 text-[11px] text-gray-300 rounded-lg p-1.5 focus:border-brand-crimson outline-none font-garet">
+                                <option value="pending" ${o.status === 'pending' ? 'selected' : ''}>En attente</option>
+                                <option value="confirmed" ${o.status === 'confirmed' ? 'selected' : ''}>Confirmer</option>
+                                <option value="delivered" ${o.status === 'delivered' ? 'selected' : ''}>Livrée</option>
+                                <option value="cancelled" ${o.status === 'cancelled' ? 'selected' : ''}>Annuler</option>
+                            </select>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
         }
 
+        async function updateOrderStatus(orderId, newStatus) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) order.status = newStatus;
+            localStorage.setItem('marouki_frippe_orders', JSON.stringify(orders));
+
+            if (maroukiSupabase) {
+                try {
+                    await maroukiSupabase.from('orders').update({
+                        status: newStatus,
+                        updated_at: new Date().toISOString()
+                    }).eq('id', orderId);
+                } catch (e) {
+                    console.error("Failed to update order status in Supabase:", e);
+                }
+            }
+
+            showToast(`Statut commande ${orderId} mis à jour : ${newStatus}`);
+            renderOrdersTable();
+            updateStats();
+        }
+
+        // --- 7. INVITES & PASSKEY MODAL ---
+        async function openInviteModal() {
+            document.getElementById('invite-modal').classList.remove('hide');
+            document.getElementById('invite-result-container').classList.add('hide');
+            loadExistingPasskeysList();
+        }
+
+        function closeInviteModal() {
+            document.getElementById('invite-modal').classList.add('hide');
+        }
+
+        async function handleGenerateInvite(e) {
+            e.preventDefault();
+            const name = document.getElementById('invite-admin-name').value.trim();
+            const hours = parseInt(document.getElementById('invite-duration').value, 10);
+
+            try {
+                const invite = await MaroukiPasskey.createOneTimeInvite(name, hours);
+                document.getElementById('generated-invite-url').value = invite.url;
+                document.getElementById('invite-result-container').classList.remove('hide');
+                showToast("Lien d'enrôlement Passkey créé dans Supabase !");
+            } catch (err) {
+                alert("Erreur lors de la génération du lien : " + err.message);
+            }
+        }
+
+        function copyInviteUrl() {
+            const input = document.getElementById('generated-invite-url');
+            input.select();
+            navigator.clipboard.writeText(input.value);
+            showToast("Lien copié dans le presse-papier !");
+        }
+
+        async function loadExistingPasskeysList() {
+            const container = document.getElementById('existing-passkeys-list');
+            container.innerHTML = `<p class="text-xs text-gray-500"><i class="fas fa-spinner fa-spin mr-1"></i> Chargement des accès...</p>`;
+
+            const passkeys = await MaroukiPasskey.listPasskeys();
+            if (passkeys.length === 0) {
+                container.innerHTML = `<p class="text-xs text-gray-500">Aucun Passkey biométrique enregistré.</p>`;
+                return;
+            }
+
+            container.innerHTML = passkeys.map(k => `
+                <div class="flex items-center justify-between p-2 rounded-xl bg-black/60 border border-gray-800 text-xs">
+                    <div>
+                        <span class="font-bold text-white">${k.admin_name}</span>
+                        <p class="text-[10px] text-gray-400 font-mono">Secours: ${k.recovery_code}</p>
+                    </div>
+                    <button onclick="handleDeletePasskey('${k.credential_id}')" class="text-gray-500 hover:text-red-500 p-1" title="Révoquer ce Passkey">
+                        <i class="fas fa-trash text-xs"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        async function handleDeletePasskey(credentialId) {
+            if (confirm("Révoquer cet identifiant Passkey ? L'administrateur ne pourra plus se connecter avec ce capteur.")) {
+                await MaroukiPasskey.deletePasskey(credentialId);
+                showToast("Passkey révoqué.");
+                loadExistingPasskeysList();
+            }
+        }
+
+        // --- 8. SETTINGS & EXPORT ---
         function toggleSettingsModal() {
-            const modal = document.getElementById('settings-modal');
-            modal.classList.toggle('hide');
+            document.getElementById('settings-modal').classList.toggle('hide');
         }
 
-        function handleSaveSettings(e) {
+        async function handleSaveSettings(e) {
             e.preventDefault();
             const store = document.getElementById('setting-store-name').value.trim();
             const wa = document.getElementById('setting-whatsapp').value.trim();
@@ -1042,15 +1565,17 @@
             boutiqueConfig.facebookUrl = fb || 'https://www.facebook.com/profile.php?id=100089787764565';
             boutiqueConfig.adminPin = pin || '1234';
 
-            saveConfig();
+            await saveConfig();
             toggleSettingsModal();
-            showToast("Paramètres enregistrés avec succès !");
+            showToast("Paramètres sauvegardés dans le cloud Supabase !");
         }
 
         function resetToDemoData() {
-            if (confirm("Réinitialiser avec les articles de démonstration ?")) {
+            if (confirm("Recharger les articles de démonstration ?")) {
                 products = [...SAMPLE_PRODUCTS];
-                saveProducts();
+                localStorage.setItem('marouki_frippe_products', JSON.stringify(products));
+                renderAdminTable();
+                updateStats();
                 showToast("Articles de démonstration rechargés !");
                 toggleSettingsModal();
             }
@@ -1058,48 +1583,43 @@
 
         function exportDataJson() {
             const data = {
-                version: "1.0",
+                version: "2.0",
                 exportedAt: new Date().toISOString(),
                 config: boutiqueConfig,
-                products: products
+                products: products,
+                orders: orders
             };
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
             const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
-            a.download = `marouki_frippe_backup_${new Date().toISOString().slice(0, 10)}.json`;
+            a.download = `marouki_frippe_cloud_backup_${new Date().toISOString().slice(0, 10)}.json`;
             a.click();
             URL.revokeObjectURL(url);
-            showToast("Sauvegarde téléchargée avec succès !");
+            showToast("Sauvegarde complète téléchargée !");
         }
 
-        function importDataJson(e) {
-            const file = e.target.files[0];
-            if (!file) return;
+        function updateStats() {
+            const total = products.length;
+            const active = products.filter(p => p.status === 'available' || p.status === 'active').length;
+            const sold = products.filter(p => p.status === 'sold').length;
+            const value = products
+                .filter(p => p.status === 'available' || p.status === 'active')
+                .reduce((sum, p) => sum + (parseFloat(p.price) || 0), 0);
 
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                try {
-                    const parsed = JSON.parse(event.target.result);
-                    if (parsed.products && Array.isArray(parsed.products)) {
-                        if (confirm(`Restaurer ${parsed.products.length} articles depuis ce fichier de sauvegarde ?`)) {
-                            products = parsed.products;
-                            saveProducts();
-                            if (parsed.config) {
-                                boutiqueConfig = { ...DEFAULT_CONFIG, ...parsed.config };
-                                saveConfig();
-                            }
-                            showToast("Catalogue restauré avec succès !");
-                            toggleSettingsModal();
-                        }
-                    } else {
-                        alert("Format de fichier de sauvegarde invalide.");
-                    }
-                } catch (err) {
-                    alert("Erreur lors de la lecture du fichier JSON.");
-                }
-            };
-            reader.readAsText(file);
+            const pendingOrders = orders.filter(o => o.status === 'pending').length;
+
+            document.getElementById('stat-total').textContent = total;
+            document.getElementById('stat-active').textContent = active;
+            document.getElementById('stat-orders-count').textContent = orders.length;
+            document.getElementById('stat-value').textContent = value.toFixed(1) + ' TND';
+
+            const badge = document.getElementById('badge-pending-orders');
+            if (badge) {
+                badge.textContent = pendingOrders;
+                if (pendingOrders > 0) badge.classList.remove('hide');
+                else badge.classList.add('hide');
+            }
         }
 
         function showToast(message) {
