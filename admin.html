@@ -14,7 +14,6 @@
 
     <!-- Font Preloads for Instant Performance -->
     <link rel="preload" href="fonts/Garet-Book.woff" as="font" type="font/woff" crossorigin>
-    <link rel="preload" href="fonts/Garet-Heavy.woff" as="font" type="font/woff" crossorigin>
 
     <!-- Google Fonts & CDN Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -64,9 +63,15 @@
     <style>
         /* ===================================================
            GARET FONT DEFINITIONS (Geometric Clean Sans)
+           Clean, sleek, normal weight, elegant luxury
            =================================================== */
-        @import url('https://fonts.cdnfonts.com/css/garet');
-
+        @font-face {
+            font-family: 'Garet';
+            font-style: normal;
+            font-weight: 100 900;
+            font-display: swap;
+            src: local('Garet Book'), local('Garet'), url('fonts/Garet-Book.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Book.woff') format('woff');
+        }
         @font-face {
             font-family: 'Garet';
             font-style: normal;
@@ -93,28 +98,28 @@
             font-style: normal;
             font-weight: 600;
             font-display: swap;
-            src: local('Garet Heavy'), local('Garet-Heavy'), local('Garet'), url('fonts/Garet-Heavy.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Heavy.woff') format('woff');
+            src: local('Garet Book'), local('Garet'), url('fonts/Garet-Book.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Book.woff') format('woff');
         }
         @font-face {
             font-family: 'Garet';
             font-style: normal;
             font-weight: 700;
             font-display: swap;
-            src: local('Garet Heavy'), local('Garet-Heavy'), local('Garet'), url('fonts/Garet-Heavy.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Heavy.woff') format('woff');
+            src: local('Garet Book'), local('Garet'), url('fonts/Garet-Book.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Book.woff') format('woff');
         }
         @font-face {
             font-family: 'Garet';
             font-style: normal;
             font-weight: 800;
             font-display: swap;
-            src: local('Garet Heavy'), local('Garet-Heavy'), local('Garet'), url('fonts/Garet-Heavy.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Heavy.woff') format('woff');
+            src: local('Garet Book'), local('Garet'), url('fonts/Garet-Book.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Book.woff') format('woff');
         }
         @font-face {
             font-family: 'Garet';
             font-style: normal;
             font-weight: 900;
             font-display: swap;
-            src: local('Garet Heavy'), local('Garet-Heavy'), local('Garet'), url('fonts/Garet-Heavy.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Heavy.woff') format('woff');
+            src: local('Garet Book'), local('Garet'), url('fonts/Garet-Book.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Book.woff') format('woff');
         }
 
         body { 
@@ -122,6 +127,15 @@
             min-height: 100vh;
             color: #f3f4f6;
             font-family: 'Garet', system-ui, sans-serif;
+            font-weight: 400;
+            letter-spacing: 0.01em;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .font-garet {
+            font-family: 'Garet', system-ui, -apple-system, sans-serif !important;
+            font-weight: 400;
         }
 
         .glass-panel { 
@@ -156,9 +170,9 @@
             <div class="flex items-center gap-3">
                 <img src="logo.svg" onerror="this.src='logo.jpg'" alt="Marouki Frippe" class="h-10 w-10 rounded-full border border-brand-crimson object-cover">
                 <div>
-                    <h1 class="text-base sm:text-lg font-serif font-bold text-white flex items-center gap-1.5 leading-tight">
+                    <h1 class="text-base sm:text-lg font-serif font-normal text-white flex items-center gap-1.5 leading-tight">
                         <span id="header-store-name">Marouki Frippe</span>
-                        <span class="text-brand-crimson text-xs font-sans font-semibold px-2 py-0.5 rounded bg-brand-crimson/20 border border-brand-crimson/40">Espace Propriétaire</span>
+                        <span class="text-brand-crimson text-xs font-sans font-medium px-2 py-0.5 rounded bg-brand-crimson/20 border border-brand-crimson/40">Espace Propriétaire</span>
                     </h1>
                     <div class="flex items-center gap-2 mt-0.5">
                         <div id="db-status-badge" class="flex items-center gap-1 text-[10px] text-emerald-400 font-medium">
@@ -173,14 +187,14 @@
 
             <!-- Tab Switchers (Inventaire vs Commandes) -->
             <div class="flex items-center bg-black/60 p-1 rounded-2xl border border-gray-800">
-                <button onclick="switchAdminTab('inventory')" id="tab-btn-inventory" class="px-4 py-1.5 rounded-xl text-xs font-bold transition-all bg-brand-crimson text-white shadow-sm flex items-center gap-1.5">
+                <button onclick="switchAdminTab('inventory')" id="tab-btn-inventory" class="px-4 py-1.5 rounded-xl text-xs font-medium transition-all bg-brand-crimson text-white shadow-sm flex items-center gap-1.5">
                     <i class="fas fa-boxes-stacked text-xs"></i>
                     <span>Inventaire</span>
                 </button>
-                <button onclick="switchAdminTab('orders')" id="tab-btn-orders" class="px-4 py-1.5 rounded-xl text-xs font-bold transition-all text-gray-400 hover:text-white flex items-center gap-1.5 relative">
+                <button onclick="switchAdminTab('orders')" id="tab-btn-orders" class="px-4 py-1.5 rounded-xl text-xs font-medium transition-all text-gray-400 hover:text-white flex items-center gap-1.5 relative">
                     <i class="fas fa-receipt text-xs"></i>
                     <span>Commandes</span>
-                    <span id="badge-pending-orders" class="ml-1 bg-brand-gold text-black text-[10px] font-black px-1.5 py-0.2 rounded-full hide">0</span>
+                    <span id="badge-pending-orders" class="ml-1 bg-brand-gold text-black text-[10px] font-medium px-1.5 py-0.2 rounded-full hide">0</span>
                 </button>
             </div>
 
@@ -199,7 +213,7 @@
                     <i class="fas fa-sliders text-brand-crimson"></i>
                     <span class="hidden sm:inline">Paramètres</span>
                 </button>
-                <button onclick="toggleAddProductForm()" class="bg-brand-crimson hover:bg-brand-red text-white px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all shadow-md shadow-brand-red/30">
+                <button onclick="toggleAddProductForm()" class="bg-brand-crimson hover:bg-brand-red text-white px-3.5 py-1.5 rounded-xl text-xs font-medium flex items-center gap-1.5 transition-all shadow-md shadow-brand-red/30">
                     <i class="fas fa-plus"></i>
                     <span id="btn-toggle-text">Nouveau Produit</span>
                 </button>
@@ -222,7 +236,7 @@
                     <i class="fas fa-fingerprint"></i>
                 </div>
                 
-                <h2 class="text-2xl font-serif font-bold text-white mb-1">Espace Propriétaire</h2>
+                <h2 class="text-2xl font-serif font-normal text-white mb-1">Espace Propriétaire</h2>
                 <p class="text-xs text-gray-400 mb-6 font-light">Connexion sécurisée par Passkey biométrique (Face ID / Touch ID)</p>
 
                 <!-- Passkey Invite Enrollment Banner (if ?setup_passkey in URL) -->
@@ -230,14 +244,14 @@
                     <div class="flex items-start gap-2.5">
                         <i class="fas fa-wand-magic-sparkles text-brand-gold text-lg mt-0.5"></i>
                         <div>
-                            <h4 class="text-xs font-bold text-brand-gold uppercase tracking-wider">Lien d'enrôlement détecté</h4>
+                            <h4 class="text-xs font-medium text-brand-gold uppercase tracking-wider">Lien d'enrôlement détecté</h4>
                             <p class="text-xs text-gray-300 mt-1">
                                 Vous êtes invité(e) en tant que <strong id="enrollment-admin-name" class="text-white">Propriétaire</strong>.
                                 Cliquez ci-dessous pour enregistrer votre Face ID ou Touch ID en 1 clic.
                             </p>
                         </div>
                     </div>
-                    <button onclick="handleEnrollPasskey()" id="btn-enroll-passkey" class="mt-3 w-full bg-brand-gold hover:bg-yellow-400 text-black font-bold py-2.5 px-4 rounded-xl text-xs uppercase tracking-wider transition-all shadow-lg flex items-center justify-center gap-2">
+                    <button onclick="handleEnrollPasskey()" id="btn-enroll-passkey" class="mt-3 w-full bg-brand-gold hover:bg-yellow-400 text-black font-medium py-2.5 px-4 rounded-xl text-xs uppercase tracking-wider transition-all shadow-lg flex items-center justify-center gap-2">
                         <i class="fas fa-fingerprint text-base"></i>
                         <span>Associer mon Passkey Biométrique</span>
                     </button>
@@ -245,7 +259,7 @@
 
                 <!-- Primary 1-Touch Passkey Login Button -->
                 <div class="space-y-4">
-                    <button onclick="handlePasskeyLogin()" id="btn-passkey-login" class="w-full bg-gradient-to-r from-brand-red via-brand-crimson to-brand-red hover:brightness-110 active:scale-[0.98] text-white font-bold py-4 px-6 rounded-2xl transition-all shadow-xl shadow-brand-red/30 flex items-center justify-center gap-3 text-xs uppercase tracking-wider group">
+                    <button onclick="handlePasskeyLogin()" id="btn-passkey-login" class="w-full bg-gradient-to-r from-brand-red via-brand-crimson to-brand-red hover:brightness-110 active:scale-[0.98] text-white font-medium py-4 px-6 rounded-2xl transition-all shadow-xl shadow-brand-red/30 flex items-center justify-center gap-3 text-xs uppercase tracking-wider group">
                         <i class="fas fa-fingerprint text-xl text-brand-gold group-hover:scale-110 transition-transform"></i>
                         <span>Connexion Face ID / Touch ID</span>
                     </button>
@@ -265,7 +279,7 @@
                         </div>
                         <p id="auth-error-msg" class="text-xs text-brand-crimson font-medium hide"></p>
 
-                        <button type="submit" class="w-full bg-black/60 hover:bg-black/90 text-gray-200 border border-gray-700 py-3 rounded-xl transition-all text-xs font-semibold uppercase tracking-wider">
+                        <button type="submit" class="w-full bg-black/60 hover:bg-black/90 text-gray-200 border border-gray-700 py-3 rounded-xl transition-all text-xs font-medium uppercase tracking-wider">
                             Valider avec le code
                         </button>
                     </form>
@@ -288,25 +302,25 @@
                 <!-- Total Articles -->
                 <div class="glass-panel p-4 rounded-2xl border-gray-800">
                     <p class="text-xs text-gray-400 uppercase tracking-wider">Total Produits</p>
-                    <p id="stat-total" class="text-2xl sm:text-3xl font-bold mt-1 text-white">0</p>
+                    <p id="stat-total" class="text-2xl sm:text-3xl font-medium mt-1 text-white">0</p>
                     <span class="text-[10px] text-gray-500">Inventaire complet</span>
                 </div>
                 <!-- En Vitrine -->
                 <div class="glass-panel p-4 rounded-2xl border-green-900/40">
                     <p class="text-xs text-green-400 uppercase tracking-wider">En Vitrine (Dispo)</p>
-                    <p id="stat-active" class="text-2xl sm:text-3xl font-bold mt-1 text-green-400">0</p>
+                    <p id="stat-active" class="text-2xl sm:text-3xl font-medium mt-1 text-green-400">0</p>
                     <span class="text-[10px] text-gray-500">Visibles par les clientes</span>
                 </div>
                 <!-- Commandes Total -->
                 <div class="glass-panel p-4 rounded-2xl border-brand-red/40">
                     <p class="text-xs text-brand-crimson uppercase tracking-wider">Commandes Clients</p>
-                    <p id="stat-orders-count" class="text-2xl sm:text-3xl font-bold mt-1 text-brand-crimson">0</p>
+                    <p id="stat-orders-count" class="text-2xl sm:text-3xl font-medium mt-1 text-brand-crimson">0</p>
                     <span class="text-[10px] text-gray-500">Total reçues</span>
                 </div>
                 <!-- Valeur Stock -->
                 <div class="glass-panel p-4 rounded-2xl border-amber-900/40">
                     <p class="text-xs text-amber-400 uppercase tracking-wider">Valeur du Stock</p>
-                    <p id="stat-value" class="text-2xl sm:text-3xl font-bold mt-1 text-amber-300">0 TND</p>
+                    <p id="stat-value" class="text-2xl sm:text-3xl font-medium mt-1 text-amber-300">0 TND</p>
                     <span class="text-[10px] text-gray-500">Articles disponibles</span>
                 </div>
             </div>
@@ -317,7 +331,7 @@
                 <!-- Add / Edit Product Form Panel -->
                 <div id="add-product-section" class="glass-panel-elevated p-6 rounded-3xl hide">
                     <div class="flex justify-between items-center mb-6 pb-3 border-b border-gray-800">
-                        <h3 id="form-title" class="text-xl font-serif font-semibold text-white flex items-center gap-2">
+                        <h3 id="form-title" class="text-xl font-serif font-normal text-white flex items-center gap-2">
                             <i class="fas fa-shirt text-brand-crimson"></i>
                             <span>Ajouter une nouvelle pièce</span>
                         </h3>
@@ -331,7 +345,7 @@
 
                         <!-- Image Upload Zone -->
                         <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-2">
+                            <label class="block text-xs font-medium uppercase tracking-wider text-gray-300 mb-2">
                                 Photos de l'article (Import direct depuis téléphone ou ordinateur)
                             </label>
                             
@@ -372,7 +386,7 @@
                             
                             <!-- Name -->
                             <div class="md:col-span-2">
-                                <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
+                                <label class="block text-xs font-medium uppercase tracking-wider text-gray-300 mb-1">
                                     Nom de la pièce *
                                 </label>
                                 <input type="text" id="prod-name" required placeholder="ex: Blazer Vintage en Laine Marron" 
@@ -381,7 +395,7 @@
 
                             <!-- Category -->
                             <div>
-                                <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
+                                <label class="block text-xs font-medium uppercase tracking-wider text-gray-300 mb-1">
                                     Catégorie *
                                 </label>
                                 <select id="prod-category" required class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none font-garet">
@@ -396,19 +410,19 @@
 
                             <!-- Price -->
                             <div>
-                                <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
+                                <label class="block text-xs font-medium uppercase tracking-wider text-gray-300 mb-1">
                                     Prix (en TND) *
                                 </label>
                                 <div class="relative">
                                     <input type="number" id="prod-price" required min="1" step="0.5" placeholder="ex: 45" 
                                            class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none pr-14 font-garet">
-                                    <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-brand-crimson">TND</span>
+                                    <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-medium text-brand-crimson">TND</span>
                                 </div>
                             </div>
 
                             <!-- Size -->
                             <div>
-                                <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
+                                <label class="block text-xs font-medium uppercase tracking-wider text-gray-300 mb-1">
                                     Taille *
                                 </label>
                                 <input type="text" id="prod-size" required placeholder="ex: S, M, L, 38, Unique" 
@@ -417,7 +431,7 @@
 
                             <!-- Color -->
                             <div>
-                                <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
+                                <label class="block text-xs font-medium uppercase tracking-wider text-gray-300 mb-1">
                                     Couleur *
                                 </label>
                                 <input type="text" id="prod-color" required placeholder="ex: Rouge bordeaux, Noir, Beige" 
@@ -426,7 +440,7 @@
 
                             <!-- Description -->
                             <div class="md:col-span-2">
-                                <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
+                                <label class="block text-xs font-medium uppercase tracking-wider text-gray-300 mb-1">
                                     Description & État (optionnel)
                                 </label>
                                 <textarea id="prod-desc" rows="2" placeholder="État impeccable, tissu soyeux, boutons dorés..." 
@@ -439,7 +453,7 @@
                             <button type="button" onclick="toggleAddProductForm()" class="px-5 py-2.5 rounded-xl text-xs font-medium text-gray-400 hover:text-white transition-colors">
                                 Annuler
                             </button>
-                            <button type="submit" id="btn-submit-product" class="bg-brand-crimson hover:bg-brand-red text-white font-semibold text-xs uppercase tracking-wider px-6 py-3 rounded-xl transition-all shadow-lg shadow-brand-red/30">
+                            <button type="submit" id="btn-submit-product" class="bg-brand-crimson hover:bg-brand-red text-white font-medium text-xs uppercase tracking-wider px-6 py-3 rounded-xl transition-all shadow-lg shadow-brand-red/30">
                                 Enregistrer dans la Base Cloud
                             </button>
                         </div>
@@ -452,7 +466,7 @@
                     <!-- Table controls -->
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                         <div>
-                            <h3 class="text-lg font-serif font-semibold">Inventaire des articles</h3>
+                            <h3 class="text-lg font-serif font-normal">Inventaire des articles</h3>
                             <p class="text-xs text-gray-400">Gérez votre stock et marquez les articles vendus en 1 clic</p>
                         </div>
 
@@ -502,7 +516,7 @@
                     
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                         <div>
-                            <h3 class="text-lg font-serif font-semibold text-white flex items-center gap-2">
+                            <h3 class="text-lg font-serif font-normal text-white flex items-center gap-2">
                                 <i class="fas fa-receipt text-brand-gold"></i>
                                 <span>Commandes Clients en Direct</span>
                             </h3>
@@ -561,7 +575,7 @@
                 <i class="fas fa-times text-lg"></i>
             </button>
             
-            <h3 class="text-xl font-serif font-bold mb-2 flex items-center gap-2 text-brand-gold">
+            <h3 class="text-xl font-serif font-normal mb-2 flex items-center gap-2 text-brand-gold">
                 <i class="fas fa-key"></i>
                 <span>Générer un Lien Passkey</span>
             </h3>
@@ -571,7 +585,7 @@
 
             <form onsubmit="handleGenerateInvite(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
+                    <label class="block text-xs font-medium uppercase tracking-wider text-gray-300 mb-1">
                         Nom de l'Administrateur
                     </label>
                     <input type="text" id="invite-admin-name" required value="Propriétaire" placeholder="ex: Propriétaire" 
@@ -579,7 +593,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
+                    <label class="block text-xs font-medium uppercase tracking-wider text-gray-300 mb-1">
                         Durée de validité
                     </label>
                     <select id="invite-duration" class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-gold outline-none font-garet">
@@ -589,7 +603,7 @@
                     </select>
                 </div>
 
-                <button type="submit" class="w-full bg-brand-gold hover:bg-yellow-400 text-black font-bold py-3 rounded-xl text-xs uppercase tracking-wider transition-all shadow-lg flex items-center justify-center gap-2">
+                <button type="submit" class="w-full bg-brand-gold hover:bg-yellow-400 text-black font-medium py-3 rounded-xl text-xs uppercase tracking-wider transition-all shadow-lg flex items-center justify-center gap-2">
                     <i class="fas fa-link"></i>
                     <span>Créer le lien unique</span>
                 </button>
@@ -597,13 +611,13 @@
 
             <!-- Generated Result Container -->
             <div id="invite-result-container" class="mt-6 p-4 rounded-2xl bg-black/80 border border-brand-gold/50 hide space-y-3">
-                <p class="text-xs text-brand-gold font-bold flex items-center gap-1.5">
+                <p class="text-xs text-brand-gold font-medium flex items-center gap-1.5">
                     <i class="fas fa-check-circle"></i> Lien généré et sauvegardé dans Supabase !
                 </p>
                 <div class="relative">
                     <input type="text" id="generated-invite-url" readonly 
                            class="w-full bg-black/90 border border-gray-700 rounded-xl p-2.5 pr-20 text-xs text-white font-mono select-all">
-                    <button type="button" onclick="copyInviteUrl()" class="absolute right-1.5 top-1/2 -translate-y-1/2 bg-brand-gold hover:bg-yellow-400 text-black text-[10px] font-bold px-3 py-1.5 rounded-lg transition-all">
+                    <button type="button" onclick="copyInviteUrl()" class="absolute right-1.5 top-1/2 -translate-y-1/2 bg-brand-gold hover:bg-yellow-400 text-black text-[10px] font-medium px-3 py-1.5 rounded-lg transition-all">
                         Copier
                     </button>
                 </div>
@@ -614,7 +628,7 @@
 
             <!-- List of existing active passkeys -->
             <div class="mt-6 pt-5 border-t border-gray-800">
-                <h4 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-3">Passkeys & Accès Actifs</h4>
+                <h4 class="text-xs font-medium uppercase tracking-wider text-gray-400 mb-3">Passkeys & Accès Actifs</h4>
                 <div id="existing-passkeys-list" class="space-y-2 max-h-40 overflow-y-auto">
                     <!-- Injected via JS -->
                 </div>
@@ -629,14 +643,14 @@
                 <i class="fas fa-times text-lg"></i>
             </button>
             
-            <h3 class="text-xl font-serif font-bold mb-4 flex items-center gap-2">
+            <h3 class="text-xl font-serif font-normal mb-4 flex items-center gap-2">
                 <i class="fas fa-sliders text-brand-crimson"></i>
                 <span>Paramètres de la Boutique</span>
             </h3>
 
             <form onsubmit="handleSaveSettings(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
+                    <label class="block text-xs font-medium uppercase tracking-wider text-gray-300 mb-1">
                         Nom de la Boutique
                     </label>
                     <input type="text" id="setting-store-name" required placeholder="Marouki Frippe" 
@@ -644,7 +658,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
+                    <label class="block text-xs font-medium uppercase tracking-wider text-gray-300 mb-1">
                         Numéro WhatsApp pour les Commandes (avec indicatif 216, sans +)
                     </label>
                     <input type="text" id="setting-whatsapp" required placeholder="ex: 21699000000" 
@@ -653,7 +667,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
+                    <label class="block text-xs font-medium uppercase tracking-wider text-gray-300 mb-1">
                         Lien ou Compte Instagram
                     </label>
                     <input type="text" id="setting-instagram" required placeholder="https://www.instagram.com/marouki.fripe/" 
@@ -661,7 +675,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
+                    <label class="block text-xs font-medium uppercase tracking-wider text-gray-300 mb-1">
                         Lien Page Facebook
                     </label>
                     <input type="text" id="setting-facebook" placeholder="https://www.facebook.com/profile.php?id=100089787764565" 
@@ -669,7 +683,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
+                    <label class="block text-xs font-medium uppercase tracking-wider text-gray-300 mb-1">
                         Code PIN de Secours Admin
                     </label>
                     <input type="password" id="setting-pin" required placeholder="ex: 1234" 
@@ -684,7 +698,7 @@
                         <button type="button" onclick="exportDataJson()" class="bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs px-3 py-2 rounded-xl transition-all" title="Télécharger une sauvegarde">
                             <i class="fas fa-download mr-1"></i> Sauvegarder
                         </button>
-                        <button type="submit" class="bg-brand-crimson hover:bg-brand-red text-white text-xs font-bold uppercase tracking-wider px-5 py-2.5 rounded-xl transition-all shadow-md">
+                        <button type="submit" class="bg-brand-crimson hover:bg-brand-red text-white text-xs font-medium uppercase tracking-wider px-5 py-2.5 rounded-xl transition-all shadow-md">
                             Enregistrer
                         </button>
                     </div>
@@ -942,13 +956,13 @@
             if (tab === 'inventory') {
                 viewInv.classList.remove('hide');
                 viewOrd.classList.add('hide');
-                btnInv.className = "px-4 py-1.5 rounded-xl text-xs font-bold transition-all bg-brand-crimson text-white shadow-sm flex items-center gap-1.5";
-                btnOrd.className = "px-4 py-1.5 rounded-xl text-xs font-bold transition-all text-gray-400 hover:text-white flex items-center gap-1.5 relative";
+                btnInv.className = "px-4 py-1.5 rounded-xl text-xs font-medium transition-all bg-brand-crimson text-white shadow-sm flex items-center gap-1.5";
+                btnOrd.className = "px-4 py-1.5 rounded-xl text-xs font-medium transition-all text-gray-400 hover:text-white flex items-center gap-1.5 relative";
             } else {
                 viewInv.classList.add('hide');
                 viewOrd.classList.remove('hide');
-                btnOrd.className = "px-4 py-1.5 rounded-xl text-xs font-bold transition-all bg-brand-crimson text-white shadow-sm flex items-center gap-1.5 relative";
-                btnInv.className = "px-4 py-1.5 rounded-xl text-xs font-bold transition-all text-gray-400 hover:text-white flex items-center gap-1.5";
+                btnOrd.className = "px-4 py-1.5 rounded-xl text-xs font-medium transition-all bg-brand-crimson text-white shadow-sm flex items-center gap-1.5 relative";
+                btnInv.className = "px-4 py-1.5 rounded-xl text-xs font-medium transition-all text-gray-400 hover:text-white flex items-center gap-1.5";
                 renderOrdersTable();
             }
         }
@@ -1156,7 +1170,7 @@
                     <button type="button" onclick="removeImage(${idx})" class="absolute top-1 right-1 bg-black/80 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] hover:bg-brand-crimson transition-colors">
                         <i class="fas fa-times"></i>
                     </button>
-                    ${idx === 0 ? `<span class="absolute bottom-1 left-1 bg-brand-crimson text-white text-[8px] font-bold px-1.5 py-0.5 rounded uppercase">Principale</span>` : ''}
+                    ${idx === 0 ? `<span class="absolute bottom-1 left-1 bg-brand-crimson text-white text-[8px] font-medium px-1.5 py-0.5 rounded uppercase">Principale</span>` : ''}
                 </div>
             `).join('');
         }
@@ -1361,15 +1375,15 @@
                         <td class="p-3.5 flex items-center gap-3">
                             <img src="${thumb}" class="w-10 h-12 rounded-lg object-cover border border-gray-700 shrink-0">
                             <div>
-                                <p class="font-bold text-white leading-tight">${item.name}</p>
+                                <p class="font-medium text-white leading-tight">${item.name}</p>
                                 <span class="text-[10px] text-gray-500 font-mono">ID: ${item.id}</span>
                             </div>
                         </td>
                         <td class="p-3.5 text-xs text-gray-300 font-medium">${item.category || 'Autres'}</td>
-                        <td class="p-3.5 text-xs font-bold text-brand-gold">${item.price} TND</td>
+                        <td class="p-3.5 text-xs font-medium text-brand-gold">${item.price} TND</td>
                         <td class="p-3.5 text-xs text-gray-300">${item.size} • ${item.color}</td>
                         <td class="p-3.5">
-                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-medium uppercase tracking-wider ${
                                 isAvailable 
                                     ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30' 
                                     : 'bg-brand-crimson/15 text-brand-crimson border border-brand-crimson/30'
@@ -1420,32 +1434,32 @@
                 const itemsDetails = Array.isArray(o.items) ? o.items.map(i => `${i.name} (${i.price} TND)`).join(', ') : 'Article commandé';
 
                 let statusBadge = '';
-                if (o.status === 'confirmed') statusBadge = '<span class="bg-blue-500/20 text-blue-400 border border-blue-500/30 px-2 py-0.5 rounded-full text-[10px] font-bold">Confirmée</span>';
-                else if (o.status === 'delivered') statusBadge = '<span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full text-[10px] font-bold">Livrée</span>';
-                else if (o.status === 'cancelled') statusBadge = '<span class="bg-red-500/20 text-red-400 border border-red-500/30 px-2 py-0.5 rounded-full text-[10px] font-bold">Annulée</span>';
-                else statusBadge = '<span class="bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-full text-[10px] font-bold">En attente</span>';
+                if (o.status === 'confirmed') statusBadge = '<span class="bg-blue-500/20 text-blue-400 border border-blue-500/30 px-2 py-0.5 rounded-full text-[10px] font-medium">Confirmée</span>';
+                else if (o.status === 'delivered') statusBadge = '<span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full text-[10px] font-medium">Livrée</span>';
+                else if (o.status === 'cancelled') statusBadge = '<span class="bg-red-500/20 text-red-400 border border-red-500/30 px-2 py-0.5 rounded-full text-[10px] font-medium">Annulée</span>';
+                else statusBadge = '<span class="bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-full text-[10px] font-medium">En attente</span>';
 
                 return `
                     <tr class="hover:bg-black/40 transition-colors">
                         <td class="p-3.5">
-                            <span class="font-mono text-xs font-bold text-white block">${o.id}</span>
+                            <span class="font-mono text-xs font-medium text-white block">${o.id}</span>
                             <span class="text-[10px] text-gray-500">${dateStr}</span>
                         </td>
                         <td class="p-3.5">
-                            <p class="font-bold text-white text-xs">${o.customer_name}</p>
+                            <p class="font-medium text-white text-xs">${o.customer_name}</p>
                             <a href="https://wa.me/${(o.customer_phone || '').replace(/[^0-9]/g, '')}" target="_blank" class="text-[11px] text-emerald-400 hover:underline flex items-center gap-1 font-mono mt-0.5">
                                 <i class="fab fa-whatsapp"></i> ${o.customer_phone}
                             </a>
                         </td>
                         <td class="p-3.5 text-xs text-gray-300">
-                            <p class="font-semibold text-white">${o.customer_city}</p>
+                            <p class="font-medium text-white">${o.customer_city}</p>
                             <span class="text-[10px] text-gray-400 line-clamp-1">${o.customer_address}</span>
                         </td>
                         <td class="p-3.5 text-xs text-gray-300 max-w-xs">
                             <span class="font-medium text-brand-gold">${itemsCount} article(s)</span>
                             <p class="text-[10px] text-gray-400 line-clamp-1">${itemsDetails}</p>
                         </td>
-                        <td class="p-3.5 text-xs font-bold text-white">${o.total} TND</td>
+                        <td class="p-3.5 text-xs font-medium text-white">${o.total} TND</td>
                         <td class="p-3.5">${statusBadge}</td>
                         <td class="p-3.5 text-right whitespace-nowrap">
                             <select onchange="updateOrderStatus('${o.id}', this.value)" class="bg-black/60 border border-gray-700 text-[11px] text-gray-300 rounded-lg p-1.5 focus:border-brand-crimson outline-none font-garet">
@@ -1527,7 +1541,7 @@
             container.innerHTML = passkeys.map(k => `
                 <div class="flex items-center justify-between p-2 rounded-xl bg-black/60 border border-gray-800 text-xs">
                     <div>
-                        <span class="font-bold text-white">${k.admin_name}</span>
+                        <span class="font-medium text-white">${k.admin_name}</span>
                         <p class="text-[10px] text-gray-400 font-mono">Secours: ${k.recovery_code}</p>
                     </div>
                     <button onclick="handleDeletePasskey('${k.credential_id}')" class="text-gray-500 hover:text-red-500 p-1" title="Révoquer ce Passkey">

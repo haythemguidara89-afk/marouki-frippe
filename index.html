@@ -16,7 +16,6 @@
 
     <!-- Font Preloads for Instant Performance -->
     <link rel="preload" href="fonts/Garet-Book.woff" as="font" type="font/woff" crossorigin>
-    <link rel="preload" href="fonts/Garet-Heavy.woff" as="font" type="font/woff" crossorigin>
 
     <!-- Google Fonts & CDN Preconnect (Alex Brush, Cinzel & Playfair Display for accents) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -69,10 +68,15 @@
     <style>
         /* ===================================================
            GARET FONT DEFINITIONS (Geometric Haute-Couture Sans)
-           Clean, sleek, architectural, modern luxury
+           Clean, sleek, normal weight, elegant textile luxury
            =================================================== */
-        @import url('https://fonts.cdnfonts.com/css/garet');
-
+        @font-face {
+            font-family: 'Garet';
+            font-style: normal;
+            font-weight: 100 900;
+            font-display: swap;
+            src: local('Garet Book'), local('Garet'), url('fonts/Garet-Book.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Book.woff') format('woff');
+        }
         @font-face {
             font-family: 'Garet';
             font-style: normal;
@@ -99,35 +103,28 @@
             font-style: normal;
             font-weight: 600;
             font-display: swap;
-            src: local('Garet Heavy'), local('Garet-Heavy'), local('Garet'), url('fonts/Garet-Heavy.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Heavy.woff') format('woff');
+            src: local('Garet Book'), local('Garet'), url('fonts/Garet-Book.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Book.woff') format('woff');
         }
         @font-face {
             font-family: 'Garet';
             font-style: normal;
             font-weight: 700;
             font-display: swap;
-            src: local('Garet Heavy'), local('Garet-Heavy'), local('Garet'), url('fonts/Garet-Heavy.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Heavy.woff') format('woff');
+            src: local('Garet Book'), local('Garet'), url('fonts/Garet-Book.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Book.woff') format('woff');
         }
         @font-face {
             font-family: 'Garet';
             font-style: normal;
             font-weight: 800;
             font-display: swap;
-            src: local('Garet Heavy'), local('Garet-Heavy'), local('Garet'), url('fonts/Garet-Heavy.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Heavy.woff') format('woff');
-        }
-        @font-face {
-            font-family: 'Garet';
-            font-style: normal;
-            font-weight: 850;
-            font-display: swap;
-            src: local('Garet Heavy'), local('Garet-Heavy'), local('Garet'), url('fonts/Garet-Heavy.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Heavy.woff') format('woff');
+            src: local('Garet Book'), local('Garet'), url('fonts/Garet-Book.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Book.woff') format('woff');
         }
         @font-face {
             font-family: 'Garet';
             font-style: normal;
             font-weight: 900;
             font-display: swap;
-            src: local('Garet Heavy'), local('Garet-Heavy'), local('Garet'), url('fonts/Garet-Heavy.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Heavy.woff') format('woff');
+            src: local('Garet Book'), local('Garet'), url('fonts/Garet-Book.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Book.woff') format('woff');
         }
 
         /* Ambient luxury dark gradient with texture */
@@ -140,16 +137,18 @@
             background: radial-gradient(circle at 50% 0%, #2e050d 0%, #0d0608 40%, #040203 100%);
             color: #ffffff;
             font-family: 'Garet', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-weight: 400;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeLegibility;
             min-height: 100vh;
             overflow-x: hidden;
-            letter-spacing: -0.01em;
+            letter-spacing: 0.01em;
         }
 
         .font-garet {
             font-family: 'Garet', system-ui, -apple-system, sans-serif !important;
+            font-weight: 400;
         }
 
         .tracking-luxury { letter-spacing: 0.24em; }
@@ -266,11 +265,11 @@
             <span class="hidden md:inline"><i class="fas fa-truck-fast text-brand-goldLight mr-1"></i> Livraison Express 24h/48h sur toute la Tunisie</span>
         </div>
         <div class="hidden lg:flex items-center gap-4 text-[11px]">
-            <a id="topbar-facebook-link" href="https://www.facebook.com/profile.php?id=100089787764565" target="_blank" rel="noopener noreferrer" class="hover:text-brand-goldLight transition-colors flex items-center gap-1 font-semibold">
+            <a id="topbar-facebook-link" href="https://www.facebook.com/profile.php?id=100089787764565" target="_blank" rel="noopener noreferrer" class="hover:text-brand-goldLight transition-colors flex items-center gap-1 font-medium">
                 <i class="fab fa-facebook-f"></i> Facebook
             </a>
             <span class="text-white/40">•</span>
-            <a id="topbar-instagram-link" href="https://www.instagram.com/marouki.fripe/" target="_blank" rel="noopener noreferrer" class="hover:text-brand-goldLight transition-colors flex items-center gap-1 font-semibold">
+            <a id="topbar-instagram-link" href="https://www.instagram.com/marouki.fripe/" target="_blank" rel="noopener noreferrer" class="hover:text-brand-goldLight transition-colors flex items-center gap-1 font-medium">
                 <i class="fab fa-instagram"></i> @marouki.fripe
             </a>
         </div>
@@ -301,7 +300,7 @@
                     </div>
                     <div class="mt-1">
                         <h1 class="text-lg md:text-xl font-serif tracking-wider leading-none">
-                            <span class="font-bold text-white">Marouki</span> 
+                            <span class="font-normal text-white">Marouki</span> 
                             <span class="text-brand-crimson italic font-script text-2xl md:text-2xl ml-0.5">Frippe</span>
                         </h1>
                         <p class="text-[9px] uppercase tracking-[0.28em] text-brand-gold font-sans font-light mt-0.5">Frippe de Luxe • Tunisie</p>
@@ -315,14 +314,14 @@
                 <!-- Wishlist Heart Button -->
                 <button onclick="openWishlistModal()" class="relative text-gray-300 hover:text-brand-crimson p-2 transition-colors" title="Mes Coups de Cœur">
                     <i class="fas fa-heart text-base"></i>
-                    <span id="wishlist-badge" class="absolute -top-0.5 -right-0.5 bg-brand-crimson text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-black shadow hide">0</span>
+                    <span id="wishlist-badge" class="absolute -top-0.5 -right-0.5 bg-brand-crimson text-white text-[9px] font-medium w-4 h-4 rounded-full flex items-center justify-center border border-black shadow hide">0</span>
                 </button>
 
                 <!-- Private Bag / Cart Drawer Button -->
-                <button onclick="toggleBagDrawer()" class="relative bg-black/60 hover:bg-black/90 text-white border border-brand-red/50 hover:border-brand-crimson px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all shadow-md group">
+                <button onclick="toggleBagDrawer()" class="relative bg-black/60 hover:bg-black/90 text-white border border-brand-red/50 hover:border-brand-crimson px-3 py-1.5 rounded-xl text-xs font-medium flex items-center gap-2 transition-all shadow-md group">
                     <i class="fas fa-bag-shopping text-brand-gold group-hover:scale-110 transition-transform"></i>
                     <span class="hidden md:inline">Panier</span>
-                    <span id="bag-count-badge" class="bg-brand-crimson text-white text-[10px] font-bold px-1.5 py-0.2 rounded-full min-w-[18px] text-center">0</span>
+                    <span id="bag-count-badge" class="bg-brand-crimson text-white text-[10px] font-medium px-1.5 py-0.2 rounded-full min-w-[18px] text-center">0</span>
                 </button>
 
                 <!-- Facebook Shortcut -->
@@ -379,10 +378,10 @@
                         </div>
 
                         <!-- Exclusive Haute Couture Floating Tags -->
-                        <span class="absolute -top-1 -right-2 bg-gradient-to-r from-brand-red to-brand-crimson text-white text-[9px] font-bold uppercase tracking-luxury px-3 py-1 rounded-full border border-brand-gold/50 shadow-lg shadow-black/80 font-garet">
+                        <span class="absolute -top-1 -right-2 bg-gradient-to-r from-brand-red to-brand-crimson text-white text-[9px] font-medium uppercase tracking-luxury px-3 py-1 rounded-full border border-brand-gold/50 shadow-lg shadow-black/80 font-garet">
                             ★ PIÈCES RARES
                         </span>
-                        <span class="absolute -bottom-1 -left-2 bg-black/95 text-brand-gold text-[9px] font-bold uppercase tracking-luxury px-3 py-1 rounded-full border border-brand-crimson/50 shadow-lg font-garet">
+                        <span class="absolute -bottom-1 -left-2 bg-black/95 text-brand-gold text-[9px] font-medium uppercase tracking-luxury px-3 py-1 rounded-full border border-brand-crimson/50 shadow-lg font-garet">
                             TUNISIE
                         </span>
                     </div>
@@ -395,13 +394,13 @@
                 </h2>
 
                 <!-- Subtitle Category Monograms -->
-                <p class="text-xs sm:text-sm font-garet tracking-[0.32em] text-gray-300 uppercase mb-5 font-bold">
+                <p class="text-xs sm:text-sm font-garet tracking-[0.32em] text-gray-300 uppercase mb-5 font-normal">
                     VÊTEMENTS • ACCESSOIRES • CHAUSSURES & PLUS ENCORE...
                 </p>
 
                 <!-- Brush Stroke Banner (From Poster) -->
                 <div class="inline-block brush-badge px-8 py-2.5 rounded shadow-2xl shadow-black/90 mb-5 transform -rotate-1 hover:rotate-0 transition-transform cursor-pointer font-garet" onclick="document.getElementById('vitrine-section').scrollIntoView({behavior: 'smooth'})">
-                    <span class="text-sm sm:text-base font-black tracking-luxury text-white uppercase drop-shadow">
+                    <span class="text-sm sm:text-base font-medium tracking-luxury text-white uppercase drop-shadow">
                         Découvrez notre univers
                     </span>
                 </div>
@@ -418,7 +417,7 @@
                         <div class="w-12 h-12 rounded-full bg-black/70 border border-brand-crimson flex items-center justify-center text-brand-crimson group-hover:scale-110 group-hover:bg-brand-crimson group-hover:text-white transition-all duration-300 mb-2 shadow-lg shadow-brand-red/30">
                             <i class="fas fa-vest text-lg"></i>
                         </div>
-                        <span class="text-xs font-bold uppercase tracking-editorial text-gray-200">Mode Tendance</span>
+                        <span class="text-xs font-medium uppercase tracking-editorial text-gray-200">Mode Tendance</span>
                         <span class="text-[10px] text-gray-400 mt-0.5 font-light">Dernières sélections</span>
                     </div>
 
@@ -427,7 +426,7 @@
                         <div class="w-12 h-12 rounded-full bg-black/70 border border-brand-crimson flex items-center justify-center text-brand-crimson group-hover:scale-110 group-hover:bg-brand-crimson group-hover:text-white transition-all duration-300 mb-2 shadow-lg shadow-brand-red/30">
                             <i class="fas fa-certificate text-lg"></i>
                         </div>
-                        <span class="text-xs font-bold uppercase tracking-editorial text-gray-200">Qualité Garantie</span>
+                        <span class="text-xs font-medium uppercase tracking-editorial text-gray-200">Qualité Garantie</span>
                         <span class="text-[10px] text-gray-400 mt-0.5 font-light">Pièces impeccables</span>
                     </div>
 
@@ -436,7 +435,7 @@
                         <div class="w-12 h-12 rounded-full bg-black/70 border border-brand-crimson flex items-center justify-center text-brand-crimson group-hover:scale-110 group-hover:bg-brand-crimson group-hover:text-white transition-all duration-300 mb-2 shadow-lg shadow-brand-red/30">
                             <i class="fas fa-truck-fast text-lg"></i>
                         </div>
-                        <span class="text-xs font-bold uppercase tracking-editorial text-gray-200">Livraison Rapide</span>
+                        <span class="text-xs font-medium uppercase tracking-editorial text-gray-200">Livraison Rapide</span>
                         <span class="text-[10px] text-gray-400 mt-0.5 font-light">Toute la Tunisie (24-48h)</span>
                     </div>
 
@@ -445,7 +444,7 @@
                         <div class="w-12 h-12 rounded-full bg-black/70 border border-brand-crimson flex items-center justify-center text-brand-crimson group-hover:scale-110 group-hover:bg-brand-crimson group-hover:text-white transition-all duration-300 mb-2 shadow-lg shadow-brand-red/30">
                             <i class="fas fa-heart text-lg"></i>
                         </div>
-                        <span class="text-xs font-bold uppercase tracking-editorial text-gray-200">Service à l'Écoute</span>
+                        <span class="text-xs font-medium uppercase tracking-editorial text-gray-200">Service à l'Écoute</span>
                         <span class="text-[10px] text-gray-400 mt-0.5 font-light">Réponse WhatsApp directe</span>
                     </div>
                 </div>
@@ -454,17 +453,17 @@
                 <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4 font-garet">
                     <!-- Official Facebook Page Button -->
                     <a id="hero-facebook-link" href="https://www.facebook.com/profile.php?id=100089787764565" target="_blank" rel="noopener noreferrer" 
-                       class="bg-[#1877F2] hover:bg-[#166fe5] text-white font-bold px-7 py-3.5 rounded-full flex items-center gap-2.5 shadow-2xl shadow-[#1877F2]/30 hover:scale-105 transition-all text-xs uppercase tracking-luxury group">
+                       class="bg-[#1877F2] hover:bg-[#166fe5] text-white font-medium px-7 py-3.5 rounded-full flex items-center gap-2.5 shadow-2xl shadow-[#1877F2]/30 hover:scale-105 transition-all text-xs uppercase tracking-luxury group">
                         <i class="fab fa-facebook-f text-lg group-hover:scale-110 transition-transform"></i>
-                        <span>Page Facebook <strong class="normal-case tracking-normal ml-0.5">Marouki Frippe</strong></span>
+                        <span>Page Facebook <strong class="normal-case tracking-normal ml-0.5 font-normal">Marouki Frippe</strong></span>
                         <i class="fas fa-arrow-right text-xs ml-0.5 group-hover:translate-x-1 transition-transform"></i>
                     </a>
 
                     <!-- Official Instagram Button -->
                     <a id="hero-instagram-link" href="https://www.instagram.com/marouki.fripe/" target="_blank" rel="noopener noreferrer" 
-                       class="bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-95 text-white font-bold px-7 py-3.5 rounded-full flex items-center gap-2.5 shadow-2xl shadow-black/80 hover:scale-105 transition-all text-xs uppercase tracking-luxury group">
+                       class="bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-95 text-white font-medium px-7 py-3.5 rounded-full flex items-center gap-2.5 shadow-2xl shadow-black/80 hover:scale-105 transition-all text-xs uppercase tracking-luxury group">
                         <i class="fab fa-instagram text-lg group-hover:rotate-12 transition-transform"></i>
-                        <span>Instagram <strong id="hero-instagram-handle" class="normal-case tracking-normal ml-0.5">@marouki.fripe</strong></span>
+                        <span>Instagram <strong id="hero-instagram-handle" class="normal-case tracking-normal ml-0.5 font-normal">@marouki.fripe</strong></span>
                         <i class="fas fa-arrow-right text-xs ml-0.5 group-hover:translate-x-1 transition-transform"></i>
                     </a>
                 </div>
@@ -486,7 +485,7 @@
                     <i class="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 text-brand-gold text-sm pointer-events-none transition-colors group-focus-within:text-brand-crimson"></i>
                     <input type="text" id="vitrine-search" oninput="renderVitrine()" 
                            placeholder="Rechercher une pièce unique (ex: Robe, Blazer, M, Noir)..." 
-                           class="w-full bg-black/60 backdrop-blur-xl border border-brand-red/35 focus:border-brand-crimson rounded-full pl-12 pr-12 py-3.5 text-sm text-white placeholder-gray-400 shadow-xl focus:ring-2 focus:ring-brand-crimson/25 outline-none transition-all font-garet text-center sm:text-left">
+                           class="w-full bg-black/60 backdrop-blur-xl border border-brand-red/35 focus:border-brand-crimson rounded-full pl-12 pr-12 py-3.5 text-sm text-white placeholder-gray-400 shadow-xl focus:ring-2 focus:ring-brand-crimson/25 outline-none transition-all font-garet text-center sm:text-left font-normal">
                     <button id="search-clear-btn" onclick="clearSearchInput()" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white p-1 text-sm hide transition-colors" title="Effacer la recherche">
                         <i class="fas fa-times-circle"></i>
                     </button>
@@ -498,9 +497,9 @@
                     <!-- Enhanced Custom Sort Dropdown (Centered & Elegant) -->
                     <div class="relative inline-block text-left" id="sort-dropdown-container">
                         <button type="button" onclick="toggleSortMenu(event)" id="sort-dropdown-btn" 
-                                class="bg-black/70 hover:bg-black/90 backdrop-blur-xl border border-brand-red/35 hover:border-brand-crimson/70 px-5 py-2.5 rounded-full text-xs text-white flex items-center justify-center gap-2.5 transition-all shadow-lg group font-garet">
+                                class="bg-black/70 hover:bg-black/90 backdrop-blur-xl border border-brand-red/35 hover:border-brand-crimson/70 px-5 py-2.5 rounded-full text-xs text-white flex items-center justify-center gap-2.5 transition-all shadow-lg group font-garet font-normal">
                             <span class="text-gray-400 text-[11px] uppercase tracking-wider">Trier :</span>
-                            <span id="current-sort-label" class="font-bold text-brand-gold group-hover:text-white transition-colors">Nouveautés (Plus récents)</span>
+                            <span id="current-sort-label" class="font-medium text-brand-gold group-hover:text-white transition-colors">Nouveautés (Plus récents)</span>
                             <i id="sort-chevron" class="fas fa-chevron-down text-[10px] text-gray-400 group-hover:text-brand-gold transition-transform duration-300"></i>
                         </button>
                         
@@ -529,7 +528,7 @@
                     </div>
 
                     <!-- Mobile Filter Trigger Button (Centered alongside Sort) -->
-                    <button type="button" onclick="toggleMobileSidebar()" class="lg:hidden bg-brand-crimson/20 border border-brand-crimson/40 hover:bg-brand-crimson text-white px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all shadow-md font-garet">
+                    <button type="button" onclick="toggleMobileSidebar()" class="lg:hidden bg-brand-crimson/20 border border-brand-crimson/40 hover:bg-brand-crimson text-white px-5 py-2.5 rounded-full text-xs font-medium uppercase tracking-wider flex items-center gap-2 transition-all shadow-md font-garet">
                         <i class="fas fa-sliders text-brand-gold text-xs"></i>
                         <span>Filtres</span>
                     </button>
@@ -554,11 +553,11 @@
                     <!-- Catalog Header: Live Count -->
                     <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-800/80">
                         <div class="flex items-center gap-2">
-                            <h3 class="text-lg sm:text-xl font-bold text-white tracking-tight">Pièces Uniques Disponibles</h3>
+                            <h3 class="text-lg sm:text-xl font-normal text-white tracking-wide">Pièces Uniques Disponibles</h3>
                             <span class="w-2 h-2 rounded-full bg-brand-crimson animate-ping"></span>
                         </div>
                         <p class="text-xs text-gray-400 font-light flex items-center gap-1.5">
-                            <span id="vitrine-count" class="font-black text-brand-gold text-sm">0</span>
+                            <span id="vitrine-count" class="font-medium text-brand-gold text-sm">0</span>
                             <span>article(s) disponible(s)</span>
                         </p>
                     </div>
@@ -573,9 +572,9 @@
                         <div class="w-16 h-16 rounded-full bg-black/60 border border-brand-crimson/40 flex items-center justify-center text-brand-crimson mx-auto mb-4 text-2xl">
                             <i class="fas fa-magnifying-glass"></i>
                         </div>
-                        <h3 class="text-xl font-garet font-bold mb-2 text-white">Aucune pièce ne correspond à votre sélection</h3>
+                        <h3 class="text-xl font-garet font-normal mb-2 text-white">Aucune pièce ne correspond à votre sélection</h3>
                         <p class="text-gray-400 text-sm max-w-md mx-auto mb-6">Modifiez vos critères ou réinitialisez les filtres pour découvrir notre dressing complet.</p>
-                        <button onclick="resetFilters()" class="bg-gradient-to-r from-brand-red to-brand-crimson hover:from-brand-crimson hover:to-red-600 text-white text-xs font-bold uppercase tracking-luxury px-6 py-3.5 rounded-xl transition-all shadow-lg font-garet">
+                        <button onclick="resetFilters()" class="bg-gradient-to-r from-brand-red to-brand-crimson hover:from-brand-crimson hover:to-red-600 text-white text-xs font-medium uppercase tracking-luxury px-6 py-3.5 rounded-xl transition-all shadow-lg font-garet">
                             Réinitialiser les filtres
                         </button>
                     </div>
@@ -593,7 +592,7 @@
                         
                         <!-- Sidebar Header -->
                         <div class="flex items-center justify-between pb-3 border-b border-gray-800/80">
-                            <span class="text-xs uppercase tracking-luxury text-gray-300 font-bold font-garet">Filtres</span>
+                            <span class="text-xs uppercase tracking-luxury text-gray-300 font-medium font-garet">Filtres</span>
                             <div class="flex items-center gap-3">
                                 <button onclick="resetFilters()" class="text-[11px] text-gray-400 hover:text-brand-gold transition-colors font-medium" title="Réinitialiser tous les filtres">
                                     Tout effacer
@@ -608,7 +607,7 @@
                         <!-- 1. DROPDOWN ACCORDION: CATÉGORIES -->
                         <div class="border-b border-gray-800/60 pb-3">
                             <button onclick="toggleAccordion('cat-dropdown')" class="w-full flex items-center justify-between text-left group py-1 focus:outline-none">
-                                <span class="text-xs uppercase tracking-editorial font-bold text-white group-hover:text-brand-gold transition-colors font-garet">
+                                <span class="text-xs uppercase tracking-editorial font-medium text-white group-hover:text-brand-gold transition-colors font-garet">
                                     Catégories
                                 </span>
                                 <i id="cat-dropdown-icon" class="fas fa-chevron-down text-xs text-gray-400 group-hover:text-white transition-transform duration-300"></i>
@@ -617,9 +616,9 @@
                             <!-- Category Vertical List -->
                             <div id="cat-dropdown" class="mt-2.5 space-y-1 transition-all">
                                 <button onclick="setFilterCategory('all')" data-cat="all" 
-                                        class="sidebar-cat-btn w-full text-left px-3 py-2 rounded-xl text-xs font-bold flex items-center justify-between transition-all bg-brand-crimson text-white shadow-sm">
+                                        class="sidebar-cat-btn w-full text-left px-3 py-2 rounded-xl text-xs font-medium flex items-center justify-between transition-all bg-brand-crimson text-white shadow-sm">
                                     <span>Tous les articles</span>
-                                    <span id="cat-count-all" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-black/40 text-brand-gold">0</span>
+                                    <span id="cat-count-all" class="text-[10px] font-medium px-2 py-0.5 rounded-full bg-black/40 text-brand-gold">0</span>
                                 </button>
                                 
                                 <button onclick="setFilterCategory('Robes')" data-cat="Robes" 
@@ -657,7 +656,7 @@
                         <!-- 2. DROPDOWN ACCORDION: BUDGET / PRIX -->
                         <div class="border-b border-gray-800/60 pb-3">
                             <button onclick="toggleAccordion('price-dropdown')" class="w-full flex items-center justify-between text-left group py-1 focus:outline-none">
-                                <span class="text-xs uppercase tracking-editorial font-bold text-white group-hover:text-brand-gold transition-colors font-garet">
+                                <span class="text-xs uppercase tracking-editorial font-medium text-white group-hover:text-brand-gold transition-colors font-garet">
                                     Budget (TND)
                                 </span>
                                 <i id="price-dropdown-icon" class="fas fa-chevron-down text-xs text-gray-400 group-hover:text-white transition-transform duration-300"></i>
@@ -665,7 +664,7 @@
                             
                             <div id="price-dropdown" class="mt-2.5 space-y-1 font-garet">
                                 <button onclick="setFilterPrice('all')" data-price="all" 
-                                        class="price-btn w-full text-left px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center justify-between transition-all bg-black/60 text-white border border-brand-crimson/50">
+                                        class="price-btn w-full text-left px-3 py-1.5 rounded-xl text-xs font-medium flex items-center justify-between transition-all bg-black/60 text-white border border-brand-crimson/50">
                                     <span>Tous les prix</span>
                                     <i class="fas fa-check text-[10px] text-brand-crimson"></i>
                                 </button>
@@ -687,14 +686,14 @@
                         <!-- 3. DROPDOWN ACCORDION: TAILLES -->
                         <div class="border-b border-gray-800/60 pb-3">
                             <button onclick="toggleAccordion('size-dropdown')" class="w-full flex items-center justify-between text-left group py-1 focus:outline-none">
-                                <span class="text-xs uppercase tracking-editorial font-bold text-white group-hover:text-brand-gold transition-colors font-garet">
+                                <span class="text-xs uppercase tracking-editorial font-medium text-white group-hover:text-brand-gold transition-colors font-garet">
                                     Taille
                                 </span>
                                 <i id="size-dropdown-icon" class="fas fa-chevron-down text-xs text-gray-400 group-hover:text-white transition-transform duration-300"></i>
                             </button>
                             
                             <div id="size-dropdown" class="mt-2.5 flex flex-wrap gap-1.5 font-garet">
-                                <button onclick="setFilterSize('all')" data-size="all" class="size-btn px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-brand-crimson text-white shadow-sm">
+                                <button onclick="setFilterSize('all')" data-size="all" class="size-btn px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-brand-crimson text-white shadow-sm">
                                     Toutes
                                 </button>
                                 <button onclick="setFilterSize('S')" data-size="S" class="size-btn px-3 py-1.5 rounded-lg text-xs font-medium text-gray-300 bg-black/60 hover:bg-white/10 hover:text-white transition-all">
@@ -715,7 +714,7 @@
                         <!-- 4. DROPDOWN ACCORDION: COUPS DE COEUR & FAVORIS -->
                         <div>
                             <button onclick="toggleAccordion('wishlist-dropdown')" class="w-full flex items-center justify-between text-left group py-1 focus:outline-none">
-                                <span class="text-xs uppercase tracking-editorial font-bold text-white group-hover:text-brand-gold transition-colors font-garet">
+                                <span class="text-xs uppercase tracking-editorial font-medium text-white group-hover:text-brand-gold transition-colors font-garet">
                                     Sélection Privée
                                 </span>
                                 <i id="wishlist-dropdown-icon" class="fas fa-chevron-down text-xs text-gray-400 group-hover:text-white transition-transform duration-300"></i>
@@ -727,14 +726,14 @@
                                         <i class="fas fa-heart text-brand-crimson text-xs"></i>
                                         <span>Mes Coups de Cœur ♡</span>
                                     </span>
-                                    <span id="sidebar-wishlist-count" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-brand-crimson/20 text-brand-crimson">0</span>
+                                    <span id="sidebar-wishlist-count" class="text-[10px] font-medium px-2 py-0.5 rounded-full bg-brand-crimson/20 text-brand-crimson">0</span>
                                 </button>
                             </div>
                         </div>
 
                         <!-- Mobile Drawer Action Button -->
                         <div class="pt-2 lg:hidden">
-                            <button onclick="toggleMobileSidebar()" class="w-full bg-gradient-to-r from-brand-red to-brand-crimson hover:brightness-110 text-white font-bold text-xs uppercase tracking-luxury py-3 rounded-xl shadow-lg transition-all font-garet">
+                            <button onclick="toggleMobileSidebar()" class="w-full bg-gradient-to-r from-brand-red to-brand-crimson hover:brightness-110 text-white font-medium text-xs uppercase tracking-luxury py-3 rounded-xl shadow-lg transition-all font-garet">
                                 Voir les pièces disponibles
                             </button>
                         </div>
@@ -763,8 +762,8 @@
                 
                 <div class="flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
                     <div class="text-center md:text-left space-y-3 max-w-xl">
-                        <span class="text-xs tracking-luxury text-brand-gold uppercase font-bold">Service Conciergerie VIP</span>
-                        <h3 class="text-2xl sm:text-3xl font-garet font-bold text-white tracking-tight leading-snug">
+                        <span class="text-xs tracking-luxury text-brand-gold uppercase font-medium">Service Conciergerie VIP</span>
+                        <h3 class="text-2xl sm:text-3xl font-garet font-normal text-white tracking-normal leading-snug">
                             Vous recherchez une pièce rare ou une taille précise ?
                         </h3>
                         <p class="text-gray-300 text-sm font-light leading-relaxed">
@@ -773,7 +772,7 @@
                     </div>
 
                     <a id="concierge-wa-btn" href="#" target="_blank" 
-                       class="bg-[#25D366] hover:bg-[#1fa851] text-white font-bold px-7 py-4 rounded-2xl flex items-center gap-3 shadow-xl shadow-[#25D366]/30 text-xs uppercase tracking-luxury flex-shrink-0 hover:scale-105 transition-all">
+                       class="bg-[#25D366] hover:bg-[#1fa851] text-white font-medium px-7 py-4 rounded-2xl flex items-center gap-3 shadow-xl shadow-[#25D366]/30 text-xs uppercase tracking-luxury flex-shrink-0 hover:scale-105 transition-all">
                         <i class="fab fa-whatsapp text-2xl"></i>
                         <span>Demander à la gérante</span>
                     </a>
@@ -796,7 +795,7 @@
             <div class="flex justify-between items-center pb-4 border-b border-gray-800">
                 <div class="flex items-center gap-2">
                     <i class="fas fa-bag-shopping text-brand-gold text-lg"></i>
-                    <h3 class="text-base font-garet font-bold uppercase tracking-editorial text-white">Ma Sélection Privée</h3>
+                    <h3 class="text-base font-garet font-medium uppercase tracking-editorial text-white">Ma Sélection Privée</h3>
                 </div>
                 <button onclick="toggleBagDrawer()" class="text-gray-400 hover:text-white p-2">
                     <i class="fas fa-times text-lg"></i>
@@ -807,7 +806,7 @@
             <div class="mt-4 bg-black/50 p-3 rounded-xl border border-gray-800">
                 <div class="flex justify-between text-xs mb-1.5">
                     <span id="free-delivery-text" class="text-gray-300 text-[11px]">Livraison partout en Tunisie : <strong>7 TND</strong></span>
-                    <span id="free-delivery-badge" class="text-brand-gold font-bold text-[11px]">Offerte dès 120 TND</span>
+                    <span id="free-delivery-badge" class="text-brand-gold font-medium text-[11px]">Offerte dès 120 TND</span>
                 </div>
                 <div class="w-full bg-gray-800 h-1.5 rounded-full overflow-hidden">
                     <div id="free-delivery-bar" class="bg-gradient-to-r from-brand-crimson to-brand-gold h-full w-0 transition-all duration-500"></div>
@@ -825,19 +824,19 @@
             <div class="space-y-1.5 text-xs text-gray-300">
                 <div class="flex justify-between">
                     <span>Sous-total articles :</span>
-                    <span id="bag-subtotal" class="font-bold text-white">0 TND</span>
+                    <span id="bag-subtotal" class="font-medium text-white">0 TND</span>
                 </div>
                 <div class="flex justify-between">
                     <span>Frais de livraison :</span>
                     <span id="bag-shipping" class="text-brand-gold font-medium">7 TND</span>
                 </div>
-                <div class="flex justify-between items-baseline text-base font-bold text-white pt-2 border-t border-gray-800/80">
-                    <span class="text-xs uppercase tracking-luxury text-gray-300 font-bold">Total Estimé :</span>
-                    <span id="bag-total" class="text-white text-2xl font-black font-garet tracking-tight">0 <span class="text-xs font-bold text-brand-gold uppercase tracking-wider">TND</span></span>
+                <div class="flex justify-between items-baseline text-base font-normal text-white pt-2 border-t border-gray-800/80">
+                    <span class="text-xs uppercase tracking-luxury text-gray-300 font-medium">Total Estimé :</span>
+                    <span id="bag-total" class="text-white text-2xl font-normal font-garet tracking-normal">0 <span class="text-xs font-medium text-brand-gold uppercase tracking-wider">TND</span></span>
                 </div>
             </div>
 
-            <button onclick="openGroupedOrderModal()" id="btn-order-bag" class="w-full bg-[#25D366] hover:bg-[#1fa851] text-white font-bold py-3.5 px-6 rounded-xl flex items-center justify-center gap-2.5 shadow-lg shadow-[#25D366]/30 text-xs uppercase tracking-luxury transition-all disabled:opacity-50 font-garet">
+            <button onclick="openGroupedOrderModal()" id="btn-order-bag" class="w-full bg-[#25D366] hover:bg-[#1fa851] text-white font-medium py-3.5 px-6 rounded-xl flex items-center justify-center gap-2.5 shadow-lg shadow-[#25D366]/30 text-xs uppercase tracking-luxury transition-all disabled:opacity-50 font-garet">
                 <i class="fab fa-whatsapp text-lg"></i>
                 <span>Commander cette sélection</span>
             </button>
@@ -861,7 +860,7 @@
                     <i class="fab fa-whatsapp"></i>
                 </div>
                 <div>
-                    <h3 class="text-xl font-garet font-bold text-white tracking-tight">Valider ma commande</h3>
+                    <h3 class="text-xl font-garet font-normal text-white tracking-wide">Valider ma commande</h3>
                     <p class="text-xs text-gray-400">Confirmation immédiate et directe avec Marouki Frippe</p>
                 </div>
             </div>
@@ -876,31 +875,31 @@
                 <input type="hidden" id="order-mode" value="single"> <!-- single or grouped -->
 
                 <div>
-                    <label class="block text-[10px] font-bold uppercase tracking-luxury text-gray-300 mb-1.5">
+                    <label class="block text-[10px] font-medium uppercase tracking-luxury text-gray-300 mb-1.5">
                         Votre Nom Complet *
                     </label>
                     <input type="text" id="customer-name" required placeholder="ex: Yasmine Ben Salem" 
-                           class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none font-garet">
+                           class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none font-garet font-normal">
                 </div>
 
                 <div>
-                    <label class="block text-[10px] font-bold uppercase tracking-luxury text-gray-300 mb-1.5">
+                    <label class="block text-[10px] font-medium uppercase tracking-luxury text-gray-300 mb-1.5">
                         Numéro de Téléphone (Tunisie) *
                     </label>
                     <div class="relative">
-                        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400">+216</span>
+                        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs font-medium text-gray-400">+216</span>
                         <input type="tel" id="customer-phone" required pattern="[0-9]{8}" placeholder="ex: 98123456" 
-                               class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 pl-14 text-sm text-white focus:border-brand-crimson outline-none">
+                                class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 pl-14 text-sm text-white focus:border-brand-crimson outline-none font-normal">
                     </div>
                     <span class="text-[10px] text-gray-500 mt-1 block">8 chiffres sans espaces pour l'appel du livreur</span>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-[10px] font-bold uppercase tracking-luxury text-gray-300 mb-1.5">
+                        <label class="block text-[10px] font-medium uppercase tracking-luxury text-gray-300 mb-1.5">
                             Gouvernorat *
                         </label>
-                        <select id="customer-gov" required class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none cursor-pointer font-garet">
+                        <select id="customer-gov" required class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none cursor-pointer font-garet font-normal">
                             <option value="Tunis">Tunis (Livraison 24h)</option>
                             <option value="Ariana">Ariana (24h)</option>
                             <option value="Ben Arous">Ben Arous (24h)</option>
@@ -929,24 +928,24 @@
                     </div>
 
                     <div>
-                        <label class="block text-[10px] font-bold uppercase tracking-luxury text-gray-300 mb-1.5">
+                        <label class="block text-[10px] font-medium uppercase tracking-luxury text-gray-300 mb-1.5">
                             Ville / Délégation *
                         </label>
                         <input type="text" id="customer-city" required placeholder="ex: La Marsa, Menzah, Hammamet..." 
-                               class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none font-garet">
+                               class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none font-garet font-normal">
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-[10px] font-bold uppercase tracking-luxury text-gray-300 mb-1.5">
+                    <label class="block text-[10px] font-medium uppercase tracking-luxury text-gray-300 mb-1.5">
                         Adresse de Livraison détaillée *
                     </label>
                     <textarea id="customer-address" required rows="2" placeholder="Rue, Résidence, Numéro d'appartement ou repère..." 
-                              class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none font-garet"></textarea>
+                              class="w-full bg-black/70 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-brand-crimson outline-none font-garet font-normal"></textarea>
                 </div>
 
                 <div class="pt-2">
-                    <button type="submit" class="w-full bg-[#25D366] hover:bg-[#1fa851] text-white font-bold py-3.5 px-6 rounded-2xl flex items-center justify-center gap-3 transition-all shadow-lg shadow-[#25D366]/30 text-xs uppercase tracking-luxury font-garet">
+                    <button type="submit" class="w-full bg-[#25D366] hover:bg-[#1fa851] text-white font-medium py-3.5 px-6 rounded-2xl flex items-center justify-center gap-3 transition-all shadow-lg shadow-[#25D366]/30 text-xs uppercase tracking-luxury font-garet">
                         <i class="fab fa-whatsapp text-2xl"></i>
                         <span>Confirmer & Envoyer sur WhatsApp</span>
                     </button>
@@ -987,7 +986,7 @@
             </button>
             <div class="flex items-center gap-2 mb-4 pb-3 border-b border-gray-800">
                 <i class="fas fa-heart text-brand-crimson text-xl"></i>
-                <h3 class="text-xl font-serif font-bold text-white">Mes Coups de Cœur</h3>
+                <h3 class="text-xl font-serif font-normal text-white tracking-wide">Mes Coups de Cœur</h3>
             </div>
             <div id="wishlist-items-container" class="space-y-3">
                 <!-- Injected via JS -->
@@ -1005,7 +1004,7 @@
             <i class="fas fa-bag-shopping"></i>
         </div>
         <div class="text-xs">
-            <p class="font-semibold text-white leading-tight" id="live-toast-text">Une cliente de La Marsa vient de réserver</p>
+            <p class="font-normal text-white leading-tight" id="live-toast-text">Une cliente de La Marsa vient de réserver</p>
             <span class="text-[10px] text-brand-gold">Il y a quelques instants</span>
         </div>
     </div>
@@ -1661,7 +1660,7 @@
 
             if (chips.length > 1) {
                 html += `
-                    <button onclick="resetFilters()" class="text-[11px] text-brand-gold hover:text-brand-goldLight underline font-bold ml-1 font-garet transition-colors">
+                    <button onclick="resetFilters()" class="text-[11px] text-brand-gold hover:text-brand-goldLight underline font-medium ml-1 font-garet transition-colors">
                         Tout effacer
                     </button>
                 `;
@@ -1848,10 +1847,10 @@
 
                             <!-- Badges -->
                             <div class="absolute top-3 left-3 flex flex-col gap-1.5 pointer-events-none">
-                                <span class="bg-gradient-to-r from-brand-red to-brand-crimson text-white text-[9px] font-bold uppercase tracking-luxury px-2.5 py-1 rounded-full shadow-lg border border-brand-gold/30">
+                                <span class="bg-gradient-to-r from-brand-red to-brand-crimson text-white text-[9px] font-medium uppercase tracking-luxury px-2.5 py-1 rounded-full shadow-lg border border-brand-gold/30">
                                     ★ Pièce Rare
                                 </span>
-                                ${product.category ? `<span class="bg-black/85 backdrop-blur-md text-brand-gold text-[9px] uppercase tracking-editorial font-semibold px-2.5 py-0.5 rounded-full border border-brand-gold/30">${product.category}</span>` : ''}
+                                ${product.category ? `<span class="bg-black/85 backdrop-blur-md text-brand-gold text-[9px] uppercase tracking-editorial font-medium px-2.5 py-0.5 rounded-full border border-brand-gold/30">${product.category}</span>` : ''}
                             </div>
 
                             <!-- Floating Actions: Wishlist Heart & Direct Bag -->
@@ -1878,7 +1877,7 @@
 
                             <!-- Quick view hover overlay (Desktop) -->
                             <div class="hidden sm:flex absolute inset-x-4 bottom-4 opacity-0 group-hover:opacity-100 transition-all duration-300 gap-2 pointer-events-none group-hover:pointer-events-auto">
-                                <button onclick="event.stopPropagation(); openQuickView('${product.id}')" class="flex-1 bg-black/90 hover:bg-black text-white text-xs font-semibold py-2.5 rounded-xl backdrop-blur-sm border border-gray-700 flex items-center justify-center gap-1.5 shadow-lg tracking-wider uppercase">
+                                <button onclick="event.stopPropagation(); openQuickView('${product.id}')" class="flex-1 bg-black/90 hover:bg-black text-white text-xs font-medium py-2.5 rounded-xl backdrop-blur-sm border border-gray-700 flex items-center justify-center gap-1.5 shadow-lg tracking-wider uppercase">
                                     <i class="fas fa-eye text-xs text-brand-gold"></i> Aperçu
                                 </button>
                                 <button onclick="event.stopPropagation(); addToBag('${product.id}')" class="bg-brand-crimson hover:bg-brand-red text-white p-2.5 rounded-xl shadow-lg" title="Ajouter au Panier">
@@ -1891,36 +1890,36 @@
                         <div class="p-4 sm:p-5 flex flex-col flex-grow justify-between">
                             <div>
                                 <div class="mb-2">
-                                    <h4 class="font-garet text-base sm:text-lg font-bold text-white tracking-snug leading-snug line-clamp-1 group-hover:text-brand-gold transition-colors cursor-pointer" onclick="openQuickView('${product.id}')">
+                                    <h4 class="font-garet text-base sm:text-lg font-normal text-white tracking-normal leading-snug line-clamp-1 group-hover:text-brand-gold transition-colors cursor-pointer" onclick="openQuickView('${product.id}')">
                                         ${product.name}
                                     </h4>
                                 </div>
 
                                 <div class="flex items-baseline justify-between mb-3">
                                     <div class="flex items-baseline gap-1">
-                                        <span class="text-2xl sm:text-3xl font-black font-garet text-white tracking-tight">${product.price}</span>
-                                        <span class="text-xs font-bold text-brand-gold tracking-widest uppercase ml-0.5">TND</span>
+                                        <span class="text-2xl sm:text-3xl font-normal font-garet text-white tracking-normal">${product.price}</span>
+                                        <span class="text-xs font-medium text-brand-gold tracking-widest uppercase ml-0.5">TND</span>
                                     </div>
-                                    <span class="text-[9px] uppercase tracking-wider text-emerald-400 font-bold bg-emerald-500/10 border border-emerald-500/25 px-2 py-0.5 rounded-full flex items-center gap-1">
+                                    <span class="text-[9px] uppercase tracking-wider text-emerald-400 font-medium bg-emerald-500/10 border border-emerald-500/25 px-2 py-0.5 rounded-full flex items-center gap-1">
                                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Unique
                                     </span>
                                 </div>
 
                                 <div class="flex flex-wrap gap-1.5 text-xs text-gray-300 mb-4">
-                                    <span class="bg-black/50 backdrop-blur-md px-2.5 py-1 rounded-full border border-gray-800 text-[11px] font-medium tracking-wide flex items-center gap-1.5">
-                                        <span class="text-gray-400 uppercase text-[9px] tracking-wider font-semibold">Taille</span>
-                                        <span class="text-white font-bold">${product.size}</span>
+                                    <span class="bg-black/50 backdrop-blur-md px-2.5 py-1 rounded-full border border-gray-800 text-[11px] font-normal tracking-wide flex items-center gap-1.5">
+                                        <span class="text-gray-400 uppercase text-[9px] tracking-wider font-medium">Taille</span>
+                                        <span class="text-white font-medium">${product.size}</span>
                                     </span>
-                                    <span class="bg-black/50 backdrop-blur-md px-2.5 py-1 rounded-full border border-gray-800 text-[11px] font-medium tracking-wide flex items-center gap-1.5">
-                                        <span class="text-gray-400 uppercase text-[9px] tracking-wider font-semibold">Couleur</span>
-                                        <span class="text-white font-bold">${product.color}</span>
+                                    <span class="bg-black/50 backdrop-blur-md px-2.5 py-1 rounded-full border border-gray-800 text-[11px] font-normal tracking-wide flex items-center gap-1.5">
+                                        <span class="text-gray-400 uppercase text-[9px] tracking-wider font-medium">Couleur</span>
+                                        <span class="text-white font-medium">${product.color}</span>
                                     </span>
                                 </div>
                             </div>
 
                             <!-- Primary Action Button: 1-Click WhatsApp Order -->
                             <div class="pt-2 font-garet">
-                                <button onclick="openSingleOrderModal('${product.id}')" class="w-full bg-gradient-to-r from-brand-red via-brand-crimson to-brand-red hover:brightness-110 active:scale-[0.98] text-white font-bold text-xs uppercase tracking-wider py-3.5 px-4 rounded-xl transition-all shadow-md shadow-brand-red/30 flex items-center justify-center gap-2.5 group">
+                                <button onclick="openSingleOrderModal('${product.id}')" class="w-full bg-gradient-to-r from-brand-red via-brand-crimson to-brand-red hover:brightness-110 active:scale-[0.98] text-white font-medium text-xs uppercase tracking-luxury py-3.5 px-4 rounded-xl transition-all shadow-md shadow-brand-red/30 flex items-center justify-center gap-2.5 group">
                                     <i class="fab fa-whatsapp text-base group-hover:scale-110 transition-transform shrink-0"></i>
                                     <span class="whitespace-nowrap">Commander direct</span>
                                 </button>
@@ -2020,9 +2019,9 @@
                     <div class="flex items-center gap-3 bg-black/60 p-2.5 rounded-2xl border border-gray-800">
                         <img src="${thumb}" class="w-12 h-14 object-cover rounded-xl border border-gray-700 flex-shrink-0">
                         <div class="flex-grow min-w-0">
-                            <h5 class="text-xs font-serif font-semibold text-white truncate">${item.name}</h5>
+                            <h5 class="text-xs font-garet font-normal text-white truncate">${item.name}</h5>
                             <p class="text-[10px] text-gray-400">Taille: ${item.size} • ${item.color}</p>
-                            <span class="text-xs font-bold text-brand-crimson">${item.price} TND</span>
+                            <span class="text-xs font-medium text-brand-crimson">${item.price} TND</span>
                         </div>
                         <button onclick="removeFromBag('${item.id}')" class="text-gray-500 hover:text-brand-crimson p-1.5 transition-colors" title="Retirer">
                             <i class="fas fa-trash text-xs"></i>
@@ -2047,14 +2046,14 @@
                 <div class="flex items-center gap-4">
                     <img src="${thumb}" class="w-16 h-20 object-cover rounded-xl border border-gray-700 flex-shrink-0 shadow-md">
                     <div class="flex-grow">
-                        <span class="text-[9px] uppercase font-bold text-brand-gold bg-brand-gold/10 px-2 py-0.5 rounded-full tracking-luxury border border-brand-gold/25">Pièce Unique</span>
-                        <h4 class="font-garet font-bold text-white leading-snug mt-1 text-sm sm:text-base">${product.name}</h4>
+                        <span class="text-[9px] uppercase font-medium text-brand-gold bg-brand-gold/10 px-2 py-0.5 rounded-full tracking-luxury border border-brand-gold/25">Pièce Unique</span>
+                        <h4 class="font-garet font-normal text-white leading-snug mt-1 text-sm sm:text-base">${product.name}</h4>
                         <p class="text-xs text-gray-400 mt-1 flex items-center gap-2">
-                            <span>Taille: <strong class="text-white">${product.size}</strong></span>
+                            <span>Taille: <span class="text-white font-medium">${product.size}</span></span>
                             <span>•</span>
-                            <span>Couleur: <strong class="text-white">${product.color}</strong></span>
+                            <span>Couleur: <span class="text-white font-medium">${product.color}</span></span>
                         </p>
-                        <p class="text-lg font-black font-garet text-white tracking-tight mt-1">${product.price} <span class="text-xs font-bold text-brand-gold uppercase tracking-wider">TND</span></p>
+                        <p class="text-lg font-normal font-garet text-white tracking-normal mt-1">${product.price} <span class="text-xs font-medium text-brand-gold uppercase tracking-wider">TND</span></p>
                     </div>
                 </div>
             `;
@@ -2078,8 +2077,8 @@
             document.getElementById('order-product-summary').innerHTML = `
                 <div>
                     <div class="flex justify-between items-center mb-2 pb-2 border-b border-gray-800 text-xs">
-                        <span class="font-bold text-white">${shoppingBag.length} Pièce(s) sélectionnée(s)</span>
-                        <span class="text-brand-gold font-bold">${total.toFixed(1)} TND (Livraison incluse)</span>
+                        <span class="font-medium text-white">${shoppingBag.length} Pièce(s) sélectionnée(s)</span>
+                        <span class="text-brand-gold font-medium">${total.toFixed(1)} TND (Livraison incluse)</span>
                     </div>
                     <div class="flex gap-2 overflow-x-auto pb-1 gallery-scroll">
                         ${shoppingBag.map(item => `
@@ -2227,51 +2226,51 @@ Merci de me confirmer la disponibilité pour l'envoi rapide ! ♡`;
                 <!-- Product Details -->
                 <div class="flex flex-col justify-between">
                     <div>
-                        <div class="inline-block bg-gradient-to-r from-brand-red to-brand-crimson text-white text-[9px] font-bold uppercase tracking-luxury px-3 py-1 rounded-full mb-3 shadow-md border border-brand-gold/30">
+                        <div class="inline-block bg-gradient-to-r from-brand-red to-brand-crimson text-white text-[9px] font-medium uppercase tracking-luxury px-3 py-1 rounded-full mb-3 shadow-md border border-brand-gold/30">
                             Pièce Unique Rare • Frippe Sélectionnée
                         </div>
-                        <h2 class="text-2xl sm:text-3xl font-garet font-bold text-white mb-2 leading-snug tracking-tight">${product.name}</h2>
+                        <h2 class="text-2xl sm:text-3xl font-garet font-normal text-white mb-2 leading-snug tracking-normal">${product.name}</h2>
                         
                         <div class="flex items-baseline gap-2 mb-5">
-                            <span class="text-3xl sm:text-4xl font-black font-garet text-white tracking-tight">${product.price}</span>
-                            <span class="text-sm font-bold text-brand-gold tracking-widest uppercase">TND</span>
-                            <span class="ml-2 text-[10px] uppercase tracking-wider text-emerald-400 font-bold bg-emerald-500/10 border border-emerald-500/25 px-2.5 py-0.5 rounded-full">Disponible</span>
+                            <span class="text-3xl sm:text-4xl font-normal font-garet text-white tracking-normal">${product.price}</span>
+                            <span class="text-sm font-medium text-brand-gold tracking-widest uppercase">TND</span>
+                            <span class="ml-2 text-[10px] uppercase tracking-wider text-emerald-400 font-medium bg-emerald-500/10 border border-emerald-500/25 px-2.5 py-0.5 rounded-full">Disponible</span>
                         </div>
 
                         <!-- Highlights Specs -->
                         <div class="space-y-2.5 mb-5 bg-black/60 p-4 rounded-2xl border border-gray-800 text-xs">
                             <div class="flex justify-between border-b border-gray-800/80 pb-2">
-                                <span class="text-gray-400 uppercase text-[10px] tracking-wider font-semibold">Catégorie</span>
-                                <span class="text-white font-bold">${product.category || 'Vêtement'}</span>
+                                <span class="text-gray-400 uppercase text-[10px] tracking-wider font-medium">Catégorie</span>
+                                <span class="text-white font-medium">${product.category || 'Vêtement'}</span>
                             </div>
                             <div class="flex justify-between border-b border-gray-800/80 pb-2">
-                                <span class="text-gray-400 uppercase text-[10px] tracking-wider font-semibold">Taille</span>
-                                <span class="text-white font-bold">${product.size}</span>
+                                <span class="text-gray-400 uppercase text-[10px] tracking-wider font-medium">Taille</span>
+                                <span class="text-white font-medium">${product.size}</span>
                             </div>
                             <div class="flex justify-between border-b border-gray-800/80 pb-2">
-                                <span class="text-gray-400 uppercase text-[10px] tracking-wider font-semibold">Couleur</span>
-                                <span class="text-white font-bold">${product.color}</span>
+                                <span class="text-gray-400 uppercase text-[10px] tracking-wider font-medium">Couleur</span>
+                                <span class="text-white font-medium">${product.color}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-400 uppercase text-[10px] tracking-wider font-semibold">État</span>
-                                <span class="text-green-400 font-bold flex items-center gap-1.5"><i class="fas fa-check-circle"></i>Impeccable & Prêt à porter</span>
+                                <span class="text-gray-400 uppercase text-[10px] tracking-wider font-medium">État</span>
+                                <span class="text-green-400 font-medium flex items-center gap-1.5"><i class="fas fa-check-circle"></i>Impeccable & Prêt à porter</span>
                             </div>
                         </div>
 
                         ${product.description ? `
                             <div class="mb-5">
-                                <h4 class="text-[10px] font-bold text-brand-gold uppercase tracking-luxury mb-1.5">Détails & Coupe</h4>
+                                <h4 class="text-[10px] font-medium text-brand-gold uppercase tracking-luxury mb-1.5">Détails & Coupe</h4>
                                 <p class="text-xs sm:text-sm text-gray-300 leading-relaxed font-light">${product.description}</p>
                             </div>
                         ` : ''}
                     </div>
 
                     <div class="space-y-2.5 pt-4 border-t border-gray-800">
-                        <button onclick="closeQuickViewModal(); openSingleOrderModal('${product.id}')" class="w-full bg-[#25D366] hover:bg-[#1fa851] text-white font-bold py-3.5 px-6 rounded-2xl flex items-center justify-center gap-2.5 transition-all shadow-xl shadow-[#25D366]/30 text-sm font-garet tracking-wide uppercase">
+                        <button onclick="closeQuickViewModal(); openSingleOrderModal('${product.id}')" class="w-full bg-[#25D366] hover:bg-[#1fa851] text-white font-medium py-3.5 px-6 rounded-2xl flex items-center justify-center gap-2.5 transition-all shadow-xl shadow-[#25D366]/30 text-sm font-garet tracking-luxury uppercase">
                             <i class="fab fa-whatsapp text-xl"></i>
                             <span>Commander cette pièce sur WhatsApp</span>
                         </button>
-                        <button onclick="addToBag('${product.id}'); closeQuickViewModal()" class="w-full bg-black/80 hover:bg-black text-gray-200 border border-gray-700 py-3 rounded-xl text-xs font-bold transition-all uppercase tracking-wider font-garet">
+                        <button onclick="addToBag('${product.id}'); closeQuickViewModal()" class="w-full bg-black/80 hover:bg-black text-gray-200 border border-gray-700 py-3 rounded-xl text-xs font-medium transition-all uppercase tracking-luxury font-garet">
                             <i class="fas fa-bag-shopping text-brand-gold mr-1.5"></i> Ajouter à ma sélection
                         </button>
                     </div>
@@ -2310,12 +2309,12 @@ Merci de me confirmer la disponibilité pour l'envoi rapide ! ♡`;
                         <div class="flex items-center gap-3">
                             <img src="${p.images[0]}" class="w-12 h-16 object-cover rounded-xl border border-gray-700">
                             <div>
-                                <h4 class="font-serif text-sm font-semibold text-white">${p.name}</h4>
+                                <h4 class="font-garet text-sm font-normal text-white">${p.name}</h4>
                                 <p class="text-xs text-gray-400">Taille: ${p.size} • ${p.price} TND</p>
                             </div>
                         </div>
                         <div class="flex items-center gap-2">
-                            <button onclick="closeWishlistModal(); openSingleOrderModal('${p.id}')" class="bg-brand-crimson hover:bg-brand-red text-white text-xs font-semibold px-3 py-2 rounded-xl transition-all">
+                            <button onclick="closeWishlistModal(); openSingleOrderModal('${p.id}')" class="bg-brand-crimson hover:bg-brand-red text-white text-xs font-medium px-3 py-2 rounded-xl transition-all">
                                 Commander
                             </button>
                             <button onclick="toggleWishlist('${p.id}')" class="text-gray-500 hover:text-red-500 p-2">

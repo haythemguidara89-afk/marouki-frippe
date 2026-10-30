@@ -48,25 +48,18 @@
     <style>
         @font-face {
             font-family: 'Garet';
-            src: url('./fonts/Garet-Book.woff2') format('woff2'),
-                 url('./fonts/Garet-Book.otf') format('opentype');
-            font-weight: 400;
             font-style: normal;
+            font-weight: 100 900;
             font-display: swap;
-        }
-        @font-face {
-            font-family: 'Garet';
-            src: url('./fonts/Garet-Heavy.woff2') format('woff2'),
-                 url('./fonts/Garet-Heavy.otf') format('opentype');
-            font-weight: 800;
-            font-style: normal;
-            font-display: swap;
+            src: local('Garet Book'), local('Garet'), url('fonts/Garet-Book.woff') format('woff'), url('https://fonts.cdnfonts.com/s/57477/Garet-Book.woff') format('woff');
         }
 
         body {
             background-color: #030303;
             color: #F3F4F6;
             font-family: 'Garet', 'Plus Jakarta Sans', sans-serif;
+            font-weight: 400;
+            letter-spacing: 0.01em;
             background-image: 
                 radial-gradient(circle at 50% 0%, rgba(139, 0, 0, 0.25) 0%, transparent 60%),
                 radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.08) 0%, transparent 40%);
@@ -87,12 +80,12 @@
         </div>
 
         <!-- 404 Badge -->
-        <span class="inline-block bg-brand-crimson/20 text-brand-crimson text-xs font-black uppercase tracking-widest px-3 py-1 rounded-full border border-brand-crimson/30 mb-4 font-mono">
+        <span class="inline-block bg-brand-crimson/20 text-brand-crimson text-xs font-medium uppercase tracking-widest px-3 py-1 rounded-full border border-brand-crimson/30 mb-4 font-mono">
             Erreur 404
         </span>
 
         <!-- Heading -->
-        <h1 class="text-3xl font-black font-garet tracking-tight text-white mb-2">
+        <h1 class="text-3xl font-normal font-garet tracking-normal text-white mb-2">
             Page Introuvable
         </h1>
 
@@ -101,7 +94,7 @@
         </p>
 
         <!-- Action Button -->
-        <a href="/" class="w-full inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-brand-red via-brand-crimson to-brand-red hover:brightness-110 text-white font-bold text-xs uppercase tracking-wider py-4 px-6 rounded-xl transition-all shadow-xl shadow-brand-red/30 group">
+        <a href="/" class="w-full inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-brand-red via-brand-crimson to-brand-red hover:brightness-110 text-white font-medium text-xs uppercase tracking-luxury py-4 px-6 rounded-xl transition-all shadow-xl shadow-brand-red/30 group">
             <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
             <span>Retour à la Boutique</span>
         </a>
