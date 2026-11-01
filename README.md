@@ -1,42 +1,36 @@
-# 👗 Marouki Frippe — Deux Pages Séparées (Vitrine & Administration)
+# 👗 Marouki Frippe — Maison de Frippe de Luxe en Tunisie
 
-Le projet a été scindé en **deux pages web distinctes** avec deux liens indépendants pour garantir une séparation totale entre la vitrine publique pour vos clientes et l'espace de gestion réservé à la propriétaire :
-
----
-
-## 🔗 Les Deux Liens & Pages Séparées
-
-### 1. 🛍️ La Vitrine Publique pour les Clientes : `index.html`
-- **Lien du fichier :** [`index.html`](file:///Users/macbook/Desktop/NEW%20APP/marouki%20frippe/index.html)
-- **Objectif :** Destiné au public et à vos clientes sur Instagram/Facebook.
-- **Sécurité & Discrétion :** **Aucun bouton "Espace Admin"** n'est affiché sur le site. Les clientes ne voient que les articles, le logo centré, les filtres et le bouton de commande WhatsApp.
-
-### 2. 🔒 L'Espace Administrateur Privé pour la Propriétaire : `admin.html`
-- **Lien du fichier :** [`admin.html`](file:///Users/macbook/Desktop/NEW%20APP/marouki%20frippe/admin.html)
-- **Objectif :** Lien confidentiel à conserver par la propriétaire pour gérer la boutique.
-- **Accès sécurisé par code PIN :**
-  - **Code PIN par défaut :** `1234` (modifiable dans les Paramètres).
-- **Fonctionnalités :**
-  - Importer directement des photos depuis le téléphone ou le PC (jusqu'à 10 photos par article avec compression automatique).
-  - Ajouter, modifier ou supprimer des articles.
-  - Marquer une pièce unique comme **"Vendue"** en 1 clic (l'article disparaît instantanément de la vitrine).
-  - Modifier le numéro WhatsApp pour recevoir les commandes.
+Plateforme e-commerce haute couture et gestionnaire d'inventaire en temps réel propulsés par **Supabase Cloud**, **WebAuthn Biometric Passkeys** et déployés sur **Vercel** sous le nom de domaine officiel **maroukifripe.tn**.
 
 ---
 
-## 🔄 Synchronisation en Temps Réel
+## 🌐 Liens de Production Officiels
 
-Les deux pages partagent automatiquement la même base de données locale (`LocalStorage`) :
-- Dès que vous ajoutez ou modifiez un produit sur `admin.html`, il apparaît instantanément sur `index.html` !
-- Si vous marquez un article comme vendu sur `admin.html`, la vitrine cliente `index.html` se met à jour en direct.
+| Espace | URL Principale (Nom de Domaine) | URL de Secours Vercel | Rôle & Sécurité |
+| :--- | :--- | :--- | :--- |
+| **🛍️ Vitrine Publique** | **[https://www.maroukifripe.tn](https://www.maroukifripe.tn)** | [https://marouki-frippe.vercel.app](https://marouki-frippe.vercel.app) | Boutique cliente optimisée mobile, filtres, panier, WhatsApp direct. Toute tentative d'accès à `/admin` renvoie une **404 Introuvable**. |
+| **🔒 Espace Propriétaire** | **[https://admin.maroukifripe.tn](https://admin.maroukifripe.tn)** | [https://marouki-frippe-admin.vercel.app](https://marouki-frippe-admin.vercel.app) | Espace confidentiel protégé par **Passkeys Biométriques (Face ID / Touch ID)** ou PIN de secours. |
+| **⚡ Base Supabase** | **[Dashboard Cloud](https://supabase.com/dashboard/project/muwhwsgiuklmdysjvkrg)** | — | Base PostgreSQL temps réel dédiée (`muwhwsgiuklmdysjvkrg`). |
+| **🐙 Code Source** | **[Dépôt GitHub](https://github.com/haythemguidara89-afk/marouki-frippe)** | — | Repository Git synchronisé. |
 
 ---
 
-## 🚀 Comment Lancer les Pages
+## ✨ Fonctionnalités Clés
 
-Vous pouvez ouvrir directement chaque fichier dans votre navigateur, ou lancer un serveur local :
-```bash
-cd "/Users/macbook/Desktop/NEW APP/marouki frippe" && python3 -m http.server 8080
-```
-- **Lien public pour vos clientes :** `http://localhost:8080/index.html`
-- **Lien privé pour la propriétaire :** `http://localhost:8080/admin.html`
+1. **Nom de Domaine Personnalisé Officiel** :
+   - Domaine apex `maroukifripe.tn` et sous-domaine canonique `www.maroukifripe.tn`.
+   - Sous-domaine dédié `admin.maroukifripe.tn` pour l'espace propriétaire.
+   - Certificats SSL automatiques et réseau Edge Vercel haute performance.
+
+2. **Typographie Garet Haute Couture** :
+   - Utilisation exclusive de la police locale **Garet Book** (fine, géométrique, élégante pour l'univers du textile et de la frippe de luxe).
+   - Espacements `tracking-luxury` et `tracking-editorial`.
+
+3. **Sécurité & Authentification Biométrique (FIDO2 / WebAuthn)** :
+   - Connexion instantanée avec Face ID, Touch ID ou Windows Hello.
+   - Liens d'invitation uniques à usage unique générables depuis l'admin ou via le CLI.
+   - Code de secours aléatoire (format `MF-XXXXXX`) et code PIN alternatif.
+
+4. **Synchronisation Temps Réel (Supabase Realtime)** :
+   - Mise à jour instantanée du catalogue, des commandes et des paramètres sans recharger la page.
+   - Commandes WhatsApp directes pré-remplies.

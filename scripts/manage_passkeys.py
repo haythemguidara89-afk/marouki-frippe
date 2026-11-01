@@ -15,7 +15,7 @@ import urllib.error
 
 SUPABASE_URL = "https://muwhwsgiuklmdysjvkrg.supabase.co"
 SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11d2h3c2dpdWtsbWR5c2p2a3JnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMxMTYxMjIsImV4cCI6MjEwODY5MjEyMn0.Cvd5-qFI0EVgd1hQLl2irnHlD9FeA0LHoUByGp0VDwo"
-BASE_ADMIN_URL = "https://marouki-frippe-admin.vercel.app"
+BASE_ADMIN_URL = os.environ.get("BASE_ADMIN_URL", "https://admin.maroukifripe.tn")
 
 def request_supabase(endpoint, method="GET", data=None):
     url = f"{SUPABASE_URL}/rest/v1/{endpoint}"
